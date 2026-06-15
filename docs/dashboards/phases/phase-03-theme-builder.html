@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Phase 3 - Theme Builder Dashboard</title>
+    <style>
+        :root { --bg: #f6f7f9; --panel: #fff; --text: #1d2430; --muted: #5e6a7a; --border: #d9dee7; --accent: #5b4aa0; --soft: #efecff; --pending: #596273; --pending-soft: #eef1f5; }
+        * { box-sizing: border-box; }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.55; }
+        a { color: #1f5fbf; }
+        .page { width: min(1080px, calc(100% - 32px)); margin: 0 auto; padding: 32px 0 48px; }
+        .back { display: inline-block; margin-bottom: 18px; font-weight: 700; }
+        h1 { margin: 0 0 8px; font-size: clamp(2rem, 5vw, 3rem); letter-spacing: 0; line-height: 1.1; }
+        h2 { margin: 0 0 14px; font-size: clamp(1.25rem, 3vw, 1.65rem); letter-spacing: 0; }
+        p { margin: 0 0 12px; }
+        ul { margin: 0; padding-left: 20px; }
+        .muted { color: var(--muted); }
+        .grid { display: grid; gap: 16px; }
+        .two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .card { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 18px; box-shadow: 0 1px 2px rgba(20, 28, 38, 0.05); }
+        .section { margin-top: 22px; }
+        .badge { display: inline-flex; border-radius: 999px; padding: 4px 10px; font-size: 0.82rem; font-weight: 700; border: 1px solid #cfd6df; }
+        .pending { background: var(--pending-soft); color: var(--pending); }
+        .source { border-left: 4px solid var(--accent); background: var(--soft); }
+        .progress { overflow: hidden; height: 10px; background: #e8ecf2; border-radius: 999px; }
+        .bar { height: 100%; width: 0%; background: var(--accent); border-radius: inherit; }
+        @media (max-width: 760px) { .two { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <main class="page">
+        <a class="back" href="../dashboard.html">Back to main dashboard</a>
+        <header>
+            <h1>Phase 3 - Theme Builder Foundation</h1>
+            <p class="muted">Dashboard for template post type, template metadata, and assignment UI foundation.</p>
+        </header>
+
+        <section class="card source">
+            <h2>Source Of Truth</h2>
+            <p>Use <a href="../../phases/phase-03-theme-builder-foundation.md">docs/phases/phase-03-theme-builder-foundation.md</a> and <a href="../../planning/theme-builder-plan.md">theme-builder-plan.md</a> as authoritative sources.</p>
+        </section>
+
+        <section class="section grid two">
+            <article class="card">
+                <h2>Phase Information</h2>
+                <p><strong>Phase:</strong> 3</p>
+                <p><strong>Name:</strong> Theme Builder Foundation</p>
+                <p><strong>Status:</strong> <span class="badge pending">Pending</span></p>
+            </article>
+            <article class="card">
+                <h2>Progress</h2>
+                <div class="progress" aria-label="Phase 3 progress 0 percent"><div class="bar"></div></div>
+                <p class="muted">0% complete. Starts after Phase 2 completion.</p>
+            </article>
+        </section>
+
+        <section class="section card">
+            <h2>Goal</h2>
+            <p>Build the template storage foundation for the Theme Builder, including the `apro_template` post type, template metadata, status, priority, and admin assignment UI.</p>
+        </section>
+
+        <section class="section grid two">
+            <article class="card">
+                <h2>Scope</h2>
+                <ul>
+                    <li>`apro_template` post type registration</li>
+                    <li>Template type definitions</li>
+                    <li>Template metadata storage</li>
+                    <li>Admin assignment UI foundation</li>
+                    <li>Elementor edit flow support</li>
+                </ul>
+            </article>
+            <article class="card">
+                <h2>Deliverables</h2>
+                <ul>
+                    <li>Template post type</li>
+                    <li>Template type registry</li>
+                    <li>Template repository</li>
+                    <li>Admin meta box and columns</li>
+                    <li>Elementor Pro overlap warning</li>
+                </ul>
+            </article>
+        </section>
+
+        <section class="section card">
+            <h2>Acceptance Criteria</h2>
+            <ul>
+                <li>`apro_template` post type is registered safely.</li>
+                <li>Template types include header, footer, single post, archive, search, and 404.</li>
+                <li>Template status and priority are stored and sanitized.</li>
+                <li>Assignment metadata saves with nonce and capability checks.</li>
+                <li>Elementor edit flow works for template posts.</li>
+            </ul>
+        </section>
+
+        <section class="section grid two">
+            <article class="card">
+                <h2>Outstanding Work</h2>
+                <ul>
+                    <li>Wait for Phase 1 and Phase 2 completion.</li>
+                    <li>Implement template post type and repository.</li>
+                    <li>Add admin assignment foundation.</li>
+                </ul>
+            </article>
+            <article class="card">
+                <h2>Next Task</h2>
+                <p>Complete Elementor integration before starting Theme Builder foundation.</p>
+                <p><a href="phase-02-elementor-integration.html">View Phase 2 dashboard</a></p>
+            </article>
+        </section>
+    </main>
+</body>
+</html>

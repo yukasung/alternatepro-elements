@@ -8,6 +8,7 @@
 namespace AlternatePro\Elements;
 
 use AlternatePro\Elements\Modules\HeaderFooter\Module as HeaderFooterModule;
+use AlternatePro\Elements\Settings\SettingsRepository;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -30,6 +31,13 @@ final class Modules {
 	private $modules = array();
 
 	/**
+	 * Settings repository.
+	 *
+	 * @var SettingsRepository|null
+	 */
+	private $settings = null;
+
+	/**
 	 * Get singleton.
 	 *
 	 * @return Modules
@@ -45,10 +53,16 @@ final class Modules {
 	/**
 	 * Initialize modules.
 	 *
+	 * @param SettingsRepository|null $settings Settings repository.
 	 * @return void
 	 */
-	public function init() {
-		$this->modules['header-footer'] = new HeaderFooterModule();
+	public function init( ?SettingsRepository $settings = null ) {
+		$this->settings = $settings ? $settings : new SettingsRepository();
+		$this->modules  = array();
+
+		if ( $this->settings->is_module_enabled( 'header_footer' ) ) {
+			$this->modules['header-footer'] = new HeaderFooterModule();
+		}
 
 		foreach ( $this->modules as $module ) {
 			if ( method_exists( $module, 'init' ) ) {

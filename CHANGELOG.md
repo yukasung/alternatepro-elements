@@ -23,15 +23,32 @@ The format is based on Keep a Changelog.
 * Codex command reference for developer workflow prompts.
 * Refactor Agent workflow for controlled maintainability and architecture improvements.
 * Detailed phase documents generated from the implementation plan.
+* Dashboard documentation structure for HTML project visualization.
+* Phase 1 foundation implementation for bootstrap, service container, activation, upgrades, capabilities, settings, admin menu, diagnostics, and module toggles.
+* Phase 1 foundation testing report with static and CLI validation results.
+* Phase 1 foundation security review report with PASS verdict.
+* Composer lockfile and installed development dependencies for project-local PHPCS tooling.
 
 ### Changed
 
 * Clarified v1.0 changelog scope by separating required, conditional, and deferred features.
 * Updated EditorConfig PHP, JavaScript, and CSS indentation to align with WordPress Coding Standards.
 * Standardized PHPCS configuration naming on `phpcs.xml`.
+* Updated PHPCS configuration to support PSR-4 class filenames while retaining WordPress Coding Standards checks.
 * Updated governance references to include `docs/context.md`.
 * Enhanced Testing Agent workflow with functional, unit, integration, and regression testing strategy.
 * Expanded Codex command quick workflow with start, implementation, review, testing, security, refactor, completion, next task, and status update steps.
+* Updated plugin metadata and runtime checks to require PHP 8.1+.
+
+### Fixed
+
+* Hid Theme Builder admin menu, tab, and links when the Header/Footer Builder module is disabled.
+* Resolved remaining PHPCS findings after aligning PHPCS configuration with PSR-4 class filenames.
+
+### Security
+
+* Added allowlist-based settings sanitization, Settings API persistence, capability checks, and read-only diagnostics output for Phase 1 foundation.
+* Completed Phase 1 foundation security review with no required fixes.
 
 ### Planned
 

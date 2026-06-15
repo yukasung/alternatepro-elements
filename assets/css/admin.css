@@ -1,0 +1,27 @@
+.apro-elements-admin .apro-elements-panel {
+	max-width: 980px;
+	margin-top: 18px;
+	padding: 20px;
+	background: #fff;
+	border: 1px solid #dcdcde;
+	border-radius: 6px;
+}
+
+.apro-elements-admin .apro-elements-links {
+	margin-left: 18px;
+	list-style: disc;
+}
+
+.apro-elements-admin .apro-elements-diagnostics th {
+	width: 240px;
+}
+
+@media screen and (max-width: 782px) {
+	.apro-elements-admin .apro-elements-panel {
+		padding: 16px;
+	}
+
+	.apro-elements-admin .apro-elements-diagnostics th {
+		width: auto;
+	}
+}

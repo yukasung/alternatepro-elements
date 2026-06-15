@@ -119,7 +119,7 @@ The current plugin folder already includes:
 - A header/footer module under `includes/modules/header-footer/`
 - Header/footer frontend and admin assets under `assets/`
 
-Planning should build on this structure rather than discard it. The current PHP requirement in the plugin header is PHP 7.4, while the requested product requirement is PHP 8.1+. Implementation should align the plugin header, runtime checks, and documentation before release.
+Planning should build on this structure rather than discard it. The plugin header, Composer configuration, and runtime checks are aligned with the PHP 8.1+ product requirement.
 
 ## Assumptions
 

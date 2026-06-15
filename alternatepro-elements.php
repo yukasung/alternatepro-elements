@@ -7,7 +7,7 @@
  * Text Domain: alternatepro-elements
  * Domain Path: /languages
  * Requires at least: 6.5
- * Requires PHP: 7.4
+ * Requires PHP: 8.1
  *
  * @package AlternatePro\Elements
  */
@@ -15,6 +15,7 @@
 defined( 'ABSPATH' ) || exit;
 
 define( 'APRO_ELEMENTS_VERSION', '1.0.0' );
+define( 'APRO_ELEMENTS_SCHEMA_VERSION', '1' );
 define( 'APRO_ELEMENTS_FILE', __FILE__ );
 define( 'APRO_ELEMENTS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'APRO_ELEMENTS_URL', plugin_dir_url( __FILE__ ) );
@@ -43,8 +44,10 @@ add_action( 'plugins_loaded', 'apro_elements', 5 );
 function apro_elements_activate() {
 	\AlternatePro\Elements\Autoloader::register();
 
-	if ( class_exists( '\AlternatePro\Elements\Modules\HeaderFooter\PostType' ) ) {
-		\AlternatePro\Elements\Modules\HeaderFooter\PostType::register();
+	if ( class_exists( '\AlternatePro\Elements\Activation' ) ) {
+		\AlternatePro\Elements\Activation::activate();
+
+		return;
 	}
 
 	flush_rewrite_rules();
@@ -56,6 +59,14 @@ function apro_elements_activate() {
  * @return void
  */
 function apro_elements_deactivate() {
+	\AlternatePro\Elements\Autoloader::register();
+
+	if ( class_exists( '\AlternatePro\Elements\Activation' ) ) {
+		\AlternatePro\Elements\Activation::deactivate();
+
+		return;
+	}
+
 	flush_rewrite_rules();
 }
 

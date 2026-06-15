@@ -58,6 +58,17 @@ Reference:
 
 Use `index.md` to locate all project documentation.
 
+## Dashboard Navigation
+
+Reference:
+
+- [docs/dashboards/dashboard.html](dashboards/dashboard.html)
+- [docs/dashboards/README.md](dashboards/README.md)
+
+Dashboards are human-friendly visualization layers only.
+
+Do not use HTML dashboards as the source of truth. Always update Markdown source documents first.
+
 ## Session Startup Checklist
 
 Before starting work:

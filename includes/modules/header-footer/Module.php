@@ -73,19 +73,19 @@ final class Module {
 	 */
 	public static function condition_types() {
 		return array(
-			'entire_site'      => __( 'Entire Site', 'alternatepro-elements' ),
-			'front_page'       => __( 'Front Page', 'alternatepro-elements' ),
-			'all_pages'        => __( 'All Pages', 'alternatepro-elements' ),
-			'specific_pages'   => __( 'Specific Pages', 'alternatepro-elements' ),
-			'all_posts'        => __( 'All Posts', 'alternatepro-elements' ),
-			'specific_posts'   => __( 'Specific Posts', 'alternatepro-elements' ),
-			'archives'         => __( 'Archives', 'alternatepro-elements' ),
-			'search_results'   => __( 'Search Results', 'alternatepro-elements' ),
-			'404_page'         => __( '404 Page', 'alternatepro-elements' ),
-			'url_path_starts'  => __( 'URL Path Starts With', 'alternatepro-elements' ),
-			'url_path_contains'=> __( 'URL Path Contains', 'alternatepro-elements' ),
-			'exclude_pages'    => __( 'Exclude Specific Pages', 'alternatepro-elements' ),
-			'exclude_posts'    => __( 'Exclude Specific Posts', 'alternatepro-elements' ),
+			'entire_site'       => __( 'Entire Site', 'alternatepro-elements' ),
+			'front_page'        => __( 'Front Page', 'alternatepro-elements' ),
+			'all_pages'         => __( 'All Pages', 'alternatepro-elements' ),
+			'specific_pages'    => __( 'Specific Pages', 'alternatepro-elements' ),
+			'all_posts'         => __( 'All Posts', 'alternatepro-elements' ),
+			'specific_posts'    => __( 'Specific Posts', 'alternatepro-elements' ),
+			'archives'          => __( 'Archives', 'alternatepro-elements' ),
+			'search_results'    => __( 'Search Results', 'alternatepro-elements' ),
+			'404_page'          => __( '404 Page', 'alternatepro-elements' ),
+			'url_path_starts'   => __( 'URL Path Starts With', 'alternatepro-elements' ),
+			'url_path_contains' => __( 'URL Path Contains', 'alternatepro-elements' ),
+			'exclude_pages'     => __( 'Exclude Specific Pages', 'alternatepro-elements' ),
+			'exclude_posts'     => __( 'Exclude Specific Posts', 'alternatepro-elements' ),
 		);
 	}
 

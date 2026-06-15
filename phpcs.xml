@@ -40,6 +40,17 @@
 	<rule ref="WordPress-Docs"/>
 	<rule ref="WordPress-Extra"/>
 
+	<!--
+		AlternatePro Elements intentionally uses namespaced PSR-4 class files.
+		Keep WordPress standards enabled, but do not enforce legacy class-* file naming.
+	-->
+	<rule ref="WordPress.Files.FileName.InvalidClassFileName">
+		<severity>0</severity>
+	</rule>
+	<rule ref="WordPress.Files.FileName.NotHyphenatedLowercase">
+		<severity>0</severity>
+	</rule>
+
 	<!-- PHP 8.1+ compatibility checks for WordPress projects. -->
 	<rule ref="PHPCompatibilityWP"/>
 

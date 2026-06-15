@@ -44,6 +44,42 @@ Do not start the next phase.
 - No dead code
 - No unnecessary complexity
 
+### Code Reuse and Shared Abstractions
+
+- Repeated logic is not duplicated across files
+- Shared logic is moved to an appropriate shared location when needed
+- Business logic uses service classes where appropriate
+- Stateless utility logic uses helper classes where appropriate
+- Traits are limited to small reusable behavior
+- Abstract base classes are used only when widgets or modules share the same lifecycle
+- Simple one-time logic is not over-abstracted
+- Shared classes have clear responsibilities
+- Shared classes are namespaced and follow PSR-4 autoloading
+- Shared logic is covered by tests when applicable
+
+Allowed shared locations:
+
+- `includes/Core/`
+- `includes/Support/`
+- `includes/Helpers/`
+- `includes/Contracts/`
+- `includes/Traits/`
+- `includes/Services/`
+
+During code review, check for:
+
+- Duplicate logic
+- Repeated sanitization
+- Repeated escaping
+- Repeated Elementor controls
+- Repeated render patterns
+- Repeated settings parsing
+- Repeated template lookup logic
+- Large methods that should be extracted
+- Classes with mixed responsibilities
+
+If duplicate logic exists, the review verdict must be `PASS WITH MINOR FIXES` or `FAIL` depending on severity.
+
 ### WordPress Standards
 
 - Uses WordPress hooks correctly

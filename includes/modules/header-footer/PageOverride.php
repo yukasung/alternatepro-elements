@@ -225,7 +225,7 @@ final class PageOverride {
 		$templates = array();
 
 		foreach ( array_map( 'absint', $query->posts ) as $template_id ) {
-			$language                 = get_post_meta( $template_id, Module::LANGUAGE_META, true );
+			$language                  = get_post_meta( $template_id, Module::LANGUAGE_META, true );
 			$templates[ $template_id ] = sprintf(
 				'%1$s (%2$s)',
 				get_the_title( $template_id ),

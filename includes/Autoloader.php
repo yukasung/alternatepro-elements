@@ -30,15 +30,15 @@ final class Autoloader {
 	/**
 	 * Autoload a class.
 	 *
-	 * @param string $class Class name.
+	 * @param string $class_name Class name.
 	 * @return void
 	 */
-	private static function autoload( $class ) {
-		if ( 0 !== strpos( $class, self::PREFIX ) ) {
+	private static function autoload( $class_name ) {
+		if ( 0 !== strpos( $class_name, self::PREFIX ) ) {
 			return;
 		}
 
-		$relative = substr( $class, strlen( self::PREFIX ) );
+		$relative = substr( $class_name, strlen( self::PREFIX ) );
 		$file     = self::class_to_file( $relative );
 
 		if ( $file && file_exists( $file ) ) {

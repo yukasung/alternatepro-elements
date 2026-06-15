@@ -15,6 +15,7 @@ This file is the master documentation navigation page for the AlternatePro Eleme
 ## Quick Navigation
 
 - Session startup context: [Project Context](context.md)
+- Project dashboard: [Dashboard](dashboards/dashboard.html)
 - Completion workflow: [Done Workflow](done.md)
 - Primary technical reference: [Architecture](planning/architecture.md)
 - Primary development reference: [Implementation Plan](planning/implementation-plan.md)
@@ -26,6 +27,7 @@ This file is the master documentation navigation page for the AlternatePro Eleme
 ## Documentation Structure Overview
 
 - `agents/` contains reusable AI agent workflows for implementation support, reviews, and future task automation.
+- `dashboards/` contains human-friendly HTML dashboards and visual project reports.
 - `phases/` contains detailed phase documents generated from the implementation plan.
 - `planning/` contains project planning, architecture, implementation, and feature design documents.
 - `reviews/` contains review history, architecture review notes, and security review checklists.
@@ -41,6 +43,13 @@ This file is the master documentation navigation page for the AlternatePro Eleme
 - [Project Context](context.md)
 
 Read this file first at the start of future development sessions.
+
+## Dashboards
+
+- [Project Dashboard](dashboards/dashboard.html)
+- [Dashboard Rules](dashboards/README.md)
+
+Dashboards are visualization layers only. Markdown files remain the source of truth.
 
 ## Done Workflow
 
@@ -135,14 +144,18 @@ Detailed phase documents are generated from [Implementation Plan](planning/imple
 - [Documentation Audit Fixes](reviews/documentation-audit-fixes.md)
 - [Pre-Development Audit](reviews/pre-development-audit.md)
 - [Pre-Development Audit Fixes](releases/pre-development-audit-fixes.md)
+- [Phase 1 Foundation Code Review](reviews/review-phase-1-foundation.md)
+- [Phase 1 Foundation Security Review](reviews/security-phase-1-foundation.md)
 
 ## Security Checklist
 
 - [Security Checklist](reviews/security-checklist.md)
+- [Phase 1 Foundation Security Review](reviews/security-phase-1-foundation.md)
 
 ## Testing Plan
 
 - [Testing Plan](testing/testing-plan.md)
+- [Phase 1 Foundation Test Report](testing/test-phase-1-foundation.md)
 
 ## Project Status
 

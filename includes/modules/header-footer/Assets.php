@@ -13,10 +13,10 @@ defined( 'ABSPATH' ) || exit;
  * Registers and conditionally enqueues assets.
  */
 final class Assets {
-	public const ADMIN_STYLE    = 'apro-header-footer-admin';
-	public const ADMIN_SCRIPT   = 'apro-header-footer-admin';
-	public const FRONT_STYLE    = 'apro-header-footer-frontend';
-	public const FRONT_SCRIPT   = 'apro-header-footer-frontend';
+	public const ADMIN_STYLE  = 'apro-header-footer-admin';
+	public const ADMIN_SCRIPT = 'apro-header-footer-admin';
+	public const FRONT_STYLE  = 'apro-header-footer-frontend';
+	public const FRONT_SCRIPT = 'apro-header-footer-frontend';
 
 	/**
 	 * Register hooks.

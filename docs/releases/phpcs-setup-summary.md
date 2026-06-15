@@ -51,5 +51,6 @@ Generated minified asset files are also excluded:
 - The ruleset uses WPCS standards intended for current WordPress plugin development and remains suitable for WordPress latest stable validation.
 - The scan scope matches the plugin source structure defined in `docs/planning/architecture.md`.
 - Third-party libraries, generated files, documentation, language files, and build artifacts are excluded.
-- Full PHPCS execution is pending local Composer/dev dependency installation.
+- PHPCS configuration supports the project's PSR-4 file naming policy by disabling WordPress legacy `class-*` filename enforcement.
+- Full PHPCS execution now runs with project-local Composer dependencies and passes.
 - No plugin source code was modified.

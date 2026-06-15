@@ -7,6 +7,8 @@
 
 namespace AlternatePro\Elements;
 
+use AlternatePro\Elements\Admin\Notices;
+
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -17,7 +19,7 @@ final class Requirements {
 	 * Minimum versions.
 	 */
 	public const MIN_WP        = '6.5';
-	public const MIN_PHP       = '7.4';
+	public const MIN_PHP       = '8.1';
 	public const MIN_ELEMENTOR = '3.5.0';
 
 	/**
@@ -111,7 +113,7 @@ final class Requirements {
 		}
 
 		if ( ! $this->has_required_php() ) {
-			$this->notice(
+			Notices::render(
 				sprintf(
 					/* translators: 1: required PHP version, 2: current PHP version. */
 					__( 'AlternatePro Elements requires PHP %1$s or newer. Current version: %2$s.', 'alternatepro-elements' ),
@@ -125,7 +127,7 @@ final class Requirements {
 		if ( ! $this->has_required_wordpress() ) {
 			global $wp_version;
 
-			$this->notice(
+			Notices::render(
 				sprintf(
 					/* translators: 1: required WordPress version, 2: current WordPress version. */
 					__( 'AlternatePro Elements requires WordPress %1$s or newer. Current version: %2$s.', 'alternatepro-elements' ),
@@ -137,8 +139,8 @@ final class Requirements {
 		}
 
 		if ( ! $this->is_elementor_loaded() ) {
-			$this->notice(
-				__( 'AlternatePro Header Footer Builder works with Elementor Free. Please install and activate Elementor to edit and render templates.', 'alternatepro-elements' ),
+			Notices::render(
+				__( 'AlternatePro Elements works with Elementor Free. Please install and activate Elementor before using Elementor-powered templates and widgets.', 'alternatepro-elements' ),
 				'warning'
 			);
 
@@ -146,7 +148,7 @@ final class Requirements {
 		}
 
 		if ( ! $this->has_required_elementor_version() ) {
-			$this->notice(
+			Notices::render(
 				sprintf(
 					/* translators: %s: required Elementor version. */
 					__( 'AlternatePro Elements recommends Elementor %s or newer for Header/Footer Builder compatibility.', 'alternatepro-elements' ),
@@ -155,21 +157,6 @@ final class Requirements {
 				'warning'
 			);
 		}
-	}
-
-	/**
-	 * Render a notice.
-	 *
-	 * @param string $message Notice message.
-	 * @param string $type Notice type.
-	 * @return void
-	 */
-	private function notice( $message, $type = 'warning' ) {
-		printf(
-			'<div class="notice notice-%1$s"><p>%2$s</p></div>',
-			esc_attr( $type ),
-			wp_kses_post( $message )
-		);
 	}
 
 	/**

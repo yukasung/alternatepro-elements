@@ -86,7 +86,9 @@ final class AdminColumns {
 				break;
 
 			case 'apro_language':
-				echo esc_html( $this->language_resolver->get_label( get_post_meta( $post_id, Module::LANGUAGE_META, true ) ?: 'all' ) );
+				$language = get_post_meta( $post_id, Module::LANGUAGE_META, true );
+				$language = ! empty( $language ) ? $language : 'all';
+				echo esc_html( $this->language_resolver->get_label( $language ) );
 				break;
 
 			case 'apro_priority':

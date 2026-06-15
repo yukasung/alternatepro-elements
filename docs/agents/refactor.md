@@ -139,6 +139,67 @@ Check:
 
 ---
 
+## Code Reuse and Shared Abstraction Rules
+
+Repeated logic must not be duplicated across files.
+
+When the same logic is needed in more than one place, move it to a shared location.
+
+Allowed shared locations:
+
+* `includes/Core/`
+* `includes/Support/`
+* `includes/Helpers/`
+* `includes/Contracts/`
+* `includes/Traits/`
+* `includes/Services/`
+
+Use shared abstraction when logic appears in:
+
+* Two or more widgets
+* Two or more admin pages
+* Two or more Theme Builder modules
+* Two or more Conditions rules
+* Two or more Dynamic Tags
+* Multiple render methods
+* Multiple validation or sanitization flows
+
+Examples:
+
+* Common sanitization logic -> shared Sanitizer class
+* Common escaping logic -> shared Escaper helper
+* Common admin page rendering -> shared Admin View class
+* Common Elementor controls -> shared Control Builder class
+* Common widget settings parsing -> shared Widget Settings Resolver
+* Common template lookup logic -> Template Resolver service
+* Common condition matching logic -> Condition Matcher service
+* Common dynamic tag formatting -> Dynamic Tag Formatter
+
+Rules:
+
+1. Do not copy-paste repeated logic.
+2. Prefer service classes for business logic.
+3. Prefer helper classes for stateless utility logic.
+4. Prefer traits only for small reusable behavior.
+5. Prefer abstract base classes only when widgets or modules share the same lifecycle.
+6. Do not over-abstract simple one-time logic.
+7. Shared classes must have clear responsibility.
+8. Shared classes must be namespaced.
+9. Shared classes must follow PSR-4 autoloading.
+10. Shared logic must be covered by tests when applicable.
+
+When duplicate logic is found:
+
+1. Identify the repeated logic.
+2. Propose the shared class/function location.
+3. Refactor without changing behavior.
+4. Verify tests still pass.
+5. Update documentation if architecture changes.
+
+Do not introduce new features while refactoring.
+
+---
+
 ## Refactor Recommendations
 
 Classify:

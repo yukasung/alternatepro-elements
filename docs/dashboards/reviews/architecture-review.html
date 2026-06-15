@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Architecture Review Dashboard</title>
+    <style>
+        :root { --bg: #f6f7f9; --panel: #fff; --text: #1d2430; --muted: #5e6a7a; --border: #d9dee7; --accent: #0f6b5f; --soft: #e3f3f0; }
+        * { box-sizing: border-box; }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.55; }
+        a { color: #1f5fbf; }
+        .page { width: min(980px, calc(100% - 32px)); margin: 0 auto; padding: 32px 0 48px; }
+        .back { display: inline-block; margin-bottom: 18px; font-weight: 700; }
+        h1 { margin: 0 0 8px; font-size: clamp(2rem, 5vw, 3rem); letter-spacing: 0; line-height: 1.1; }
+        h2 { margin: 0 0 14px; font-size: clamp(1.25rem, 3vw, 1.65rem); letter-spacing: 0; }
+        p { margin: 0 0 12px; }
+        ul { margin: 0; padding-left: 20px; }
+        .muted { color: var(--muted); }
+        .card { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 18px; margin-top: 16px; box-shadow: 0 1px 2px rgba(20, 28, 38, 0.05); }
+        .badge { display: inline-flex; border-radius: 999px; padding: 4px 10px; font-size: 0.82rem; font-weight: 700; background: var(--soft); color: var(--accent); border: 1px solid #a9d8d0; }
+    </style>
+</head>
+<body>
+    <main class="page">
+        <a class="back" href="../dashboard.html">Back to main dashboard</a>
+        <h1>Architecture Review</h1>
+        <p class="muted">Visual summary of the architecture review history.</p>
+
+        <section class="card">
+            <h2>Source Of Truth</h2>
+            <p>Use <a href="../../reviews/architecture-review.md">docs/reviews/architecture-review.md</a> and <a href="../../planning/architecture.md">docs/planning/architecture.md</a> as authoritative sources.</p>
+        </section>
+
+        <section class="card">
+            <h2>Review Result</h2>
+            <p><span class="badge">Resolved Into Final Architecture</span></p>
+            <p>The review informed the final architecture document and helped keep v1.0 scope realistic.</p>
+        </section>
+
+        <section class="card">
+            <h2>Key Focus Areas</h2>
+            <ul>
+                <li>Scope realism for v1.0.</li>
+                <li>Elementor Free compatibility.</li>
+                <li>Theme Builder risk management.</li>
+                <li>Security and WordPress coding standards.</li>
+                <li>Deferred features for later versions.</li>
+            </ul>
+        </section>
+    </main>
+</body>
+</html>

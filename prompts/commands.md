@@ -1,166 +1,85 @@
 # AlternatePro Elements - Codex Commands
 
+## How To Use
+
+Copy one command block and paste it into Codex.
+
+Use **Quick Workflow** for normal development.
+
+Use **Individual Commands** for one-off actions.
+
+---
+
 ## Important Rule
 
-Every completed implementation task must update docs/status.md.
+Every completed implementation task must update:
 
-A task is not complete until docs/status.md is accurate.
+- `docs/status.md`
+- `CHANGELOG.md`
+- relevant `docs/releases/*` file if applicable
+- relevant `docs/dashboards/*` file if applicable
+
+A task is not complete until `docs/status.md` is accurate.
 
 ---
 
-## Start Session
+## Architecture Rules
+
+Follow shared abstraction rules.
+
+Do not duplicate logic.
+
+When logic is reused across multiple locations:
+
+- Create a shared Service
+- Create a shared Helper
+- Create a shared Support class
+- Create a shared Trait when appropriate
+- Create a shared Base Class when appropriate
+
+Use:
+
+- `includes/Core/`
+- `includes/Support/`
+- `includes/Services/`
+- `includes/Helpers/`
+- `includes/Traits/`
+
+Avoid copy-paste implementations.
+
+---
+
+## Standard Workflow
 
 Read docs/context.md
 
-Continue current phase.
+↓
 
----
+Verify current phase dashboard
 
-## Implement Current Task
+↓
 
-Read docs/context.md
+Implement task
 
-Implement current task.
+↓
 
-After implementation, update:
+Review
 
-* docs/status.md
-* CHANGELOG.md
-* relevant docs/releases/* file if applicable
+↓
 
----
+Test
 
-## Implement Next Task
+↓
 
-Read docs/context.md
+Security Review
 
-Implement next task.
+↓
 
-After implementation, update:
+Update dashboards
 
-* docs/status.md
-* CHANGELOG.md
-* relevant docs/releases/* file if applicable
-
----
-
-## Review Code
-
-Read docs/agents/review.md
-
----
-
-## Test Implementation
-
-Read docs/agents/test.md
-
----
-
-## Security Review
-
-Read docs/agents/security.md
-
----
-
-## Refactor Code
-
-Read docs/agents/refactor.md
-
----
-
-## Complete Current Task
+↓
 
 Read docs/done.md
-
-Then verify:
-
-* docs/status.md updated
-* CHANGELOG.md updated
-* release documentation updated if applicable
-* next task identified
-
----
-
-## Continue Current Phase
-
-Read docs/context.md
-
-Continue current phase.
-
-After implementation, update:
-
-* docs/status.md
-* CHANGELOG.md
-* relevant docs/releases/* file if applicable
-
----
-
-## Continue Next Phase
-
-Read docs/context.md
-
-Review current status and begin the next phase.
-
-After implementation, update:
-
-* docs/status.md
-* CHANGELOG.md
-* relevant docs/releases/* file if applicable
-
----
-
-## Review Project Status
-
-Read docs/status.md
-
-Summarize:
-
-* Current Phase
-* Completed Work
-* Remaining Work
-* Open Issues
-* Recommended Next Task
-
----
-
-## Update Project Status
-
-Read docs/status.md
-
-Update current project status based on completed work.
-
-Include:
-
-* Current Phase
-* Phase Status
-* Completed Work
-* Remaining Work
-* Open Issues
-* Next Task
-
----
-
-## Documentation Audit
-
-Read docs/reviews/documentation-audit.md
-
-Verify documentation consistency.
-
----
-
-## Pre-Development Audit
-
-Read docs/reviews/pre-development-audit.md
-
-Verify project readiness.
-
----
-
-## Release Preparation
-
-Read docs/done.md
-
-Prepare project for release.
 
 ---
 
@@ -168,86 +87,297 @@ Prepare project for release.
 
 ### Start Work
 
+```text
 Read docs/context.md
 
-Continue current phase.
-
----
-
-### Implement Task
-
-Read docs/context.md
+Verify current phase dashboard.
 
 Implement current task.
 
-After implementation:
-
-* Update docs/status.md
-* Update CHANGELOG.md
-* Update relevant docs/releases/* file if applicable
+Requirements:
+- Follow architecture.md
+- Follow shared abstraction rules
+- Avoid duplicate logic
+```
 
 ---
 
 ### Review
 
+```text
 Read docs/agents/review.md
+```
 
 ---
 
-### Test
+### Testing
 
+```text
 Read docs/agents/test.md
+```
 
 ---
 
-### Security Review
+### Security
 
+```text
 Read docs/agents/security.md
+```
 
 ---
 
-### Refactor
+### Update Dashboards
 
-Read docs/agents/refactor.md
+```text
+Update:
+- docs/dashboards/dashboard.html
+- current phase dashboard
+```
 
 ---
 
 ### Complete Task
 
+```text
 Read docs/done.md
 
 Verify:
-
-* docs/status.md updated
-* CHANGELOG.md updated
-* release documentation updated if applicable
-* next task identified
+- docs/status.md updated
+- CHANGELOG.md updated
+- dashboards updated
+```
 
 ---
 
-### Next Task
+## Individual Commands
 
+## Start Session
+
+```text
 Read docs/context.md
+
+Verify current phase dashboard.
+
+Continue current phase.
+```
+
+---
+
+## Implement Current Task
+
+```text
+Read docs/context.md
+
+Verify current phase dashboard exists.
+
+Implement current task.
+
+Requirements:
+- Follow architecture.md
+- Follow shared abstraction rules
+- Reuse existing services/helpers when possible
+- Extract duplicate logic into shared classes
+
+After implementation:
+- Update docs/status.md
+```
+
+---
+
+## Implement Next Task
+
+```text
+Read docs/context.md
+
+Verify current phase dashboard exists.
 
 Implement next task.
 
-After implementation:
+Requirements:
+- Follow architecture.md
+- Follow shared abstraction rules
+- Reuse existing services/helpers when possible
+- Extract duplicate logic into shared classes
 
-* Update docs/status.md
-* Update CHANGELOG.md
-* Update relevant docs/releases/* file if applicable
+After implementation:
+- Update docs/status.md
+```
 
 ---
 
-### Update Status
+## Continue Current Phase
 
+```text
+Read docs/context.md
+
+Verify current phase dashboard.
+
+Continue current phase.
+
+After implementation, update:
+- docs/status.md
+- CHANGELOG.md
+- relevant docs/releases/* file if applicable
+- relevant docs/dashboards/* file if applicable
+```
+
+---
+
+## Continue Next Phase
+
+```text
+Read docs/context.md
+
+Verify current phase dashboard.
+
+Review current status and begin the next phase.
+
+After implementation, update:
+- docs/status.md
+- CHANGELOG.md
+- relevant docs/releases/* file if applicable
+- relevant docs/dashboards/* file if applicable
+```
+
+---
+
+## Review Code
+
+```text
+Read docs/agents/review.md
+
+Verify:
+- No duplicate logic
+- No copy-paste code
+- Shared abstractions are used correctly
+- Class responsibilities are clear
+```
+
+---
+
+## Test Implementation
+
+```text
+Read docs/agents/test.md
+```
+
+---
+
+## Security Review
+
+```text
+Read docs/agents/security.md
+```
+
+---
+
+## Refactor Code
+
+```text
+Read docs/agents/refactor.md
+
+Review for:
+- Duplicate logic
+- Large classes
+- Large methods
+- Repeated Elementor controls
+- Repeated settings handling
+- Repeated render logic
+
+Move reusable logic into shared abstractions.
+```
+
+---
+
+## Update Dashboards
+
+```text
+Update:
+- docs/dashboards/dashboard.html
+- current phase dashboard
+
+Use:
+- docs/status.md
+- current phase documentation
+
+as the source of truth.
+```
+
+---
+
+## Complete Current Task
+
+```text
+Read docs/done.md
+
+Verify:
+- Phase dashboard updated
+- Project dashboard updated
+- docs/status.md updated
+- CHANGELOG.md updated
+- Release documentation updated if applicable
+- Next task identified
+```
+
+---
+
+## Update Project Status
+
+```text
 Read docs/status.md
 
-Update:
+Update current project status based on completed work.
 
-* Current Phase
-* Phase Status
-* Completed Work
-* Remaining Work
-* Open Issues
-* Next Task
+Include:
+- Current Phase
+- Phase Status
+- Completed Work
+- Remaining Work
+- Open Issues
+- Next Task
+```
+
+---
+
+## Review Project Status
+
+```text
+Read docs/status.md
+
+Summarize:
+- Current Phase
+- Completed Work
+- Remaining Work
+- Open Issues
+- Recommended Next Task
+```
+
+---
+
+## Documentation Audit
+
+```text
+Read docs/reviews/documentation-audit.md
+
+Verify documentation consistency.
+```
+
+---
+
+## Pre-Development Audit
+
+```text
+Read docs/reviews/pre-development-audit.md
+
+Verify project readiness.
+```
+
+---
+
+## Release Preparation
+
+```text
+Read docs/done.md
+
+Prepare project for release.
+```
