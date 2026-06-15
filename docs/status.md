@@ -32,6 +32,7 @@ Primary Governance Documents:
 - [docs/development-rules.md](development-rules.md)
 - [docs/planning/architecture.md](planning/architecture.md)
 - [docs/planning/implementation-plan.md](planning/implementation-plan.md)
+- [docs/phases/](index.md#phase-documents)
 
 All development work must follow the rules defined in [docs/development-rules.md](development-rules.md).
 
@@ -75,6 +76,14 @@ Release:
 
 Phase 1 - Foundation
 
+## Phase Documentation
+
+Detailed phase documents are stored in `docs/phases/` and are generated from [Implementation Plan](planning/implementation-plan.md).
+
+- Current phase reference: [Phase 1 - Foundation](phases/phase-01-foundation.md)
+- Phase 2 reference: [Elementor Integration](phases/phase-02-elementor-integration.md)
+- Full phase navigation is available in [Documentation Index](index.md#phase-documents).
+
 ## Objective
 
 Establish the plugin foundation so modules can load safely, requirements can fail gracefully, settings can be stored consistently, and administrators have a basic control surface.
@@ -104,6 +113,7 @@ Establish the plugin foundation so modules can load safely, requirements can fai
 
 - [Architecture](planning/architecture.md)
 - [Implementation Plan](planning/implementation-plan.md)
+- [Phase 1 - Foundation](phases/phase-01-foundation.md)
 - [Requirements](planning/requirements.md)
 - Existing plugin bootstrap and autoloader.
 - WordPress admin APIs.
@@ -185,11 +195,14 @@ Phase 2 - Elementor Integration
 - 2026-06-15: Created Done Workflow for task completion review, testing, security, documentation, and summary steps.
 - 2026-06-15: Created Codex command reference for developer workflow prompts.
 - 2026-06-15: Created Refactor Agent workflow for controlled maintainability and architecture improvements.
+- 2026-06-15: Created detailed phase documents from the implementation plan and added phase navigation references.
+- 2026-06-15: Expanded Codex command quick workflow with start, implementation, review, testing, security, refactor, completion, next task, and status update steps.
 
 ## Status Rules
 
 - `docs/status.md` must be updated at the end of every completed phase.
 - `docs/index.md` must remain the master documentation navigation page.
+- `docs/phases/` must stay aligned with `docs/planning/implementation-plan.md`.
 - `docs/context.md` must be read first at the start of future development sessions.
 - `docs/done.md` must be used after implementation, bug fix, refactor, or feature development work.
 - `docs/development-rules.md` must be reviewed before future code changes.

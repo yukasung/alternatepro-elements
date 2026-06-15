@@ -7,6 +7,7 @@ Date: 2026-06-15
 - Created `prompts/commands.md`.
 - Added a centralized Codex command reference for developers.
 - Included short reusable commands for session startup, implementation, review, testing, security review, completion, audits, status review, and release preparation.
+- Expanded the Quick Workflow section with step-by-step development, review, testing, security, refactor, completion, next task, and status update commands.
 
 ## Files Created
 
@@ -18,6 +19,7 @@ Date: 2026-06-15
 - `docs/releases/commands-reference-summary.md`
 - `docs/status.md`
 - `CHANGELOG.md`
+- `prompts/commands.md`
 
 ## Notes
 
@@ -29,4 +31,5 @@ Date: 2026-06-15
 
 - Command sections were created as requested.
 - Commands avoid implementation details.
+- Quick Workflow commands remain short and copy-paste friendly.
 - No plugin source code was modified.

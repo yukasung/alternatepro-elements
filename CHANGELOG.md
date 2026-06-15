@@ -22,6 +22,7 @@ The format is based on Keep a Changelog.
 * Done Workflow for task completion review, testing, security, documentation, and summary steps.
 * Codex command reference for developer workflow prompts.
 * Refactor Agent workflow for controlled maintainability and architecture improvements.
+* Detailed phase documents generated from the implementation plan.
 
 ### Changed
 
@@ -30,6 +31,7 @@ The format is based on Keep a Changelog.
 * Standardized PHPCS configuration naming on `phpcs.xml`.
 * Updated governance references to include `docs/context.md`.
 * Enhanced Testing Agent workflow with functional, unit, integration, and regression testing strategy.
+* Expanded Codex command quick workflow with start, implementation, review, testing, security, refactor, completion, next task, and status update steps.
 
 ### Planned
 

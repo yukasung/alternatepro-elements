@@ -13,6 +13,7 @@ No release has been prepared yet. v1.0 release criteria are currently defined in
 
 ## Current Release Documents
 
+- [Commands Quick Workflow Update Summary](commands-quick-workflow-update-summary.md)
 - [Commands Reference Summary](commands-reference-summary.md)
 - [Context Document Summary](context-document-summary.md)
 - [Composer Setup Summary](composer-setup-summary.md)
@@ -21,6 +22,7 @@ No release has been prepared yet. v1.0 release criteria are currently defined in
 - [Done Workflow Summary](done-workflow-summary.md)
 - [EditorConfig Setup Summary](editorconfig-setup-summary.md)
 - [PHPCS Setup Summary](phpcs-setup-summary.md)
+- [Phase Documents Summary](phase-documents-summary.md)
 - [Pre-Development Audit Fixes](pre-development-audit-fixes.md)
 - [Refactor Agent Summary](refactor-agent-summary.md)
 - [Review Agent Summary](review-agent-summary.md)
