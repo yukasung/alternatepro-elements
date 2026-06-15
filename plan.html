@@ -1,0 +1,1193 @@
+<!doctype html>
+<html lang="th">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>แผนโมดูล Header Footer Builder | AlternatePro Elements</title>
+	<style>
+		:root {
+			--ink: #18212f;
+			--muted: #5d6675;
+			--line: #dce1e8;
+			--paper: #ffffff;
+			--soft: #f5f7fa;
+			--brand: #176f6b;
+			--brand-dark: #104946;
+			--accent: #b45f24;
+			--blue: #2457a6;
+			--green: #28734a;
+			--shadow: 0 14px 34px rgba(24, 33, 47, 0.08);
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+
+		html {
+			scroll-behavior: smooth;
+		}
+
+		body {
+			margin: 0;
+			background: var(--soft);
+			color: var(--ink);
+			font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Tahoma, sans-serif;
+			font-size: 16px;
+			line-height: 1.7;
+		}
+
+		a {
+			color: var(--blue);
+		}
+
+		code,
+		pre {
+			font-family: SFMono-Regular, Consolas, "Liberation Mono", monospace;
+		}
+
+		code {
+			border-radius: 5px;
+			padding: 0.12em 0.35em;
+			background: #edf1f5;
+			color: #263447;
+			font-size: 0.92em;
+		}
+
+		pre {
+			margin: 0;
+			overflow-x: auto;
+			border-radius: 8px;
+			padding: 18px;
+			background: #101820;
+			color: #ecf5f4;
+			font-size: 0.9rem;
+			line-height: 1.58;
+		}
+
+		.wrap,
+		.hero-inner,
+		.footer-inner {
+			width: min(1120px, calc(100% - 32px));
+			margin: 0 auto;
+		}
+
+		.hero {
+			background: #101820;
+			color: #fff;
+			padding: 54px 0 32px;
+		}
+
+		.kicker {
+			margin: 0 0 10px;
+			color: #9ed6ce;
+			font-size: 0.84rem;
+			font-weight: 800;
+			letter-spacing: 0.05em;
+			text-transform: uppercase;
+		}
+
+		h1,
+		h2,
+		h3 {
+			margin: 0;
+			line-height: 1.25;
+		}
+
+		h1 {
+			max-width: 850px;
+			font-size: clamp(2rem, 5vw, 3.75rem);
+		}
+
+		h2 {
+			font-size: clamp(1.35rem, 3vw, 2rem);
+		}
+
+		h3 {
+			font-size: 1rem;
+		}
+
+		.hero-text {
+			max-width: 850px;
+			margin: 16px 0 0;
+			color: #dbe2ec;
+			font-size: 1.08rem;
+		}
+
+		.meta-grid {
+			display: grid;
+			grid-template-columns: repeat(4, minmax(0, 1fr));
+			gap: 12px;
+			margin-top: 28px;
+		}
+
+		.meta-card {
+			border: 1px solid rgba(255, 255, 255, 0.18);
+			border-radius: 8px;
+			padding: 13px 14px;
+			background: rgba(255, 255, 255, 0.06);
+		}
+
+		.meta-card span {
+			display: block;
+		}
+
+		.meta-label {
+			color: #9ed6ce;
+			font-size: 0.78rem;
+			font-weight: 800;
+		}
+
+		.meta-value {
+			margin-top: 4px;
+			color: #fff;
+			font-weight: 800;
+			word-break: break-word;
+		}
+
+		main {
+			padding: 28px 0 46px;
+		}
+
+		.toc {
+			display: grid;
+			grid-template-columns: repeat(4, minmax(0, 1fr));
+			gap: 10px;
+			margin-bottom: 18px;
+		}
+
+		.toc a {
+			display: block;
+			border: 1px solid var(--line);
+			border-radius: 8px;
+			padding: 10px 12px;
+			background: var(--paper);
+			color: var(--ink);
+			font-weight: 800;
+			text-decoration: none;
+		}
+
+		.section {
+			margin-top: 18px;
+			border: 1px solid var(--line);
+			border-radius: 8px;
+			background: var(--paper);
+			box-shadow: var(--shadow);
+			overflow: hidden;
+		}
+
+		.section-head {
+			border-bottom: 1px solid var(--line);
+			padding: 22px 24px 16px;
+			background: #fbfcfe;
+		}
+
+		.section-head p {
+			max-width: 850px;
+			margin: 8px 0 0;
+			color: var(--muted);
+		}
+
+		.section-body {
+			padding: 22px 24px 26px;
+		}
+
+		.grid-2,
+		.grid-3 {
+			display: grid;
+			gap: 16px;
+		}
+
+		.grid-2 {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+
+		.grid-3 {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+
+		.panel {
+			border: 1px solid var(--line);
+			border-radius: 8px;
+			padding: 16px;
+			background: #fff;
+		}
+
+		.panel p,
+		.panel ul {
+			margin-top: 8px;
+			margin-bottom: 0;
+			color: var(--muted);
+		}
+
+		.badges {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 8px;
+			margin-top: 16px;
+		}
+
+		.badge {
+			display: inline-flex;
+			align-items: center;
+			min-height: 30px;
+			border-radius: 999px;
+			padding: 4px 10px;
+			background: #e8f3f1;
+			color: #145b57;
+			font-size: 0.86rem;
+			font-weight: 800;
+		}
+
+		.badge.alt {
+			background: #fff0e2;
+			color: #854514;
+		}
+
+		.badge.info {
+			background: #eaf1ff;
+			color: #224f99;
+		}
+
+		.table-wrap {
+			overflow-x: auto;
+		}
+
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			border: 1px solid var(--line);
+			background: #fff;
+		}
+
+		th,
+		td {
+			border-bottom: 1px solid var(--line);
+			padding: 12px 14px;
+			text-align: left;
+			vertical-align: top;
+		}
+
+		th {
+			background: #eef3f7;
+			color: #263447;
+			font-size: 0.92rem;
+		}
+
+		tr:last-child td {
+			border-bottom: 0;
+		}
+
+		.clean-list,
+		.checklist,
+		.flow {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+
+		.clean-list li,
+		.checklist li {
+			position: relative;
+			margin-top: 10px;
+			padding-left: 28px;
+		}
+
+		.clean-list li:first-child,
+		.checklist li:first-child {
+			margin-top: 0;
+		}
+
+		.clean-list li::before {
+			content: "";
+			position: absolute;
+			top: 0.68em;
+			left: 6px;
+			width: 8px;
+			height: 8px;
+			border-radius: 50%;
+			background: var(--accent);
+		}
+
+		.checklist li::before {
+			content: "";
+			position: absolute;
+			top: 0.48em;
+			left: 0;
+			width: 15px;
+			height: 15px;
+			border: 2px solid var(--green);
+			border-radius: 4px;
+			background: #fff;
+		}
+
+		.flow {
+			display: grid;
+			gap: 12px;
+			max-width: 620px;
+		}
+
+		.flow li {
+			position: relative;
+			border: 1px solid var(--line);
+			border-radius: 8px;
+			padding: 14px 16px;
+			background: #fff;
+			font-weight: 800;
+			text-align: center;
+		}
+
+		.flow li:not(:last-child)::after {
+			content: "↓";
+			position: absolute;
+			left: 50%;
+			bottom: -23px;
+			transform: translateX(-50%);
+			color: var(--brand);
+			font-size: 1.35rem;
+			font-weight: 900;
+		}
+
+		.timeline {
+			display: grid;
+			gap: 12px;
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			counter-reset: phase;
+		}
+
+		.timeline li {
+			position: relative;
+			border: 1px solid var(--line);
+			border-radius: 8px;
+			padding: 16px 16px 16px 58px;
+			background: #fff;
+			counter-increment: phase;
+		}
+
+		.timeline li::before {
+			content: counter(phase);
+			position: absolute;
+			top: 16px;
+			left: 16px;
+			display: grid;
+			width: 30px;
+			height: 30px;
+			place-items: center;
+			border-radius: 50%;
+			background: var(--brand);
+			color: #fff;
+			font-weight: 900;
+		}
+
+		.timeline strong {
+			display: block;
+			margin-bottom: 4px;
+		}
+
+		.callout {
+			border-left: 5px solid var(--accent);
+			border-radius: 8px;
+			padding: 16px;
+			background: #fff8f0;
+			color: #5d3a1f;
+		}
+
+		.footer {
+			border-top: 1px solid var(--line);
+			background: #fff;
+			padding: 22px 0;
+			color: var(--muted);
+		}
+
+		.footer-inner {
+			display: flex;
+			justify-content: space-between;
+			gap: 16px;
+			flex-wrap: wrap;
+		}
+
+		@media (max-width: 900px) {
+			.meta-grid,
+			.toc,
+			.grid-3 {
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+			}
+
+			.grid-2 {
+				grid-template-columns: 1fr;
+			}
+		}
+
+		@media (max-width: 620px) {
+			body {
+				font-size: 15px;
+			}
+
+			.hero {
+				padding: 38px 0 26px;
+			}
+
+			.wrap,
+			.hero-inner,
+			.footer-inner {
+				width: min(100% - 24px, 1120px);
+			}
+
+			.meta-grid,
+			.toc,
+			.grid-3 {
+				grid-template-columns: 1fr;
+			}
+
+			.section-head,
+			.section-body {
+				padding-left: 16px;
+				padding-right: 16px;
+			}
+
+			th,
+			td {
+				padding: 10px;
+			}
+		}
+	</style>
+</head>
+<body>
+	<header class="hero">
+		<div class="hero-inner">
+			<p class="kicker">AlternatePro Elements Module Plan</p>
+			<h1>แผนโมดูล Header Footer Builder สำหรับ Elementor Free</h1>
+			<p class="hero-text">เอกสารนี้อธิบายแผนสถาปัตยกรรมและการพัฒนาโมดูล Header/Footer Builder ที่ใช้ Custom Post Type, Display Conditions, Page-Level Override และ Multilingual Resolver เพื่อ render template ผ่าน hook ของธีม AlternatePro โดยไม่พึ่ง Elementor Pro</p>
+
+			<div class="meta-grid" aria-label="ข้อมูลโมดูล">
+				<div class="meta-card">
+					<span class="meta-label">Plugin</span>
+					<span class="meta-value">AlternatePro Elements</span>
+				</div>
+				<div class="meta-card">
+					<span class="meta-label">Module</span>
+					<span class="meta-value">Header Footer Builder</span>
+				</div>
+				<div class="meta-card">
+					<span class="meta-label">Post Type</span>
+					<span class="meta-value">apro_template</span>
+				</div>
+				<div class="meta-card">
+					<span class="meta-label">Namespace</span>
+					<span class="meta-value">AlternatePro\Elements</span>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<main class="wrap">
+		<nav class="toc" aria-label="สารบัญ">
+			<a href="#overview">ภาพรวม</a>
+			<a href="#theme">Theme Hooks</a>
+			<a href="#requirements">Requirements</a>
+			<a href="#structure">โครงสร้างไฟล์</a>
+			<a href="#cpt">CPT และ Meta</a>
+			<a href="#conditions">Conditions</a>
+			<a href="#override">Override</a>
+			<a href="#testing">Testing</a>
+		</nav>
+
+		<section class="section" id="overview">
+			<div class="section-head">
+				<h2>1. ภาพรวมโมดูล Header Footer Builder</h2>
+				<p>โมดูลนี้เพิ่มความสามารถให้ผู้ดูแลเว็บสร้าง Header และ Footer ด้วย Elementor Free ผ่าน template post type ของปลั๊กอินเอง</p>
+			</div>
+			<div class="section-body">
+				<div class="grid-3">
+					<div class="panel">
+						<h3>สร้าง Template</h3>
+						<p>ใช้ CPT <code>apro_template</code> สำหรับเก็บ Header/Footer templates และเปิดให้แก้ไขด้วย Elementor</p>
+					</div>
+					<div class="panel">
+						<h3>เลือก Template อัตโนมัติ</h3>
+						<p>ระบบเลือก template จาก page override, display conditions, ภาษา และ priority</p>
+					</div>
+					<div class="panel">
+						<h3>ทำงานกับ Theme Fallback</h3>
+						<p>ถ้าไม่มี custom template ที่ match โมดูลจะไม่ render อะไร เพื่อให้ fallback ของธีมทำงานตามเดิม</p>
+					</div>
+				</div>
+				<div class="badges">
+					<span class="badge">Elementor Free</span>
+					<span class="badge alt">No Elementor Pro Code</span>
+					<span class="badge info">WordPress Public APIs</span>
+					<span class="badge">Multilingual Ready</span>
+				</div>
+			</div>
+		</section>
+
+		<section class="section" id="goals">
+			<div class="section-head">
+				<h2>2. เป้าหมายของระบบ</h2>
+				<p>เป้าหมายหลักคือให้ทีมสร้างและควบคุม Header/Footer ได้จาก WordPress Admin โดยยังคงความเบา ปลอดภัย และยืดหยุ่น</p>
+			</div>
+			<div class="section-body">
+				<div class="grid-2">
+					<div class="panel">
+						<h3>Functional Goals</h3>
+						<ul class="clean-list">
+							<li>สร้าง Header และ Footer templates ได้</li>
+							<li>แก้ไข template ด้วย Elementor Free</li>
+							<li>รองรับ display conditions และ priority</li>
+							<li>รองรับ override ระดับ page/post</li>
+							<li>รองรับเว็บหลายภาษาแบบไม่บังคับติดตั้ง plugin เพิ่ม</li>
+						</ul>
+					</div>
+					<div class="panel">
+						<h3>Engineering Goals</h3>
+						<ul class="clean-list">
+							<li>แยกโมดูลใน <code>includes/modules/header-footer/</code></li>
+							<li>ใช้ metabox native ของ WordPress ก่อน</li>
+							<li>โหลด assets เฉพาะหน้าที่เกี่ยวข้อง</li>
+							<li>ไม่ fatal เมื่อ Elementor ไม่ active</li>
+							<li>เก็บ matched template cache ต่อ request</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="section" id="theme">
+			<div class="section-head">
+				<h2>3. ความสัมพันธ์กับ AlternatePro Theme</h2>
+				<p>โมดูล render เฉพาะ hook หลักของธีม และไม่แตะ output fallback หากไม่มี template ที่ match</p>
+			</div>
+			<div class="section-body">
+				<div class="table-wrap">
+					<table>
+						<thead>
+							<tr>
+								<th>Theme Hook</th>
+								<th>สถานะใช้งาน</th>
+								<th>บทบาท</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><code>alternatepro_before_header</code></td>
+								<td>ไม่ render</td>
+								<td>สงวนไว้สำหรับธีมหรือ extension อื่น</td>
+							</tr>
+							<tr>
+								<td><code>alternatepro_header</code></td>
+								<td>render header</td>
+								<td>แสดง custom Header template เมื่อมี match</td>
+							</tr>
+							<tr>
+								<td><code>alternatepro_after_header</code></td>
+								<td>ไม่ render</td>
+								<td>สงวนไว้สำหรับธีมหรือ extension อื่น</td>
+							</tr>
+							<tr>
+								<td><code>alternatepro_footer</code></td>
+								<td>render footer</td>
+								<td>แสดง custom Footer template เมื่อมี match</td>
+							</tr>
+							<tr>
+								<td><code>alternatepro_before_content</code>, <code>alternatepro_after_content</code></td>
+								<td>ไม่ render</td>
+								<td>อยู่นอก scope ของ Header/Footer module</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="callout" style="margin-top: 16px;">
+					<strong>หมายเหตุ:</strong> Page override ค่า <code>none</code> จะไม่ render custom template และมี filter ให้ธีมใช้ตรวจ suppress fallback ได้ แต่การซ่อน fallback จริงขึ้นกับการเชื่อมต่อในธีมด้วย
+				</div>
+			</div>
+		</section>
+
+		<section class="section" id="requirements">
+			<div class="section-head">
+				<h2>4. Elementor Requirements</h2>
+				<p>ใช้ requirements ของ Elementor เป็น compatibility baseline และต้อง fail gracefully หาก Elementor ไม่พร้อมใช้งาน</p>
+			</div>
+			<div class="section-body">
+				<div class="table-wrap">
+					<table>
+						<thead>
+							<tr>
+								<th>รายการ</th>
+								<th>ขั้นต่ำ</th>
+								<th>แนะนำ</th>
+								<th>พฤติกรรม</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>WordPress</td>
+								<td>6.5+</td>
+								<td>ล่าสุด</td>
+								<td>แสดง admin notice หากต่ำกว่าขั้นต่ำ</td>
+							</tr>
+							<tr>
+								<td>PHP</td>
+								<td>7.4+</td>
+								<td>8.2+</td>
+								<td>ไม่โหลด module หาก core requirements ไม่ผ่าน</td>
+							</tr>
+							<tr>
+								<td>Database</td>
+								<td>MySQL 5.6+ หรือ MariaDB 10.5+</td>
+								<td>ตาม hosting ที่รองรับ WordPress ล่าสุด</td>
+								<td>ไม่มี query เฉพาะ database vendor</td>
+							</tr>
+							<tr>
+								<td>WP Memory Limit</td>
+								<td>256MB</td>
+								<td>512MB</td>
+								<td>เลี่ยง query ซ้ำและไม่โหลด frontend assets ทุกหน้า</td>
+							</tr>
+							<tr>
+								<td>Elementor</td>
+								<td>Elementor Free</td>
+								<td>เวอร์ชันล่าสุด</td>
+								<td>ไม่ fatal หาก inactive และ render เฉพาะเมื่อ frontend API พร้อม</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</section>
+
+		<section class="section" id="browsers">
+			<div class="section-head">
+				<h2>5. Browser Support</h2>
+				<p>รองรับเบราว์เซอร์สมัยใหม่ตาม baseline ของ Elementor และไม่รองรับ Internet Explorer หรือ Legacy Edge</p>
+			</div>
+			<div class="section-body">
+				<div class="grid-2">
+					<div class="panel">
+						<h3>Supported</h3>
+						<ul class="checklist">
+							<li>Google Chrome 111+</li>
+							<li>Microsoft Edge 111+</li>
+							<li>Brave 111+</li>
+							<li>Firefox 111+</li>
+							<li>Safari 16.4+</li>
+						</ul>
+					</div>
+					<div class="panel">
+						<h3>Frontend Standards</h3>
+						<ul class="checklist">
+							<li>ใช้ HTML5, CSS3, CSS Variables, Flexbox และ basic CSS Grid</li>
+							<li>ใช้ Vanilla JavaScript ES6+</li>
+							<li>หลีกเลี่ยง CSS nesting, container queries และ <code>:has()</code></li>
+							<li>ไม่ใช้ Tailwind, Bootstrap, React หรือ Vue ในโมดูลนี้</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="section" id="structure">
+			<div class="section-head">
+				<h2>6. โครงสร้างไฟล์</h2>
+				<p>โครงสร้างของโมดูลแยกจาก core plugin และมี asset แยกสำหรับ admin/frontend</p>
+			</div>
+			<div class="section-body">
+				<pre>alternatepro-elements/
+|-- alternatepro-elements.php
+|-- uninstall.php
+|-- includes/
+|   |-- Autoloader.php
+|   |-- Plugin.php
+|   |-- Requirements.php
+|   |-- Modules.php
+|   |-- Helpers.php
+|   `-- modules/
+|       `-- header-footer/
+|           |-- Module.php
+|           |-- PostType.php
+|           |-- MetaBox.php
+|           |-- Conditions.php
+|           |-- Renderer.php
+|           |-- PageOverride.php
+|           |-- LanguageResolver.php
+|           |-- AdminColumns.php
+|           `-- Assets.php
+|-- assets/
+|   |-- css/
+|   |   |-- header-footer-admin.css
+|   |   `-- header-footer-frontend.css
+|   `-- js/
+|       |-- header-footer-admin.js
+|       `-- header-footer-frontend.js
+`-- plan.html</pre>
+			</div>
+		</section>
+
+		<section class="section" id="cpt">
+			<div class="section-head">
+				<h2>7. Custom Post Type: <code>apro_template</code></h2>
+				<p>CPT นี้เป็นที่เก็บ Elementor templates สำหรับ Header และ Footer โดยเปิด UI ใน admin แต่ไม่เปิดเป็น public content</p>
+			</div>
+			<div class="section-body">
+				<div class="table-wrap">
+					<table>
+						<thead>
+							<tr>
+								<th>Setting</th>
+								<th>Value</th>
+								<th>เหตุผล</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Public</td>
+								<td><code>false</code></td>
+								<td>Template ไม่ใช่หน้า public โดยตรง</td>
+							</tr>
+							<tr>
+								<td>Show UI/Menu</td>
+								<td><code>true</code></td>
+								<td>ให้ admin สร้างและจัดการ template ได้</td>
+							</tr>
+							<tr>
+								<td>Show in REST</td>
+								<td><code>true</code></td>
+								<td>รองรับ block/editor ecosystem และ Elementor compatibility</td>
+							</tr>
+							<tr>
+								<td>Supports</td>
+								<td><code>title</code>, <code>editor</code>, <code>elementor</code>, <code>revisions</code></td>
+								<td>แก้ไขด้วย Elementor และย้อน revision ได้</td>
+							</tr>
+							<tr>
+								<td>Menu Icon</td>
+								<td><code>dashicons-layout</code></td>
+								<td>สื่อความหมายว่าเป็น layout/template</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</section>
+
+		<section class="section" id="meta">
+			<div class="section-head">
+				<h2>8. Template Meta Fields</h2>
+				<p>Meta fields เป็นข้อมูลควบคุมการเลือก template และต้อง sanitize ทุกครั้งก่อนบันทึก</p>
+			</div>
+			<div class="section-body">
+				<div class="table-wrap">
+					<table>
+						<thead>
+							<tr>
+								<th>Meta Key</th>
+								<th>Type</th>
+								<th>Values</th>
+								<th>การใช้งาน</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><code>_apro_template_type</code></td>
+								<td>string</td>
+								<td><code>header</code>, <code>footer</code></td>
+								<td>ระบุว่า template render ที่ hook ใด</td>
+							</tr>
+							<tr>
+								<td><code>_apro_template_status</code></td>
+								<td>string</td>
+								<td><code>active</code>, <code>inactive</code></td>
+								<td>template ต้อง active จึงจะ render</td>
+							</tr>
+							<tr>
+								<td><code>_apro_template_priority</code></td>
+								<td>integer</td>
+								<td>0 ขึ้นไป</td>
+								<td>ใช้ตัดสินเมื่อ condition specificity เท่ากัน</td>
+							</tr>
+							<tr>
+								<td><code>_apro_display_conditions</code></td>
+								<td>JSON string</td>
+								<td>include/exclude rules</td>
+								<td>resolver แปลงเป็น array ต่อ request</td>
+							</tr>
+							<tr>
+								<td><code>_apro_language</code></td>
+								<td>string</td>
+								<td><code>all</code>, <code>th</code>, <code>en</code>, detected language</td>
+								<td>เลือก template ตามภาษาปัจจุบัน แล้ว fallback เป็น all</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</section>
+
+		<section class="section" id="conditions">
+			<div class="section-head">
+				<h2>9. Display Conditions</h2>
+				<p>Conditions ใช้เลือก template ตามบริบทของ request โดย exclude rules มี priority สูงกว่า include rules</p>
+			</div>
+			<div class="section-body">
+				<div class="grid-2">
+					<div class="panel">
+						<h3>Include Rules</h3>
+						<ul class="checklist">
+							<li>Entire Site</li>
+							<li>Front Page</li>
+							<li>All Pages และ Specific Pages</li>
+							<li>All Posts และ Specific Posts</li>
+							<li>Archives, Search Results, 404 Page</li>
+							<li>URL Path Starts With และ URL Path Contains</li>
+						</ul>
+					</div>
+					<div class="panel">
+						<h3>Exclude Rules</h3>
+						<ul class="checklist">
+							<li>Exclude Specific Pages</li>
+							<li>Exclude Specific Posts</li>
+							<li>ถ้า exclude match จะไม่ render template นั้นทันที</li>
+							<li>เหมาะสำหรับยกเว้น landing page หรือ post เฉพาะรายการ</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="section" id="override">
+			<div class="section-head">
+				<h2>10. Page-Level Override</h2>
+				<p>Posts และ Pages มี metabox ชื่อ AlternatePro Layout เพื่อกำหนด Header/Footer เฉพาะหน้า</p>
+			</div>
+			<div class="section-body">
+				<div class="table-wrap">
+					<table>
+						<thead>
+							<tr>
+								<th>Field</th>
+								<th>Values</th>
+								<th>Behavior</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Header Template</td>
+								<td><code>default</code>, <code>none</code>, template ID</td>
+								<td>Default ใช้ resolver, None ไม่ render custom header, ID render template นั้น</td>
+							</tr>
+							<tr>
+								<td>Footer Template</td>
+								<td><code>default</code>, <code>none</code>, template ID</td>
+								<td>Default ใช้ resolver, None ไม่ render custom footer, ID render template นั้น</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</section>
+
+		<section class="section" id="language">
+			<div class="section-head">
+				<h2>11. Multilingual Support</h2>
+				<p>ระบบรองรับ multilingual แบบ optional integration โดยไม่บังคับติดตั้ง plugin ภาษา</p>
+			</div>
+			<div class="section-body">
+				<ol class="timeline">
+					<li><strong>Polylang</strong>ตรวจ <code>pll_current_language()</code> และ language list จาก Polylang หากมี</li>
+					<li><strong>WPML</strong>ใช้ filter <code>wpml_current_language</code> และ <code>wpml_active_languages</code> เมื่อพร้อมใช้งาน</li>
+					<li><strong>TranslatePress</strong>อ่าน current language จาก function/global/settings เมื่อมี</li>
+					<li><strong>URL Prefix</strong>fallback จาก prefix เช่น <code>/th/</code>, <code>/en/</code>, <code>/jp/</code>, <code>/zh/</code></li>
+					<li><strong>All Languages</strong>ถ้าไม่พบภาษา ใช้ <code>all</code> เป็นค่า fallback</li>
+				</ol>
+			</div>
+		</section>
+
+		<section class="section" id="rendering">
+			<div class="section-head">
+				<h2>12. Rendering Flow</h2>
+				<p>Renderer ทำงานผ่าน hook ของธีมและเรียก Elementor frontend API เฉพาะเมื่อมี template ที่ใช้งานได้</p>
+			</div>
+			<div class="section-body">
+				<div class="grid-2">
+					<div class="panel">
+						<h3>Priority Flow</h3>
+						<ul class="flow" aria-label="Priority flow">
+							<li>Page Override</li>
+							<li>Display Conditions</li>
+							<li>Default Site Template</li>
+							<li>Theme Fallback</li>
+						</ul>
+					</div>
+					<div class="panel">
+						<h3>Elementor Rendering</h3>
+						<ul class="clean-list">
+							<li>ตรวจ <code>\Elementor\Plugin::$instance->frontend</code> ก่อน render</li>
+							<li>ใช้ <code>get_builder_content_for_display( $template_id, true )</code></li>
+							<li>ไม่ double escape Elementor HTML output</li>
+							<li>ป้องกัน duplicate rendering ต่อ type ใน request เดียวกัน</li>
+							<li>enqueue frontend assets เฉพาะเมื่อ render สำเร็จ</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="section" id="priority">
+			<div class="section-head">
+				<h2>13. Priority Logic</h2>
+				<p>การเลือก template ต้องคาดเดาได้และไม่ทำ query ซ้ำโดยไม่จำเป็น</p>
+			</div>
+			<div class="section-body">
+				<div class="table-wrap">
+					<table>
+						<thead>
+							<tr>
+								<th>ลำดับ</th>
+								<th>กฎ</th>
+								<th>ผลลัพธ์</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>1</td>
+								<td>Page override เป็น template ID</td>
+								<td>render template ID นั้น ถ้า active และ type ถูกต้อง</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>Page override เป็น <code>none</code></td>
+								<td>ไม่ render custom template และแจ้ง hook/filter สำหรับ theme fallback suppression</td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>Language-specific template match</td>
+								<td>เลือกภาษาปัจจุบันก่อน <code>all</code></td>
+							</tr>
+							<tr>
+								<td>4</td>
+								<td>Exclude condition match</td>
+								<td>ตัด template นั้นออกทันที</td>
+							</tr>
+							<tr>
+								<td>5</td>
+								<td>Specific condition match</td>
+								<td>specific pages/posts ชนะ broad rules</td>
+							</tr>
+							<tr>
+								<td>6</td>
+								<td>Priority number สูงกว่า</td>
+								<td>ชนะเมื่อ specificity เท่ากัน</td>
+							</tr>
+							<tr>
+								<td>7</td>
+								<td>ไม่มี match</td>
+								<td>ไม่ render และปล่อย theme fallback</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</section>
+
+		<section class="section" id="security">
+			<div class="section-head">
+				<h2>14. Security Checklist</h2>
+				<p>ทุก input จาก admin ต้อง sanitize และทุก output ใน admin ต้อง escape</p>
+			</div>
+			<div class="section-body">
+				<div class="grid-2">
+					<div class="panel">
+						<h3>Input</h3>
+						<ul class="checklist">
+							<li>ใช้ <code>wp_nonce_field()</code> ใน metabox</li>
+							<li>ตรวจ <code>check_admin_referer()</code> ตอน save</li>
+							<li>ตรวจ <code>current_user_can( 'edit_post' )</code></li>
+							<li>sanitize ด้วย <code>sanitize_text_field()</code>, <code>sanitize_key()</code>, <code>absint()</code></li>
+						</ul>
+					</div>
+					<div class="panel">
+						<h3>Output</h3>
+						<ul class="checklist">
+							<li>escape admin output ด้วย <code>esc_html()</code>, <code>esc_attr()</code>, <code>esc_textarea()</code></li>
+							<li>ไม่ใช้ <code>eval()</code></li>
+							<li>ไม่เปิด arbitrary PHP execution</li>
+							<li>Elementor HTML output ไม่ double escape แต่ต้อง render เฉพาะ template ID ที่ตรวจแล้ว</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="section" id="performance">
+			<div class="section-head">
+				<h2>15. Performance Checklist</h2>
+				<p>โมดูลต้องเบาและไม่เพิ่มงานให้ทุก frontend request โดยไม่จำเป็น</p>
+			</div>
+			<div class="section-body">
+				<ul class="checklist">
+					<li>cache matched template ID ต่อ request</li>
+					<li>query เฉพาะ active templates ตาม type</li>
+					<li>ใช้ <code>fields => ids</code> และ <code>no_found_rows => true</code></li>
+					<li>โหลด Elementor frontend rendering เฉพาะเมื่อมี template ID</li>
+					<li>enqueue frontend CSS/JS เฉพาะเมื่อมีการ render template</li>
+					<li>ป้องกัน duplicate render ต่อ header/footer ใน request เดียว</li>
+				</ul>
+			</div>
+		</section>
+
+		<section class="section" id="testing">
+			<div class="section-head">
+				<h2>16. Testing Checklist</h2>
+				<p>รายการทดสอบหลักก่อนถือว่าโมดูลพร้อมใช้งานจริง</p>
+			</div>
+			<div class="section-body">
+				<div class="grid-3">
+					<div class="panel">
+						<h3>Activation</h3>
+						<ul class="checklist">
+							<li>Module loads without fatal error</li>
+							<li>Elementor missing does not fatal error</li>
+							<li>Admin notice appears if Elementor missing</li>
+						</ul>
+					</div>
+					<div class="panel">
+						<h3>CPT</h3>
+						<ul class="checklist">
+							<li><code>apro_template</code> appears in admin</li>
+							<li>Header template can be created</li>
+							<li>Footer template can be created</li>
+							<li>Elementor editor opens for template</li>
+						</ul>
+					</div>
+					<div class="panel">
+						<h3>Rendering</h3>
+						<ul class="checklist">
+							<li>Header renders on <code>alternatepro_header</code></li>
+							<li>Footer renders on <code>alternatepro_footer</code></li>
+							<li>Theme fallback works if no template exists</li>
+							<li>Duplicate rendering does not happen</li>
+						</ul>
+					</div>
+					<div class="panel">
+						<h3>Conditions</h3>
+						<ul class="checklist">
+							<li>Entire Site</li>
+							<li>Front Page</li>
+							<li>Specific Pages</li>
+							<li>URL Path Starts With</li>
+							<li>Exclude Pages</li>
+							<li>Priority sorting</li>
+						</ul>
+					</div>
+					<div class="panel">
+						<h3>Page Override</h3>
+						<ul class="checklist">
+							<li>Default</li>
+							<li>None</li>
+							<li>Specific Header</li>
+							<li>Specific Footer</li>
+						</ul>
+					</div>
+					<div class="panel">
+						<h3>Multilingual</h3>
+						<ul class="checklist">
+							<li>All Languages fallback</li>
+							<li>Thai URL prefix</li>
+							<li>English URL prefix</li>
+							<li>Language-specific template</li>
+							<li>Fallback to all</li>
+						</ul>
+					</div>
+					<div class="panel">
+						<h3>Browsers</h3>
+						<ul class="checklist">
+							<li>Chrome 111+</li>
+							<li>Edge 111+</li>
+							<li>Brave 111+</li>
+							<li>Firefox 111+</li>
+							<li>Safari 16.4+</li>
+						</ul>
+					</div>
+					<div class="panel">
+						<h3>Quality</h3>
+						<ul class="checklist">
+							<li>PHP error log</li>
+							<li>Console errors</li>
+							<li>Accessibility keyboard navigation</li>
+							<li>Mobile responsive</li>
+							<li>Performance</li>
+						</ul>
+					</div>
+					<div class="panel">
+						<h3>Assets</h3>
+						<ul class="checklist">
+							<li>Admin assets load only on template/page/post edit screens</li>
+							<li>Frontend assets load only when template renders</li>
+							<li>No duplicate CSS or JS</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="section" id="roadmap">
+			<div class="section-head">
+				<h2>17. Future Roadmap</h2>
+				<p>หลังจากโมดูล Header/Footer พร้อมใช้งาน สามารถต่อยอดไปยัง Theme Builder ส่วนอื่นได้</p>
+			</div>
+			<div class="section-body">
+				<div class="table-wrap">
+					<table>
+						<thead>
+							<tr>
+								<th>Roadmap</th>
+								<th>เป้าหมาย</th>
+								<th>ข้อควรระวัง</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Archive Builder</td>
+								<td>สร้าง template สำหรับ archive pages</td>
+								<td>ต้องเพิ่ม condition เฉพาะ taxonomy/CPT</td>
+							</tr>
+							<tr>
+								<td>Single Builder</td>
+								<td>ควบคุม layout ของ single post/page/CPT</td>
+								<td>ต้องมี precedence ชัดเจนกับ page override</td>
+							</tr>
+							<tr>
+								<td>Search Builder</td>
+								<td>สร้าง template สำหรับ search results</td>
+								<td>เริ่มจาก condition ที่มีอยู่แล้ว</td>
+							</tr>
+							<tr>
+								<td>404 Builder</td>
+								<td>สร้างหน้า 404 ด้วย Elementor Free</td>
+								<td>ต้อง fallback ปลอดภัยถ้า Elementor ไม่พร้อม</td>
+							</tr>
+							<tr>
+								<td>Dynamic Tags</td>
+								<td>เพิ่ม dynamic data สำหรับ site/post/user</td>
+								<td>ใช้ Elementor public APIs เท่านั้น</td>
+							</tr>
+							<tr>
+								<td>WooCommerce Builder</td>
+								<td>รองรับ shop/product templates</td>
+								<td>โหลดเฉพาะเมื่อ WooCommerce active</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<footer class="footer">
+		<div class="footer-inner">
+			<span>AlternatePro Elements | Header Footer Builder Module</span>
+			<span>Version 1.0.0</span>
+		</div>
+	</footer>
+</body>
+</html>

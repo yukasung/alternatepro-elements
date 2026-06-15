@@ -1,0 +1,61 @@
+# Composer
+/vendor/
+
+# Node
+/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build Files
+/dist/
+/build/
+
+# Logs
+*.log
+
+# macOS
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+
+# PHPUnit
+/phpunit.xml
+.phpunit.result.cache
+
+# Coverage
+/coverage/
+
+# Environment
+.env
+.env.local
+.env.*
+
+# Temporary Files
+*.tmp
+*.temp
+
+# OS Files
+Thumbs.db
+
+# WordPress
+wp-config.php
+
+# Composer Lock
+# Do not ignore composer.lock. Plugin projects should commit it when Composer is used.
+
+# Documentation Notes
+# Do not ignore:
+# - docs/
+# - README.md
+# - CHANGELOG.md
+
+# Plugin Source
+# Do not ignore:
+# - alternatepro-elements.php
+# - includes/
+# - assets/
+# - languages/
+# - uninstall.php
