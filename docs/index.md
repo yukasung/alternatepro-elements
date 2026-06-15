@@ -49,6 +49,7 @@ Use this workflow after completing implementation, bug fix, refactor, or feature
 ## Agent Workflows
 
 - [Code Review Agent](agents/review.md)
+- [Refactor Agent](agents/refactor.md)
 - [Security Audit Agent](agents/security.md)
 - [Testing Agent](agents/test.md)
 

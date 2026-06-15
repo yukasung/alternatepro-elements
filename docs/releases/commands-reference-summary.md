@@ -23,7 +23,7 @@ Date: 2026-06-15
 
 - `prompts/commands.md` is a developer cheat sheet only.
 - Commands are intentionally short and copy-paste friendly.
-- The Refactor Code command references `docs/agents/refactor.md`, which has not been created yet.
+- The Refactor Code command references the created `docs/agents/refactor.md` workflow.
 
 ## Validation Results
 

@@ -184,6 +184,7 @@ Phase 2 - Elementor Integration
 - 2026-06-15: Created Security Audit Agent workflow for post-testing security reviews.
 - 2026-06-15: Created Done Workflow for task completion review, testing, security, documentation, and summary steps.
 - 2026-06-15: Created Codex command reference for developer workflow prompts.
+- 2026-06-15: Created Refactor Agent workflow for controlled maintainability and architecture improvements.
 
 ## Status Rules
 

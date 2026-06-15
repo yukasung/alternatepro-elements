@@ -21,6 +21,7 @@ The format is based on Keep a Changelog.
 * Security Audit Agent workflow for post-testing security reviews.
 * Done Workflow for task completion review, testing, security, documentation, and summary steps.
 * Codex command reference for developer workflow prompts.
+* Refactor Agent workflow for controlled maintainability and architecture improvements.
 
 ### Changed
 

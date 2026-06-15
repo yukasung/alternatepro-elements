@@ -22,6 +22,7 @@ No release has been prepared yet. v1.0 release criteria are currently defined in
 - [EditorConfig Setup Summary](editorconfig-setup-summary.md)
 - [PHPCS Setup Summary](phpcs-setup-summary.md)
 - [Pre-Development Audit Fixes](pre-development-audit-fixes.md)
+- [Refactor Agent Summary](refactor-agent-summary.md)
 - [Review Agent Summary](review-agent-summary.md)
 - [Security Agent Summary](security-agent-summary.md)
 - [Test Agent Summary](test-agent-summary.md)
