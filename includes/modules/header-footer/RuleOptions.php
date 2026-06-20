@@ -278,49 +278,6 @@ final class RuleOptions {
 	}
 
 	/**
-	 * Return user role rule groups.
-	 *
-	 * @return array<string,array{label:string,value:array<string,string>}>
-	 */
-	public static function user_role_groups() {
-		$groups = array(
-			'basic'    => array(
-				'label' => __( 'Basic', 'alternatepro-elements' ),
-				'value' => array(
-					'all'        => __( 'All', 'alternatepro-elements' ),
-					'logged-in'  => __( 'Logged In', 'alternatepro-elements' ),
-					'logged-out' => __( 'Logged Out', 'alternatepro-elements' ),
-				),
-			),
-			'advanced' => array(
-				'label' => __( 'Advanced', 'alternatepro-elements' ),
-				'value' => array(),
-			),
-		);
-
-		foreach ( get_editable_roles() as $slug => $data ) {
-			$groups['advanced']['value'][ sanitize_key( $slug ) ] = isset( $data['name'] ) ? translate_user_role( $data['name'] ) : $slug;
-		}
-
-		return $groups;
-	}
-
-	/**
-	 * Return flat user role options.
-	 *
-	 * @return array<string,string>
-	 */
-	public static function user_role_options() {
-		$options = array();
-
-		foreach ( self::user_role_groups() as $group ) {
-			$options = array_merge( $options, $group['value'] );
-		}
-
-		return $options;
-	}
-
-	/**
 	 * Return a default display rule.
 	 *
 	 * @return array<int,array<string,string>>
@@ -456,47 +413,6 @@ final class RuleOptions {
 	}
 
 	/**
-	 * Sanitize posted user role rules.
-	 *
-	 * @param mixed $raw Raw input.
-	 * @return string[]
-	 */
-	public static function sanitize_user_roles( $raw ) {
-		if ( ! is_array( $raw ) ) {
-			return array();
-		}
-
-		$allowed = self::user_role_options();
-		$clean   = array();
-
-		foreach ( $raw as $role ) {
-			$role = sanitize_key( $role );
-
-			if ( '' === $role || ! isset( $allowed[ $role ] ) ) {
-				continue;
-			}
-
-			$clean[] = $role;
-		}
-
-		return array_values( array_unique( $clean ) );
-	}
-
-	/**
-	 * Decode stored user roles.
-	 *
-	 * @param mixed $raw Raw value.
-	 * @return string[]
-	 */
-	public static function decode_user_roles( $raw ) {
-		if ( ! is_array( $raw ) ) {
-			return array();
-		}
-
-		return self::sanitize_user_roles( $raw );
-	}
-
-	/**
 	 * Return a public condition label.
 	 *
 	 * @param string $type Rule type.
@@ -507,19 +423,6 @@ final class RuleOptions {
 		$options = self::location_options();
 
 		return isset( $options[ $type ] ) ? $options[ $type ] : $type;
-	}
-
-	/**
-	 * Return a public user role label.
-	 *
-	 * @param string $role User role rule.
-	 * @return string
-	 */
-	public static function user_role_label( $role ) {
-		$role    = sanitize_key( $role );
-		$options = self::user_role_options();
-
-		return isset( $options[ $role ] ) ? $options[ $role ] : $role;
 	}
 
 	/**

@@ -178,10 +178,6 @@ final class Conditions {
 		$best_timestamp = -1;
 
 		foreach ( $template_ids as $template_id ) {
-			if ( ! $this->user_rules_match( get_post_meta( $template_id, Module::USER_ROLES_META, true ) ) ) {
-				continue;
-			}
-
 			$conditions = self::decode_conditions( get_post_meta( $template_id, Module::CONDITIONS_META, true ) );
 			$score      = $this->match_score( $conditions );
 
@@ -414,51 +410,6 @@ final class Conditions {
 				if ( $term_id > 0 && '' !== $taxonomy && has_term( $term_id, $taxonomy, $current_id ) ) {
 					return true;
 				}
-			}
-		}
-
-		return false;
-	}
-
-	/**
-	 * Check stored user role display rules.
-	 *
-	 * @param mixed $rules Stored user role rules.
-	 * @return bool
-	 */
-	private function user_rules_match( $rules ) {
-		$rules = RuleOptions::decode_user_roles( $rules );
-
-		if ( empty( $rules ) ) {
-			return true;
-		}
-
-		foreach ( $rules as $rule ) {
-			switch ( $rule ) {
-				case 'all':
-					return true;
-
-				case 'logged-in':
-					if ( is_user_logged_in() ) {
-						return true;
-					}
-					break;
-
-				case 'logged-out':
-					if ( ! is_user_logged_in() ) {
-						return true;
-					}
-					break;
-
-				default:
-					if ( is_user_logged_in() ) {
-						$user = wp_get_current_user();
-
-						if ( isset( $user->roles ) && is_array( $user->roles ) && in_array( $rule, $user->roles, true ) ) {
-							return true;
-						}
-					}
-					break;
 			}
 		}
 

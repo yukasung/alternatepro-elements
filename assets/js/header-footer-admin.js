@@ -524,65 +524,8 @@
 		}
 	}
 
-	function updateUserRoleRemoveButtons(builder) {
-		var rules = builder.querySelectorAll(".apro-hfb-user-role-rule");
-		var showRemove = rules.length > 1;
-
-		rules.forEach(function (rule) {
-			var button = rule.querySelector(".apro-hfb-remove-user-rule");
-
-			if (button) {
-				button.classList.toggle("apro-is-hidden", !showRemove);
-			}
-		});
-	}
-
-	function addUserRoleRule(builder) {
-		var list = builder.querySelector(".apro-hfb-user-role-list");
-		var firstRule = builder.querySelector(".apro-hfb-user-role-rule");
-		var rule = firstRule ? firstRule.cloneNode(true) : null;
-		var select = rule ? rule.querySelector(".apro-hfb-user-role-select") : null;
-
-		if (!list || !rule) {
-			return;
-		}
-
-		if (select) {
-			select.value = "";
-		}
-
-		list.appendChild(rule);
-		updateUserRoleRemoveButtons(builder);
-	}
-
-	function initUserRoleBuilder(builder) {
-		updateUserRoleRemoveButtons(builder);
-
-		builder.addEventListener("click", function (event) {
-			var addButton = event.target.closest(".apro-hfb-add-user-rule");
-			var removeButton = event.target.closest(".apro-hfb-remove-user-rule");
-
-			if (addButton) {
-				event.preventDefault();
-				addUserRoleRule(builder);
-				return;
-			}
-
-			if (removeButton) {
-				event.preventDefault();
-
-				if (builder.querySelectorAll(".apro-hfb-user-role-rule").length > 1) {
-					removeButton.closest(".apro-hfb-user-role-rule").remove();
-				}
-
-				updateUserRoleRemoveButtons(builder);
-			}
-		});
-	}
-
 	function init() {
 		document.querySelectorAll(".apro-hfb-rule-builder--locations").forEach(initLocationBuilder);
-		document.querySelectorAll(".apro-hfb-user-role-builder").forEach(initUserRoleBuilder);
 
 		document.addEventListener("click", function (event) {
 			if (event.target.closest(".apro-hfb-show-exclusions")) {

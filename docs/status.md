@@ -129,9 +129,9 @@ Establish the plugin foundation so modules can load safely, requirements can fai
 - Display Conditions layout validation passed 6 of 6 desktop browser checks for row order, label/control columns, condition card placement, and Elementor edit button availability.
 - Forced the Header/Footer template settings metabox into the main editor column even when a user account previously saved it in the sidebar.
 - Forced-position validation passed 6 of 6 browser checks and confirmed the metabox renders in `normal-sortables`.
-- Implemented a UAE-style Header/Footer display rule builder with `Display On`, `Do Not Display On`, and `User Roles` rows.
-- Added shared Header/Footer rule helpers for grouped rule options, sanitization, user role rules, and legacy condition compatibility.
-- Header/Footer condition evaluation now supports Blog Page, All Categories, Specific Category, UAE-style specific target tokens, exclusion rows, and user role rules.
+- Implemented a UAE-style Header/Footer display rule builder with `Display On` and `Do Not Display On` rows.
+- Added shared Header/Footer rule helpers for grouped rule options, sanitization, and legacy condition compatibility.
+- Header/Footer condition evaluation now supports Blog Page, All Categories, Specific Category, UAE-style specific target tokens, and exclusion rows.
 - Header/Footer Display On combobox options now follow UAE-style grouping for Basic, Special Pages, public post types, public taxonomies, and Specific Target.
 - Header/Footer condition evaluation now supports UAE-style All Singulars, Date Archive, Author Archive, post type archive, and taxonomy archive rules.
 - Static validation for the UAE-style rule builder passed: `composer lint`, `composer phpcs`, `node --check assets/js/header-footer-admin.js`, and `git diff --check`.
@@ -148,6 +148,11 @@ Establish the plugin foundation so modules can load safely, requirements can fai
 - Removed link-style underlines from Header/Footer `Display On` target search results and added UAE-style indentation below group labels.
 - Fixed Header/Footer `Display On` target search ordering so Posts and Pages are searched first, matching UAE behavior and preventing Pages from being dropped by a global result cap.
 - Header/Footer `Display On` target search now includes draft Posts and Pages for users with the corresponding edit permissions.
+- Removed Header/Footer template User Roles targeting from the settings UI, matching code, helper code, JavaScript, CSS, and legacy database metadata with schema version `4`.
+- Header/Footer User Roles removal code review passed with no required fixes.
+- Header/Footer User Roles removal testing passed with minor issues limited to unavailable browser/runtime validation while the local WordPress database is unavailable.
+- Header/Footer User Roles removal security review passed with no required fixes.
+- Header/Footer User Roles removal refactor review completed with no refactor needed.
 - Browser validation for the new UAE-style rule builder remains pending.
 - Runtime baseline observed during admin validation: WordPress 7.0 and Elementor Free 4.1.3.
 - Temporary validation user `codex_admin` was deleted after browser testing.
@@ -194,9 +199,10 @@ Phase 2 - Elementor Integration
 ## Current Implementation Issues
 
 - Exact minimum supported WordPress and Elementor Free versions remain pending decisions.
-- Header/Footer rule builder review still requires an explicit decision for User Roles scope documentation.
+- Header/Footer User Roles scope decision is resolved: User Roles targeting was removed from v1.0.
 - Runtime verification for the schema `3` empty condition migration is pending until WordPress database connectivity is available again.
-- Browser validation for the newly implemented UAE-style Header/Footer rule builder remains pending.
+- Runtime verification for the schema `4` User Roles metadata cleanup is pending until WordPress database connectivity is available again.
+- Browser validation for the newly implemented UAE-style Header/Footer rule builder, including absence of User Roles controls, remains pending.
 
 ## Pending Decisions
 
@@ -263,7 +269,7 @@ Phase 2 - Elementor Integration
 - 2026-06-15: Fixed Header/Footer template metabox interactivity and verified metabox controls with 8 of 8 browser checks passing.
 - 2026-06-15: Moved Header/Footer template display conditions to a UAE-style Display On row and verified the layout with 6 of 6 browser checks passing.
 - 2026-06-15: Forced the Header/Footer template settings metabox into the main editor column and verified the position with 6 of 6 browser checks passing.
-- 2026-06-15: Implemented UAE-style Header/Footer display rule builder rows for Display On, Do Not Display On, and User Roles with shared rule sanitization and condition evaluation support.
+- 2026-06-15: Implemented UAE-style Header/Footer display rule builder rows for Display On and Do Not Display On with shared rule sanitization and condition evaluation support.
 - 2026-06-15: Created Header/Footer rule builder code review report with PASS WITH MINOR FIXES verdict.
 - 2026-06-20: Removed Header/Footer template Language setting from UI, code, registered meta, and local database metadata.
 - 2026-06-20: Implemented schema `3` migration to backfill active Header/Footer templates with empty display conditions to `Entire Site`.
@@ -273,6 +279,8 @@ Phase 2 - Elementor Integration
 - 2026-06-20: Removed link-style underlines from Header/Footer Display On target search results and added UAE-style result indentation.
 - 2026-06-20: Fixed Header/Footer Display On target search ordering so Posts and Pages are searched first and Pages are not dropped by the global result cap.
 - 2026-06-20: Updated Header/Footer Display On target search to include draft Posts and Pages for users with edit permissions.
+- 2026-06-20: Removed Header/Footer User Roles targeting from v1.0 scope and added schema `4` cleanup for legacy `_apro_user_roles` metadata.
+- 2026-06-20: Completed Header/Footer User Roles removal review, testing, security, refactor, and dashboard documentation updates.
 
 ## Status Rules
 

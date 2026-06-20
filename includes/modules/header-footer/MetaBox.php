@@ -87,7 +87,6 @@ final class MetaBox {
 		$status     = get_post_meta( $post->ID, Module::STATUS_META, true );
 		$priority   = get_post_meta( $post->ID, Module::PRIORITY_META, true );
 		$conditions = Conditions::decode_conditions( get_post_meta( $post->ID, Module::CONDITIONS_META, true ) );
-		$user_roles = RuleOptions::decode_user_roles( get_post_meta( $post->ID, Module::USER_ROLES_META, true ) );
 
 		if ( '' === $type ) {
 			$type = 'header';
@@ -149,16 +148,6 @@ final class MetaBox {
 				</div>
 				<div class="apro-hfb-option-control">
 					<?php $this->render_location_rule_builder( 'apro_exclusion_rules', $exclude_rules, 'exclude', __( 'Add Exclusion Rule', 'alternatepro-elements' ), false ); ?>
-				</div>
-			</div>
-
-			<div class="apro-hfb-option-row apro-hfb-option-row--user-roles">
-				<div class="apro-hfb-option-label">
-					<label><?php esc_html_e( 'User Roles', 'alternatepro-elements' ); ?></label>
-					<span class="dashicons dashicons-editor-help" title="<?php esc_attr_e( 'Display this template based on visitor login state or role.', 'alternatepro-elements' ); ?>"></span>
-				</div>
-				<div class="apro-hfb-option-control">
-					<?php $this->render_user_role_builder( $user_roles ); ?>
 				</div>
 			</div>
 
@@ -283,60 +272,6 @@ final class MetaBox {
 	}
 
 	/**
-	 * Render the user role builder.
-	 *
-	 * @param string[] $user_roles User role rules.
-	 * @return void
-	 */
-	private function render_user_role_builder( array $user_roles ) {
-		if ( empty( $user_roles ) ) {
-			$user_roles = array( '' );
-		}
-		?>
-		<div class="apro-hfb-user-role-builder" data-name-prefix="apro_user_roles">
-			<div class="apro-hfb-user-role-list">
-				<?php foreach ( $user_roles as $index => $role ) : ?>
-					<?php $this->render_user_role_rule( $role, absint( $index ) ); ?>
-				<?php endforeach; ?>
-			</div>
-
-			<div class="apro-hfb-rule-actions">
-				<button type="button" class="button apro-hfb-add-user-rule"><?php esc_html_e( 'Add User Rule', 'alternatepro-elements' ); ?></button>
-			</div>
-		</div>
-		<?php
-	}
-
-	/**
-	 * Render one user role rule row.
-	 *
-	 * @param string $role User role rule.
-	 * @param int    $index Rule index.
-	 * @return void
-	 */
-	private function render_user_role_rule( $role, $index ) {
-		$role = sanitize_key( $role );
-		?>
-		<div class="apro-hfb-user-role-rule" data-rule-index="<?php echo esc_attr( absint( $index ) ); ?>">
-			<button type="button" class="button-link apro-hfb-remove-user-rule" aria-label="<?php esc_attr_e( 'Remove user rule', 'alternatepro-elements' ); ?>">
-				<span class="dashicons dashicons-dismiss"></span>
-			</button>
-
-			<select name="apro_user_roles[]" class="apro-hfb-user-role-select">
-				<option value=""><?php esc_html_e( 'Select', 'alternatepro-elements' ); ?></option>
-				<?php foreach ( RuleOptions::user_role_groups() as $group ) : ?>
-					<optgroup label="<?php echo esc_attr( $group['label'] ); ?>">
-						<?php foreach ( $group['value'] as $value_key => $label ) : ?>
-							<option value="<?php echo esc_attr( $value_key ); ?>" <?php selected( $role, $value_key ); ?>><?php echo esc_html( $label ); ?></option>
-						<?php endforeach; ?>
-					</optgroup>
-				<?php endforeach; ?>
-			</select>
-		</div>
-		<?php
-	}
-
-	/**
 	 * Save metabox data.
 	 *
 	 * @param int $post_id Post ID.
@@ -371,7 +306,6 @@ final class MetaBox {
 
 		$display_rules = isset( $_POST['apro_display_rules'] ) ? RuleOptions::sanitize_location_rules( wp_unslash( $_POST['apro_display_rules'] ), 'include' ) : array();
 		$exclude_rules = isset( $_POST['apro_exclusion_rules'] ) ? RuleOptions::sanitize_location_rules( wp_unslash( $_POST['apro_exclusion_rules'] ), 'exclude' ) : array();
-		$user_roles    = isset( $_POST['apro_user_roles'] ) ? RuleOptions::sanitize_user_roles( wp_unslash( $_POST['apro_user_roles'] ) ) : array();
 		$conditions    = array_merge( $display_rules, $exclude_rules );
 
 		if ( empty( $conditions ) && isset( $_POST['apro_conditions'] ) ) {
@@ -381,8 +315,8 @@ final class MetaBox {
 		update_post_meta( $post_id, Module::TYPE_META, $type );
 		update_post_meta( $post_id, Module::STATUS_META, $status );
 		update_post_meta( $post_id, Module::PRIORITY_META, $priority );
-		update_post_meta( $post_id, Module::USER_ROLES_META, $user_roles );
 		update_post_meta( $post_id, Module::CONDITIONS_META, wp_json_encode( $conditions ) );
+		delete_post_meta( $post_id, '_apro_user_roles' );
 		delete_post_meta( $post_id, '_apro_language' );
 	}
 }

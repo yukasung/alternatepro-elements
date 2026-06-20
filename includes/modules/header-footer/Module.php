@@ -18,7 +18,6 @@ final class Module {
 	public const STATUS_META     = '_apro_template_status';
 	public const PRIORITY_META   = '_apro_template_priority';
 	public const CONDITIONS_META = '_apro_display_conditions';
-	public const USER_ROLES_META = '_apro_user_roles';
 
 	public const PAGE_HEADER_META = '_apro_page_header_template';
 	public const PAGE_FOOTER_META = '_apro_page_footer_template';

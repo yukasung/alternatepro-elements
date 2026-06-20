@@ -26,6 +26,7 @@ No release has been prepared yet. v1.0 release criteria are currently defined in
 - [Header/Footer Language Removal Summary](header-footer-language-removal-summary.md)
 - [Header/Footer Target Search Summary](header-footer-target-search-summary.md)
 - [Header/Footer UAE Display Options Summary](header-footer-uae-display-options-summary.md)
+- [Header/Footer User Roles Removal Summary](header-footer-user-roles-removal-summary.md)
 - [PHPCS Setup Summary](phpcs-setup-summary.md)
 - [Phase Documents Summary](phase-documents-summary.md)
 - [Phase 1 Progress](phase-01-progress.md)

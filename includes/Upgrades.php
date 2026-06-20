@@ -46,6 +46,10 @@ final class Upgrades {
 			self::backfill_empty_header_footer_conditions();
 		}
 
+		if ( version_compare( $stored, '4', '<' ) ) {
+			self::delete_header_footer_user_roles_meta();
+		}
+
 		update_option( self::SCHEMA_OPTION, APRO_ELEMENTS_SCHEMA_VERSION, false );
 	}
 
@@ -56,6 +60,15 @@ final class Upgrades {
 	 */
 	public static function delete_header_footer_language_meta() {
 		delete_post_meta_by_key( '_apro_language' );
+	}
+
+	/**
+	 * Remove deferred Header/Footer template user role targeting meta.
+	 *
+	 * @return void
+	 */
+	public static function delete_header_footer_user_roles_meta() {
+		delete_post_meta_by_key( '_apro_user_roles' );
 	}
 
 	/**

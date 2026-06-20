@@ -31,6 +31,7 @@ final class Activation {
 
 		Upgrades::delete_header_footer_language_meta();
 		Upgrades::backfill_empty_header_footer_conditions();
+		Upgrades::delete_header_footer_user_roles_meta();
 
 		update_option( Upgrades::SCHEMA_OPTION, APRO_ELEMENTS_SCHEMA_VERSION, false );
 

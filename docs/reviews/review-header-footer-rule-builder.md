@@ -8,7 +8,7 @@ Reviewed the latest UAE-style Header/Footer rule builder implementation against 
 
 The implementation is directionally solid: shared rule option and sanitization logic was extracted into `RuleOptions`, admin save logic uses nonce and capability checks, output is escaped, Elementor Pro APIs are not used, and PHPCS passes.
 
-The review found minor but important completion risks around backward compatibility, UAE-style target search behavior, and scope documentation for User Roles.
+The review found minor but important completion risks around backward compatibility, UAE-style target search behavior, and the original User Roles scope expansion.
 
 ## Files Reviewed
 
@@ -77,7 +77,7 @@ Impact:
 - The original mismatch is resolved in code.
 - Browser validation should now confirm searching pages, posts, and categories, grouped result headings, selecting a result, removing a selected chip, saving, and reloading values.
 
-### 3. User Roles rules are implemented but not clearly included in the v1.0 condition scope
+### 3. User Roles rules were implemented but not clearly included in the v1.0 condition scope
 
 Severity: Low
 
@@ -93,24 +93,25 @@ Location:
 - `docs/planning/architecture.md:985`
 - `docs/planning/architecture.md:117`
 
-The builder now supports `User Roles`, including all visitors, logged-in users, logged-out users, and editable WordPress roles. This matches the UAE-style Header/Footer UI, but the v1.0 condition definitions do not list User Roles, and the architecture excludes a Role Manager from v1.0.
+The builder previously supported `User Roles`, including all visitors, logged-in users, logged-out users, and editable WordPress roles. This matched part of the UAE-style Header/Footer UI, but the v1.0 condition definitions did not list User Roles, and the architecture excludes a Role Manager from v1.0.
+
+Resolution status: fixed in code on 2026-06-20 by removing Header/Footer User Roles targeting from the settings UI, save flow, condition matching, helper code, JavaScript, CSS, and legacy database metadata with schema `4`.
 
 Impact:
 
-- The implementation may be perceived as scope expansion unless documented as Header/Footer-specific display targeting.
-- Testing requirements for User Roles are not clearly defined in the v1.0 planning docs.
-- Future contributors may not know whether to maintain, expand, or defer this behavior.
+- The scope expansion risk is resolved for v1.0.
+- User role targeting can be reconsidered in a later version as a separately scoped feature.
 
 ## Required Fixes
 
 1. Completed in code: add a backward compatibility migration for empty condition meta. Runtime verification remains pending until WordPress database connectivity is available again.
 2. Completed in code: implement real AJAX search/autocomplete behavior for Header/Footer specific target rules.
-3. Decide whether `User Roles` is officially part of Phase 1 Header/Footer Builder behavior. If yes, update architecture, phase, testing, and release documentation. If no, hide or defer the UI and matching logic.
+3. Completed in code: removed User Roles targeting from Phase 1 Header/Footer Builder behavior.
 
 ## Recommendations
 
 - Add focused browser checks for adding/removing display rules, revealing exclusion rules, searching/selecting specific targets, removing target chips, saving values, reloading the edit screen, and confirming frontend render behavior.
-- Add unit-level recommendations for `RuleOptions::sanitize_location_rules()`, `RuleOptions::sanitize_user_roles()`, and `Conditions` matching behavior.
+- Add unit-level recommendations for `RuleOptions::sanitize_location_rules()` and `Conditions` matching behavior.
 - Keep the `RuleOptions` helper as the shared abstraction for Header/Footer rule options and sanitization; it avoids duplicate logic and fits the current module boundary.
 - Keep the lightweight native AJAX search implementation unless future UX testing proves a Select2-style dependency is necessary.
 

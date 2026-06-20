@@ -41,7 +41,7 @@ Revalidated on 2026-06-15 after documentation workflow updates.
 - Display Conditions desktop layout validation completed with 6 of 6 checks passing: row order, label/control columns, condition card placement, Elementor edit button availability, and no JavaScript exceptions.
 - Metabox positioning was revalidated by simulating a user account that previously saved the template settings metabox in the sidebar.
 - Forced-position validation completed with 6 of 6 checks passing: the template settings metabox renders in `normal-sortables`, remains out of `side-sortables`, keeps wide label/control columns, keeps multi-column condition cards, preserves the Elementor edit button, and has no JavaScript exceptions.
-- UAE-style Header/Footer rule builder implementation was statically validated after replacing condition checkbox cards with `Display On`, `Do Not Display On`, and `User Roles` rule rows.
+- UAE-style Header/Footer rule builder implementation was statically validated after replacing condition checkbox cards with `Display On` and `Do Not Display On` rule rows.
 - Static validation for the UAE-style rule builder passed: `composer lint`, `composer phpcs`, `node --check assets/js/header-footer-admin.js`, and `git diff --check`.
 - UAE-style Header/Footer Display On combobox options were added for Basic, Special Pages, public post types, public taxonomies, and Specific Target.
 - Static validation for the UAE-style Display On combobox option update passed PHP syntax checks, PHPCS, JavaScript syntax check, and `git diff --check`.
@@ -89,12 +89,12 @@ Revalidated on 2026-06-15 after documentation workflow updates.
 - Passed by browser admin validation: Display Conditions are positioned in a `Display On` row directly below `Type of Template` and before `Status`.
 - Passed by browser admin validation: Display Conditions use UAE-style label/control columns on desktop.
 - Passed by browser admin validation: AlternatePro Template Settings metabox is forced into the main editor column even when user metabox order previously placed it in the sidebar.
-- Passed by static validation: Header/Footer template settings now render UAE-style Display On, Do Not Display On, and User Roles rule builders.
+- Passed by static validation: Header/Footer template settings now render UAE-style Display On and Do Not Display On rule builders.
 - Passed by static validation: Header/Footer Display On combobox options now follow UAE-style grouping for Basic, Special Pages, public post types, public taxonomies, and Specific Target.
 - Passed by static validation: Header/Footer condition matching supports UAE-style All Singulars, Date Archive, Author Archive, post type archive, and taxonomy archive rules.
 - Passed by static validation: Header/Footer rule sanitization uses shared allowlisted helpers and stores include/exclude rules in `_apro_display_conditions`.
-- Passed by static validation: Header/Footer user role rules are sanitized and stored in `_apro_user_roles`.
-- Passed by static validation: Header/Footer condition matching supports Blog Page, All Categories, Specific Category, specific target tokens, exclusion rules, and user role rules.
+- Passed by static validation: Header/Footer User Roles targeting has been removed from v1.0 scope and legacy `_apro_user_roles` metadata is deleted by schema `4`.
+- Passed by static validation: Header/Footer condition matching supports Blog Page, All Categories, Specific Category, specific target tokens, and exclusion rules.
 - Passed by static validation: schema `3` backfills active Header/Footer templates with empty display conditions to an explicit `Entire Site` include rule.
 - Passed by static validation: Header/Footer specific target searchable rules now include a nonce-protected admin AJAX endpoint, debounced search UI, UAE-style selected target chips, chip removal, result rendering, and token insertion.
 - Passed by static validation: Header/Footer Specific Target picker now hides the search input in the selected chip state, shows minimum-character feedback while searching, and renders grouped search results.

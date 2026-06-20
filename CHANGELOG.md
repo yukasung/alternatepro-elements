@@ -29,16 +29,16 @@ The format is based on Keep a Changelog.
 * Phase 1 browser-based WordPress admin validation results.
 * Phase 1 foundation security review report with PASS verdict.
 * Composer lockfile and installed development dependencies for project-local PHPCS tooling.
-* UAE-style Header/Footer display rule builder with Display On, Do Not Display On, and User Roles rule rows.
+* UAE-style Header/Footer display rule builder with Display On and Do Not Display On rule rows.
 * UAE-style Header/Footer Display On combobox options generated from public post types and taxonomies.
-* Shared Header/Footer `RuleOptions` helper for rule labels, sanitization, user role rules, and legacy condition compatibility.
+* Shared Header/Footer `RuleOptions` helper for rule labels, sanitization, and legacy condition compatibility.
 * UAE-style chip/token picker with admin AJAX target search for Header/Footer specific display rules.
 * UAE-style grouped target search results with minimum-character feedback for Header/Footer specific display rules.
 
 ### Changed
 
 * Replaced Header/Footer condition checkbox cards with UAE-style add/remove rule rows.
-* Updated Header/Footer condition evaluation to support Blog Page, All Categories, Specific Category, UAE-style specific target tokens, exclusion rules, and user role rules.
+* Updated Header/Footer condition evaluation to support Blog Page, All Categories, Specific Category, UAE-style specific target tokens, and exclusion rules.
 * Updated Header/Footer condition evaluation to support UAE-style All Singulars, Date Archive, Author Archive, post type archive, and taxonomy archive rules.
 * Changed empty Header/Footer display rule sets to not render templates automatically.
 * Moved Header/Footer template Display Conditions into a UAE-style `Display On` row below Type of Template.
@@ -70,11 +70,13 @@ The format is based on Keep a Changelog.
 ### Removed
 
 * Removed the Header/Footer template Language setting from the template settings UI, admin columns, matching logic, page override labels, registered meta, and local database metadata.
+* Removed Header/Footer template User Roles targeting from the template settings UI, condition matching, helper code, JavaScript, CSS, and legacy database metadata.
 
 ### Security
 
 * Added allowlist-based settings sanitization, Settings API persistence, capability checks, and read-only diagnostics output for Phase 1 foundation.
 * Completed Phase 1 foundation security review with no required fixes.
+* Completed Header/Footer User Roles removal security review with no required fixes.
 
 ### Planned
 
