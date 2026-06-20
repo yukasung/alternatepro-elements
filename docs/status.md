@@ -132,11 +132,22 @@ Establish the plugin foundation so modules can load safely, requirements can fai
 - Implemented a UAE-style Header/Footer display rule builder with `Display On`, `Do Not Display On`, and `User Roles` rows.
 - Added shared Header/Footer rule helpers for grouped rule options, sanitization, user role rules, and legacy condition compatibility.
 - Header/Footer condition evaluation now supports Blog Page, All Categories, Specific Category, UAE-style specific target tokens, exclusion rows, and user role rules.
+- Header/Footer Display On combobox options now follow UAE-style grouping for Basic, Special Pages, public post types, public taxonomies, and Specific Target.
+- Header/Footer condition evaluation now supports UAE-style All Singulars, Date Archive, Author Archive, post type archive, and taxonomy archive rules.
 - Static validation for the UAE-style rule builder passed: `composer lint`, `composer phpcs`, `node --check assets/js/header-footer-admin.js`, and `git diff --check`.
 - Header/Footer rule builder code review was created with PASS WITH MINOR FIXES verdict.
 - Removed the Header/Footer template Language setting from UI, resolver code, admin columns, registered meta, and page override labels.
 - Added schema version `2` cleanup for legacy `_apro_language` post meta.
 - Local database cleanup was verified with WP-CLI: schema version is `2` and `_apro_language` meta count is `0`.
+- Added schema version `3` migration to backfill active Header/Footer templates with empty display conditions to an explicit `Entire Site` include rule.
+- Static validation for the schema `3` migration passed: PHP syntax checks and PHPCS.
+- Runtime WP-CLI verification for the schema `3` migration is pending because WordPress currently returns `Error establishing a database connection`.
+- Implemented Header/Footer specific target AJAX search/autocomplete with UAE-style selected target chips and token insertion for searchable display rules.
+- Refined the Header/Footer `Specific Target` picker to match UAE-style selected chip display, search focus behavior, minimum-character feedback, and grouped search results.
+- Removed the inner border from the Header/Footer `Display On` target search input so only the outer UAE-style target picker container is framed.
+- Removed link-style underlines from Header/Footer `Display On` target search results and added UAE-style indentation below group labels.
+- Fixed Header/Footer `Display On` target search ordering so Posts and Pages are searched first, matching UAE behavior and preventing Pages from being dropped by a global result cap.
+- Header/Footer `Display On` target search now includes draft Posts and Pages for users with the corresponding edit permissions.
 - Browser validation for the new UAE-style rule builder remains pending.
 - Runtime baseline observed during admin validation: WordPress 7.0 and Elementor Free 4.1.3.
 - Temporary validation user `codex_admin` was deleted after browser testing.
@@ -183,7 +194,8 @@ Phase 2 - Elementor Integration
 ## Current Implementation Issues
 
 - Exact minimum supported WordPress and Elementor Free versions remain pending decisions.
-- Header/Footer rule builder review requires minor fixes or explicit decisions for legacy empty condition behavior, specific target search/copy behavior, and User Roles scope documentation.
+- Header/Footer rule builder review still requires an explicit decision for User Roles scope documentation.
+- Runtime verification for the schema `3` empty condition migration is pending until WordPress database connectivity is available again.
 - Browser validation for the newly implemented UAE-style Header/Footer rule builder remains pending.
 
 ## Pending Decisions
@@ -254,6 +266,13 @@ Phase 2 - Elementor Integration
 - 2026-06-15: Implemented UAE-style Header/Footer display rule builder rows for Display On, Do Not Display On, and User Roles with shared rule sanitization and condition evaluation support.
 - 2026-06-15: Created Header/Footer rule builder code review report with PASS WITH MINOR FIXES verdict.
 - 2026-06-20: Removed Header/Footer template Language setting from UI, code, registered meta, and local database metadata.
+- 2026-06-20: Implemented schema `3` migration to backfill active Header/Footer templates with empty display conditions to `Entire Site`.
+- 2026-06-20: Implemented Header/Footer specific target AJAX search/autocomplete with UAE-style selected target chips and token insertion for searchable display rules.
+- 2026-06-20: Refined Header/Footer Specific Target picker UI to match UAE-style chip-only selected state, search state, and grouped results.
+- 2026-06-20: Removed the inner border from the Header/Footer Display On target search input to match UAE plugin styling.
+- 2026-06-20: Removed link-style underlines from Header/Footer Display On target search results and added UAE-style result indentation.
+- 2026-06-20: Fixed Header/Footer Display On target search ordering so Posts and Pages are searched first and Pages are not dropped by the global result cap.
+- 2026-06-20: Updated Header/Footer Display On target search to include draft Posts and Pages for users with edit permissions.
 
 ## Status Rules
 

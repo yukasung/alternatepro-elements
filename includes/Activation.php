@@ -30,6 +30,7 @@ final class Activation {
 		$settings->ensure_defaults();
 
 		Upgrades::delete_header_footer_language_meta();
+		Upgrades::backfill_empty_header_footer_conditions();
 
 		update_option( Upgrades::SCHEMA_OPTION, APRO_ELEMENTS_SCHEMA_VERSION, false );
 

@@ -19,43 +19,38 @@ final class RuleOptions {
 	 * @return array<string,array{label:string,value:array<string,string>}>
 	 */
 	public static function location_groups() {
-		return array(
-			'basic'           => array(
+		$groups = array(
+			'basic'         => array(
 				'label' => __( 'Basic', 'alternatepro-elements' ),
 				'value' => array(
-					'entire_site'    => __( 'Entire Site', 'alternatepro-elements' ),
-					'all_pages'      => __( 'All Pages', 'alternatepro-elements' ),
-					'all_posts'      => __( 'All Posts', 'alternatepro-elements' ),
-					'archives'       => __( 'Archives', 'alternatepro-elements' ),
-					'all_categories' => __( 'All Categories', 'alternatepro-elements' ),
+					'entire_site'   => __( 'Entire Website', 'alternatepro-elements' ),
+					'all_singulars' => __( 'All Singulars', 'alternatepro-elements' ),
+					'archives'      => __( 'All Archives', 'alternatepro-elements' ),
 				),
 			),
-			'special-pages'   => array(
+			'special-pages' => array(
 				'label' => __( 'Special Pages', 'alternatepro-elements' ),
 				'value' => array(
-					'front_page'     => __( 'Front Page', 'alternatepro-elements' ),
-					'blog_page'      => __( 'Blog Page', 'alternatepro-elements' ),
-					'search_results' => __( 'Search Results', 'alternatepro-elements' ),
 					'404_page'       => __( '404 Page', 'alternatepro-elements' ),
-				),
-			),
-			'specific-target' => array(
-				'label' => __( 'Specific Target', 'alternatepro-elements' ),
-				'value' => array(
-					'specifics'         => __( 'Specific Pages / Posts / Taxonomies, etc.', 'alternatepro-elements' ),
-					'specific_pages'    => __( 'Specific Pages', 'alternatepro-elements' ),
-					'specific_posts'    => __( 'Specific Posts', 'alternatepro-elements' ),
-					'specific_category' => __( 'Specific Category', 'alternatepro-elements' ),
-				),
-			),
-			'advanced'        => array(
-				'label' => __( 'Advanced', 'alternatepro-elements' ),
-				'value' => array(
-					'url_path_starts'   => __( 'URL Path Starts With', 'alternatepro-elements' ),
-					'url_path_contains' => __( 'URL Path Contains', 'alternatepro-elements' ),
+					'search_results' => __( 'Search Page', 'alternatepro-elements' ),
+					'blog_page'      => __( 'Blog / Posts Page', 'alternatepro-elements' ),
+					'front_page'     => __( 'Front Page', 'alternatepro-elements' ),
+					'date_archive'   => __( 'Date Archive', 'alternatepro-elements' ),
+					'author_archive' => __( 'Author Archive', 'alternatepro-elements' ),
 				),
 			),
 		);
+
+		$groups = array_merge( $groups, self::post_type_location_groups() );
+
+		$groups['specific-target'] = array(
+			'label' => __( 'Specific Target', 'alternatepro-elements' ),
+			'value' => array(
+				'specifics' => __( 'Specific Pages / Posts / Taxonomies, etc.', 'alternatepro-elements' ),
+			),
+		);
+
+		return $groups;
 	}
 
 	/**
@@ -70,10 +65,166 @@ final class RuleOptions {
 			$options = array_merge( $options, $group['value'] );
 		}
 
-		$options['exclude_pages'] = __( 'Exclude Specific Pages', 'alternatepro-elements' );
-		$options['exclude_posts'] = __( 'Exclude Specific Posts', 'alternatepro-elements' );
+		$options['all_pages']         = __( 'All Pages', 'alternatepro-elements' );
+		$options['all_posts']         = __( 'All Posts', 'alternatepro-elements' );
+		$options['all_categories']    = __( 'All Categories Archive', 'alternatepro-elements' );
+		$options['specific_pages']    = __( 'Specific Pages', 'alternatepro-elements' );
+		$options['specific_posts']    = __( 'Specific Posts', 'alternatepro-elements' );
+		$options['specific_category'] = __( 'Specific Category', 'alternatepro-elements' );
+		$options['exclude_pages']     = __( 'Exclude Specific Pages', 'alternatepro-elements' );
+		$options['exclude_posts']     = __( 'Exclude Specific Posts', 'alternatepro-elements' );
 
 		return $options;
+	}
+
+	/**
+	 * Return UAE-style location groups for public post types and taxonomies.
+	 *
+	 * @return array<string,array{label:string,value:array<string,string>}>
+	 */
+	private static function post_type_location_groups() {
+		$groups     = array();
+		$post_types = get_post_types(
+			array(
+				'public' => true,
+			),
+			'objects'
+		);
+
+		unset( $post_types['attachment'] );
+
+		foreach ( $post_types as $post_type ) {
+			$post_type_name = sanitize_key( $post_type->name );
+
+			if ( '' === $post_type_name ) {
+				continue;
+			}
+
+			$group_key = self::post_type_group_key( $post_type_name );
+			$values    = array(
+				self::post_type_rule_key( $post_type_name ) => sprintf(
+					/* translators: %s: Post type plural label. */
+					__( 'All %s', 'alternatepro-elements' ),
+					self::post_type_plural_label( $post_type )
+				),
+			);
+
+			if ( 'page' !== $post_type_name ) {
+				$values[ self::post_type_archive_rule_key( $post_type_name ) ] = sprintf(
+					/* translators: %s: Post type plural label. */
+					__( 'All %s Archive', 'alternatepro-elements' ),
+					self::post_type_plural_label( $post_type )
+				);
+			}
+
+			foreach ( self::public_taxonomies_for_post_type( $post_type_name ) as $taxonomy ) {
+				$values[ self::taxonomy_archive_rule_key( $taxonomy->name ) ] = sprintf(
+					/* translators: %s: Taxonomy plural label. */
+					__( 'All %s Archive', 'alternatepro-elements' ),
+					self::taxonomy_plural_label( $taxonomy )
+				);
+			}
+
+			$groups[ $group_key ] = array(
+				'label' => self::post_type_plural_label( $post_type ),
+				'value' => $values,
+			);
+		}
+
+		return $groups;
+	}
+
+	/**
+	 * Return public taxonomies attached to a post type.
+	 *
+	 * @param string $post_type Post type.
+	 * @return \WP_Taxonomy[]
+	 */
+	private static function public_taxonomies_for_post_type( $post_type ) {
+		$taxonomies = get_object_taxonomies( $post_type, 'objects' );
+		$public     = array();
+
+		foreach ( $taxonomies as $taxonomy ) {
+			if ( empty( $taxonomy->public ) || 'post_format' === $taxonomy->name ) {
+				continue;
+			}
+
+			$public[] = $taxonomy;
+		}
+
+		return $public;
+	}
+
+	/**
+	 * Return a stable group key for a post type.
+	 *
+	 * @param string $post_type Post type.
+	 * @return string
+	 */
+	private static function post_type_group_key( $post_type ) {
+		return 'post-type-' . sanitize_key( $post_type );
+	}
+
+	/**
+	 * Return a condition key for post type singulars.
+	 *
+	 * @param string $post_type Post type.
+	 * @return string
+	 */
+	private static function post_type_rule_key( $post_type ) {
+		if ( 'post' === $post_type ) {
+			return 'all_posts';
+		}
+
+		if ( 'page' === $post_type ) {
+			return 'all_pages';
+		}
+
+		return 'post_type_' . sanitize_key( $post_type );
+	}
+
+	/**
+	 * Return a condition key for post type archives.
+	 *
+	 * @param string $post_type Post type.
+	 * @return string
+	 */
+	private static function post_type_archive_rule_key( $post_type ) {
+		return 'post_type_archive_' . sanitize_key( $post_type );
+	}
+
+	/**
+	 * Return a condition key for taxonomy archives.
+	 *
+	 * @param string $taxonomy Taxonomy.
+	 * @return string
+	 */
+	private static function taxonomy_archive_rule_key( $taxonomy ) {
+		if ( 'category' === $taxonomy ) {
+			return 'all_categories';
+		}
+
+		return 'taxonomy_archive_' . sanitize_key( $taxonomy );
+	}
+
+	/**
+	 * Return a post type plural label.
+	 *
+	 * @param \WP_Post_Type $post_type Post type object.
+	 * @return string
+	 */
+	private static function post_type_plural_label( $post_type ) {
+		return isset( $post_type->labels->name ) && '' !== $post_type->labels->name ? $post_type->labels->name : $post_type->name;
+	}
+
+	/**
+	 * Return a taxonomy plural label.
+	 *
+	 * @param \WP_Taxonomy $taxonomy Taxonomy object.
+	 * @return string
+	 */
+	private static function taxonomy_plural_label( $taxonomy ) {
+		return isset( $taxonomy->labels->name ) && '' !== $taxonomy->labels->name ? $taxonomy->labels->name : $taxonomy->name;
 	}
 
 	/**
@@ -93,6 +244,20 @@ final class RuleOptions {
 	}
 
 	/**
+	 * Return condition types that support admin target search.
+	 *
+	 * @return string[]
+	 */
+	public static function searchable_rule_types() {
+		return array(
+			'specifics',
+			'specific_pages',
+			'specific_posts',
+			'specific_category',
+		);
+	}
+
+	/**
 	 * Check whether a rule type uses an extra value field.
 	 *
 	 * @param string $type Rule type.
@@ -100,6 +265,16 @@ final class RuleOptions {
 	 */
 	public static function rule_has_value( $type ) {
 		return in_array( sanitize_key( $type ), self::value_rule_types(), true );
+	}
+
+	/**
+	 * Check whether a rule type supports admin target search.
+	 *
+	 * @param string $type Rule type.
+	 * @return bool
+	 */
+	public static function rule_has_search( $type ) {
+		return in_array( sanitize_key( $type ), self::searchable_rule_types(), true );
 	}
 
 	/**

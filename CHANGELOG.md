@@ -30,16 +30,24 @@ The format is based on Keep a Changelog.
 * Phase 1 foundation security review report with PASS verdict.
 * Composer lockfile and installed development dependencies for project-local PHPCS tooling.
 * UAE-style Header/Footer display rule builder with Display On, Do Not Display On, and User Roles rule rows.
+* UAE-style Header/Footer Display On combobox options generated from public post types and taxonomies.
 * Shared Header/Footer `RuleOptions` helper for rule labels, sanitization, user role rules, and legacy condition compatibility.
+* UAE-style chip/token picker with admin AJAX target search for Header/Footer specific display rules.
+* UAE-style grouped target search results with minimum-character feedback for Header/Footer specific display rules.
 
 ### Changed
 
 * Replaced Header/Footer condition checkbox cards with UAE-style add/remove rule rows.
 * Updated Header/Footer condition evaluation to support Blog Page, All Categories, Specific Category, UAE-style specific target tokens, exclusion rules, and user role rules.
+* Updated Header/Footer condition evaluation to support UAE-style All Singulars, Date Archive, Author Archive, post type archive, and taxonomy archive rules.
 * Changed empty Header/Footer display rule sets to not render templates automatically.
 * Moved Header/Footer template Display Conditions into a UAE-style `Display On` row below Type of Template.
 * Forced the Header/Footer template settings metabox into the main editor column when user preferences previously placed it in the sidebar.
 * Bumped the plugin schema version to remove legacy Header/Footer template language metadata.
+* Bumped the plugin schema version to backfill legacy active Header/Footer templates with empty display conditions.
+* Refined the Header/Footer specific target picker layout to match UAE-style selected chips, search focus state, and grouped dropdown results.
+* Removed the inner border from the Header/Footer Display On target search input to better match the UAE plugin field styling.
+* Removed link-style underlines from Header/Footer Display On target search results and added UAE-style result indentation.
 * Clarified v1.0 changelog scope by separating required, conditional, and deferred features.
 * Updated EditorConfig PHP, JavaScript, and CSS indentation to align with WordPress Coding Standards.
 * Standardized PHPCS configuration naming on `phpcs.xml`.
@@ -53,6 +61,10 @@ The format is based on Keep a Changelog.
 
 * Hid Theme Builder admin menu, tab, and links when the Header/Footer Builder module is disabled.
 * Fixed Header/Footer template metabox interactivity by using the classic editor for the `apro_template` post type while keeping Elementor editing available.
+* Added a schema migration that fills active Header/Footer templates with empty display conditions using an explicit `Entire Site` include rule.
+* Replaced placeholder-only Header/Footer specific target behavior with real AJAX search/autocomplete, selected target chips, and token insertion.
+* Fixed Header/Footer Display On target search so Posts and Pages are searched first and Pages are not dropped by the global result limit.
+* Fixed Header/Footer Display On target search to include draft Posts and Pages for users with edit permissions.
 * Resolved remaining PHPCS findings after aligning PHPCS configuration with PSR-4 class filenames.
 
 ### Removed

@@ -254,11 +254,20 @@ final class Conditions {
 			case 'entire_site':
 				return true;
 
+			case 'all_singulars':
+				return is_singular();
+
 			case 'front_page':
 				return is_front_page();
 
 			case 'blog_page':
 				return is_home();
+
+			case 'date_archive':
+				return is_date();
+
+			case 'author_archive':
+				return is_author();
 
 			case 'all_pages':
 				return is_page();
@@ -299,7 +308,51 @@ final class Conditions {
 				return $this->path_matches( $value, 'contains' );
 		}
 
+		if ( preg_match( '/^post_type_archive_([a-z0-9_-]+)$/', $type, $matches ) ) {
+			return $this->post_type_archive_matches( sanitize_key( $matches[1] ) );
+		}
+
+		if ( preg_match( '/^post_type_([a-z0-9_-]+)$/', $type, $matches ) ) {
+			return is_singular( sanitize_key( $matches[1] ) );
+		}
+
+		if ( preg_match( '/^taxonomy_archive_([a-z0-9_-]+)$/', $type, $matches ) ) {
+			return $this->taxonomy_archive_matches( sanitize_key( $matches[1] ) );
+		}
+
 		return false;
+	}
+
+	/**
+	 * Check post type archive conditions.
+	 *
+	 * @param string $post_type Post type.
+	 * @return bool
+	 */
+	private function post_type_archive_matches( $post_type ) {
+		if ( 'post' === $post_type ) {
+			return is_home() || is_category() || is_tag() || is_date() || is_author();
+		}
+
+		return is_post_type_archive( $post_type ) || ( is_archive() && get_post_type() === $post_type );
+	}
+
+	/**
+	 * Check taxonomy archive conditions.
+	 *
+	 * @param string $taxonomy Taxonomy.
+	 * @return bool
+	 */
+	private function taxonomy_archive_matches( $taxonomy ) {
+		if ( 'category' === $taxonomy ) {
+			return is_category();
+		}
+
+		if ( 'post_tag' === $taxonomy ) {
+			return is_tag();
+		}
+
+		return is_tax( $taxonomy );
 	}
 
 	/**
@@ -447,6 +500,8 @@ final class Conditions {
 			'front_page'        => 80,
 			'404_page'          => 80,
 			'blog_page'         => 78,
+			'date_archive'      => 78,
+			'author_archive'    => 78,
 			'search_results'    => 75,
 			'url_path_starts'   => 70,
 			'url_path_contains' => 65,
@@ -454,8 +509,21 @@ final class Conditions {
 			'archives'          => 60,
 			'all_pages'         => 50,
 			'all_posts'         => 50,
+			'all_singulars'     => 45,
 			'entire_site'       => 10,
 		);
+
+		if ( preg_match( '/^taxonomy_archive_[a-z0-9_-]+$/', $type ) ) {
+			return 65;
+		}
+
+		if ( preg_match( '/^post_type_archive_[a-z0-9_-]+$/', $type ) ) {
+			return 60;
+		}
+
+		if ( preg_match( '/^post_type_[a-z0-9_-]+$/', $type ) ) {
+			return 50;
+		}
 
 		return isset( $scores[ $type ] ) ? $scores[ $type ] : 0;
 	}

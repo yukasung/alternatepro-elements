@@ -23,10 +23,19 @@ This is a progress summary, not a phase completion report.
 - Hid Theme Builder admin menu, tab, and links when the Header/Footer Builder module is disabled.
 - Added admin settings assets.
 - Added UAE-style Header/Footer display rule builder rows for Display On, Do Not Display On, and User Roles.
+- Added UAE-style Header/Footer Display On combobox groups for Basic, Special Pages, public post types, public taxonomies, and Specific Target.
 - Added shared Header/Footer rule option and sanitization helper.
 - Added Header/Footer condition evaluation support for Blog Page, All Categories, Specific Category, UAE-style specific target tokens, exclusions, and user role rules.
+- Added Header/Footer condition evaluation support for UAE-style All Singulars, Date Archive, Author Archive, post type archive, and taxonomy archive rules.
 - Removed Header/Footer template Language setting from UI, resolver code, admin columns, registered meta, and page override labels.
 - Added schema version `2` cleanup for legacy `_apro_language` post meta.
+- Added schema version `3` migration to backfill active Header/Footer templates with empty display conditions to an explicit `Entire Site` include rule.
+- Implemented Header/Footer specific target AJAX search/autocomplete with UAE-style selected target chips and token insertion for searchable display rules.
+- Refined Header/Footer Specific Target picker UI to match UAE-style selected chip display, search focus behavior, minimum-character feedback, and grouped search results.
+- Removed the inner border from the Header/Footer Display On target search input to better match UAE plugin styling.
+- Removed link-style underlines from Header/Footer Display On target search results and added UAE-style result indentation.
+- Fixed Header/Footer Display On target search ordering so Posts and Pages are searched first and Pages are not dropped by a global result cap.
+- Added draft Posts and Pages to Header/Footer Display On target search results for users with edit permissions.
 
 ## Verification Completed
 
@@ -48,18 +57,28 @@ This is a progress summary, not a phase completion report.
 - Display Conditions moved to a UAE-style `Display On` row and validated with 6 of 6 browser checks passing.
 - Header/Footer template settings metabox is forced into the main editor column and validated with 6 of 6 browser checks after simulating a saved sidebar position.
 - Static validation for the UAE-style Header/Footer rule builder passes: `composer lint`, `composer phpcs`, `node --check assets/js/header-footer-admin.js`, and `git diff --check`.
+- Static validation for the UAE-style Display On combobox options passes: PHP syntax checks, PHPCS, JavaScript syntax check, and `git diff --check`.
 - Header/Footer rule builder code review completed with PASS WITH MINOR FIXES verdict.
 - Header/Footer Language removal validation passed: PHP syntax checks, PHPCS, JavaScript syntax check, `git diff --check`, and local WP-CLI database meta count check.
 - Local database cleanup confirmed `_apro_language` meta count is `0`.
+- Schema `3` empty condition migration static validation passed with PHP syntax checks and PHPCS.
+- Runtime WP-CLI verification for schema `3` is pending because WordPress currently returns `Error establishing a database connection`.
+- Header/Footer specific target chip picker and AJAX search/autocomplete passed PHP syntax checks, PHPCS, JavaScript syntax check, and `git diff --check`.
+- Header/Footer Specific Target picker UI refinement passed PHP syntax checks, PHPCS, JavaScript syntax check, and `git diff --check`.
+- Header/Footer Display On target search input border refinement passed CSS review and `git diff --check`.
+- Header/Footer Display On target result typography and indentation refinement passed JavaScript syntax check, PHPCS, and `git diff --check`.
+- Header/Footer Display On target search ordering fix passed PHP syntax check, PHPCS, and `git diff --check`.
+- Header/Footer Display On draft Post/Page search support passed PHP syntax check, PHPCS, and `git diff --check`.
 - Temporary validation user `codex_admin` was deleted after testing.
 - Runtime baseline observed during validation: WordPress 7.0 and Elementor Free 4.1.3.
 
 ## Pending Work
 
 - Initial Phase 1 foundation code review completed with PASS verdict.
-- Resolve or explicitly document Header/Footer rule builder review findings for legacy empty condition behavior, specific target search/copy behavior, and User Roles scope.
+- Resolve or explicitly document the remaining Header/Footer rule builder review finding for User Roles scope.
+- Re-run runtime verification for the schema `3` empty condition migration after WordPress database connectivity is available again.
 - Confirm exact minimum supported WordPress and Elementor Free versions.
-- Re-run browser validation for the new UAE-style Header/Footer rule builder.
+- Re-run browser validation for the new UAE-style Header/Footer rule builder, including Display On combobox options, specific target search, chip removal, token insertion, save, and reload behavior.
 - Prepare final Phase 1 completion summary and acceptance criteria verification.
 
 ## Current Verdict

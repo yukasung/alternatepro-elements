@@ -37,6 +37,7 @@ final class Module {
 		( new MetaBox() )->init();
 		$page_override->init();
 		( new AdminColumns() )->init();
+		( new TargetSearch() )->init();
 		$assets->init();
 		( new Renderer( $conditions, $page_override, $assets ) )->init();
 	}

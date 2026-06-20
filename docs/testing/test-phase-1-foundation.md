@@ -43,8 +43,18 @@ Revalidated on 2026-06-15 after documentation workflow updates.
 - Forced-position validation completed with 6 of 6 checks passing: the template settings metabox renders in `normal-sortables`, remains out of `side-sortables`, keeps wide label/control columns, keeps multi-column condition cards, preserves the Elementor edit button, and has no JavaScript exceptions.
 - UAE-style Header/Footer rule builder implementation was statically validated after replacing condition checkbox cards with `Display On`, `Do Not Display On`, and `User Roles` rule rows.
 - Static validation for the UAE-style rule builder passed: `composer lint`, `composer phpcs`, `node --check assets/js/header-footer-admin.js`, and `git diff --check`.
+- UAE-style Header/Footer Display On combobox options were added for Basic, Special Pages, public post types, public taxonomies, and Specific Target.
+- Static validation for the UAE-style Display On combobox option update passed PHP syntax checks, PHPCS, JavaScript syntax check, and `git diff --check`.
 - Header/Footer template Language setting removal was validated on 2026-06-20 with PHP syntax checks, PHPCS, JavaScript syntax check, `git diff --check`, and WP-CLI database verification.
 - WP-CLI database verification confirmed schema version `2` and `_apro_language` meta count `0`.
+- Schema `3` migration for active Header/Footer templates with empty display conditions was added on 2026-06-20 and passed PHP syntax checks and PHPCS.
+- Runtime WP-CLI verification for schema `3` is pending because WordPress currently returns `Error establishing a database connection`.
+- Header/Footer specific target AJAX search/autocomplete with UAE-style selected target chips was implemented on 2026-06-20 and passed PHP syntax checks, PHPCS, JavaScript syntax check, and `git diff --check`.
+- Header/Footer Specific Target picker UI was refined on 2026-06-20 to match UAE-style selected chip display, search focus state, minimum-character feedback, and grouped search results; static validation passed PHP syntax checks, PHPCS, JavaScript syntax check, and `git diff --check`.
+- Header/Footer Display On target search input border styling was refined on 2026-06-20 so the inner search input has no separate frame inside the UAE-style target picker.
+- Header/Footer Display On target search results were refined on 2026-06-20 to remove link-style underlines and indent result items below group labels.
+- Header/Footer Display On target search ordering was fixed on 2026-06-20 so Posts and Pages are searched first and Pages are not dropped by the global result cap.
+- Header/Footer Display On target search was updated on 2026-06-20 to include draft Posts and Pages for users with edit permissions.
 - Browser validation for the new UAE-style rule builder remains pending.
 
 ## Functional Test Results
@@ -80,12 +90,21 @@ Revalidated on 2026-06-15 after documentation workflow updates.
 - Passed by browser admin validation: Display Conditions use UAE-style label/control columns on desktop.
 - Passed by browser admin validation: AlternatePro Template Settings metabox is forced into the main editor column even when user metabox order previously placed it in the sidebar.
 - Passed by static validation: Header/Footer template settings now render UAE-style Display On, Do Not Display On, and User Roles rule builders.
+- Passed by static validation: Header/Footer Display On combobox options now follow UAE-style grouping for Basic, Special Pages, public post types, public taxonomies, and Specific Target.
+- Passed by static validation: Header/Footer condition matching supports UAE-style All Singulars, Date Archive, Author Archive, post type archive, and taxonomy archive rules.
 - Passed by static validation: Header/Footer rule sanitization uses shared allowlisted helpers and stores include/exclude rules in `_apro_display_conditions`.
 - Passed by static validation: Header/Footer user role rules are sanitized and stored in `_apro_user_roles`.
 - Passed by static validation: Header/Footer condition matching supports Blog Page, All Categories, Specific Category, specific target tokens, exclusion rules, and user role rules.
+- Passed by static validation: schema `3` backfills active Header/Footer templates with empty display conditions to an explicit `Entire Site` include rule.
+- Passed by static validation: Header/Footer specific target searchable rules now include a nonce-protected admin AJAX endpoint, debounced search UI, UAE-style selected target chips, chip removal, result rendering, and token insertion.
+- Passed by static validation: Header/Footer Specific Target picker now hides the search input in the selected chip state, shows minimum-character feedback while searching, and renders grouped search results.
+- Passed by static validation: Header/Footer Display On target search input CSS now overrides WordPress admin input borders and focus shadows.
+- Passed by static validation: Header/Footer Display On search result buttons no longer use WordPress link styling and have UAE-style result indentation.
+- Passed by static validation: Header/Footer Display On target search now forces Posts and Pages into the first search groups and removes the global result cap that could hide Pages.
+- Passed by static validation: Header/Footer Display On target search includes draft Posts and Pages only when the current user can edit the corresponding content type.
 - Not executed in runtime: plugin activation flow from inactive to active in WordPress admin.
 - Not executed in runtime: dependency notices for missing or unsupported Elementor.
-- Not executed in browser runtime: UAE-style rule builder add/remove interactions and save flow after the latest implementation because the local WordPress database connection is currently failing through WP-CLI/browser automation.
+- Not executed in browser runtime: UAE-style rule builder add/remove interactions, specific target search/select behavior, chip removal, save flow, and reload behavior after the latest implementation because the local WordPress database connection is currently failing through WP-CLI/browser automation.
 
 ### Environment Validation
 
@@ -168,6 +187,7 @@ Runtime integration checks still pending:
 
 - Activation through WordPress.
 - Elementor inactive and unsupported-version notices.
+- Runtime verification for schema `3` empty condition migration.
 - Browser save/reload validation for the new UAE-style Header/Footer rule builder.
 
 Previously resolved blocker:
@@ -177,6 +197,7 @@ Previously resolved blocker:
 Current pending validation:
 
 - Browser automation for the latest UAE-style rule builder implementation has not been completed in this pass.
+- WordPress currently returns `Error establishing a database connection` during WP-CLI runtime verification for schema `3`.
 
 ## Regression Test Results
 
@@ -197,6 +218,7 @@ Current pending validation:
 - PHPUnit could not be run because no PHPUnit dependency or test scaffold is currently available.
 - No automated unit or integration tests currently exist.
 - Browser validation for the newly implemented UAE-style rule builder remains pending.
+- Runtime verification for the schema `3` empty condition migration remains pending.
 
 ## Recommendations
 

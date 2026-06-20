@@ -93,7 +93,16 @@ final class Assets {
 			self::ADMIN_SCRIPT,
 			'aproHeaderFooterRules',
 			array(
-				'valueRuleTypes' => RuleOptions::value_rule_types(),
+				'ajaxUrl'             => admin_url( 'admin-ajax.php' ),
+				'searchNonce'         => wp_create_nonce( TargetSearch::NONCE_ACTION ),
+				'valueRuleTypes'      => RuleOptions::value_rule_types(),
+				'searchableRuleTypes' => RuleOptions::searchable_rule_types(),
+				'strings'             => array(
+					'searching' => __( 'Searching...', 'alternatepro-elements' ),
+					'minChars'  => __( 'Please enter 2 or more characters', 'alternatepro-elements' ),
+					'noResults' => __( 'No matching targets found.', 'alternatepro-elements' ),
+					'error'     => __( 'Search failed. Please try again.', 'alternatepro-elements' ),
+				),
 			)
 		);
 	}

@@ -83,11 +83,11 @@ final class MetaBox {
 	public function render( $post ) {
 		wp_nonce_field( 'apro_template_meta', 'apro_template_meta_nonce' );
 
-			$type       = get_post_meta( $post->ID, Module::TYPE_META, true );
-			$status     = get_post_meta( $post->ID, Module::STATUS_META, true );
-			$priority   = get_post_meta( $post->ID, Module::PRIORITY_META, true );
-			$conditions = Conditions::decode_conditions( get_post_meta( $post->ID, Module::CONDITIONS_META, true ) );
-			$user_roles = RuleOptions::decode_user_roles( get_post_meta( $post->ID, Module::USER_ROLES_META, true ) );
+		$type       = get_post_meta( $post->ID, Module::TYPE_META, true );
+		$status     = get_post_meta( $post->ID, Module::STATUS_META, true );
+		$priority   = get_post_meta( $post->ID, Module::PRIORITY_META, true );
+		$conditions = Conditions::decode_conditions( get_post_meta( $post->ID, Module::CONDITIONS_META, true ) );
+		$user_roles = RuleOptions::decode_user_roles( get_post_meta( $post->ID, Module::USER_ROLES_META, true ) );
 
 		if ( '' === $type ) {
 			$type = 'header';
@@ -127,7 +127,7 @@ final class MetaBox {
 					<select id="apro-template-type" name="apro_template_type">
 						<?php foreach ( Module::template_types() as $value => $label ) : ?>
 							<option value="<?php echo esc_attr( $value ); ?>" <?php selected( $type, $value ); ?>><?php echo esc_html( $label ); ?></option>
-						<?php endforeach; ?>
+					<?php endforeach; ?>
 					</select>
 				</div>
 			</div>
@@ -237,6 +237,8 @@ final class MetaBox {
 		$type       = isset( $rule['type'] ) ? sanitize_key( $rule['type'] ) : '';
 		$value      = isset( $rule['value'] ) ? (string) $rule['value'] : '';
 		$has_value  = RuleOptions::rule_has_value( $type );
+		$has_search = RuleOptions::rule_has_search( $type );
+		$targets    = $has_search ? TargetSearch::selected_targets( $value, $type ) : array();
 		$value_name = sprintf( '%1$s[value][%2$d]', $input_name, absint( $index ) );
 		$rule_name  = sprintf( '%1$s[rule][%2$d]', $input_name, absint( $index ) );
 		?>
@@ -254,13 +256,27 @@ final class MetaBox {
 								<option value="<?php echo esc_attr( $value_key ); ?>" <?php selected( $type, $value_key ); ?>><?php echo esc_html( $label ); ?></option>
 							<?php endforeach; ?>
 						</optgroup>
-					<?php endforeach; ?>
+						<?php endforeach; ?>
 				</select>
 			</div>
 
 			<div class="apro-hfb-rule-value-wrap <?php echo $has_value ? '' : 'apro-is-hidden'; ?>">
-				<textarea name="<?php echo esc_attr( $value_name ); ?>" rows="2" class="apro-hfb-rule-value" placeholder="<?php esc_attr_e( 'Search pages / posts / categories, or enter IDs separated by commas', 'alternatepro-elements' ); ?>"><?php echo esc_textarea( $value ); ?></textarea>
-				<p class="description"><?php esc_html_e( 'Use IDs, post-123, tax-12, or URL paths depending on the selected rule.', 'alternatepro-elements' ); ?></p>
+				<div class="apro-hfb-target-picker <?php echo $has_search ? '' : 'apro-is-hidden'; ?>">
+					<div class="apro-hfb-target-selection">
+						<div class="apro-hfb-target-chips">
+							<?php foreach ( $targets as $target ) : ?>
+								<span class="apro-hfb-target-chip" data-token="<?php echo esc_attr( $target['token'] ); ?>">
+									<button type="button" class="apro-hfb-target-chip-remove" aria-label="<?php esc_attr_e( 'Remove selected target', 'alternatepro-elements' ); ?>" data-token="<?php echo esc_attr( $target['token'] ); ?>">&times;</button>
+									<span class="apro-hfb-target-chip-label"><?php echo esc_html( $target['label'] ); ?></span>
+								</span>
+							<?php endforeach; ?>
+						</div>
+						<input type="search" class="apro-hfb-target-search" autocomplete="off" aria-label="<?php esc_attr_e( 'Search pages, posts, and categories', 'alternatepro-elements' ); ?>" placeholder="<?php esc_attr_e( 'Search pages / posts / categories', 'alternatepro-elements' ); ?>">
+					</div>
+					<div class="apro-hfb-target-results" hidden></div>
+				</div>
+				<textarea name="<?php echo esc_attr( $value_name ); ?>" rows="2" class="apro-hfb-rule-value <?php echo $has_search ? 'apro-hfb-rule-value--hidden' : ''; ?>" placeholder="<?php esc_attr_e( 'Enter values separated by commas', 'alternatepro-elements' ); ?>"><?php echo esc_textarea( $value ); ?></textarea>
+				<p class="description apro-hfb-rule-value-description <?php echo $has_search ? 'apro-is-hidden' : ''; ?>"><?php esc_html_e( 'Enter values separated by commas.', 'alternatepro-elements' ); ?></p>
 			</div>
 		</div>
 		<?php
