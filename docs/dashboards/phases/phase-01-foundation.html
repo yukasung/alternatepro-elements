@@ -25,7 +25,7 @@
         .pending { background: var(--pending-soft); color: var(--pending); }
         .in-progress { background: var(--info-soft); color: var(--info); }
         .progress { overflow: hidden; height: 10px; background: #e8ecf2; border-radius: 999px; }
-        .bar { height: 100%; width: 90%; background: var(--accent); border-radius: inherit; }
+        .bar { height: 100%; width: 95%; background: var(--accent); border-radius: inherit; }
         .source { border-left: 4px solid var(--accent); background: var(--soft); }
         @media (max-width: 760px) { .two { grid-template-columns: 1fr; } }
     </style>
@@ -52,8 +52,8 @@
             </article>
             <article class="card">
                 <h2>Progress</h2>
-                <div class="progress" aria-label="Phase 1 progress 90 percent"><div class="bar"></div></div>
-                <p class="muted">90% complete. Foundation code is implemented, code review passed, runtime smoke validation passes, PHPCS passes, and security review passed.</p>
+                <div class="progress" aria-label="Phase 1 progress 95 percent"><div class="bar"></div></div>
+                <p class="muted">95% complete. Foundation code is implemented, code review passed, runtime smoke validation passes, browser admin validation, metabox interactivity validation, UAE-style Display On layout validation, Header/Footer Language removal validation, PHPCS, JavaScript syntax checks, and security review pass. Browser validation for the latest UAE-style rule builder remains pending.</p>
             </article>
         </section>
 
@@ -100,13 +100,14 @@
             <article class="card">
                 <h2>Outstanding Work</h2>
                 <ul>
-                    <li>Complete detailed WordPress admin functional validation.</li>
-                    <li>Confirm exact minimum supported WordPress and Elementor Free versions.</li>
+	                    <li>Confirm exact minimum supported WordPress and Elementor Free versions.</li>
+	                    <li>Re-run browser validation for the latest UAE-style Header/Footer rule builder.</li>
+	                    <li>Prepare final Phase 1 completion summary and acceptance criteria verification.</li>
                 </ul>
             </article>
             <article class="card">
                 <h2>Next Task</h2>
-                <p>Complete detailed WordPress admin validation and confirm version baselines before marking the phase complete.</p>
+                <p>Confirm version baselines, then prepare the final completion summary before marking the phase complete.</p>
                 <p><a href="../../releases/phase-01-progress.md">Read Phase 1 progress summary</a></p>
                 <p><a href="../../testing/test-phase-1-foundation.md">Read Phase 1 test report</a></p>
                 <p><a href="../../reviews/security-phase-1-foundation.md">Read Phase 1 security review</a></p>

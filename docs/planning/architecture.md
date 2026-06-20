@@ -714,7 +714,6 @@ Template meta:
 - `_apro_template_status`
 - `_apro_template_priority`
 - `_apro_display_conditions`
-- `_apro_language`
 
 Existing header/footer meta may remain valid:
 

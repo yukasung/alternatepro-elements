@@ -45,7 +45,7 @@ No development session should begin without reviewing the governance documents.
 - Current Version: 1.0.0 planned
 - Current Phase: Phase 1 - Foundation
 - Phase Status: In Progress
-- Last Updated: 2026-06-15
+- Last Updated: 2026-06-20
 
 ## Overall Progress
 
@@ -110,18 +110,37 @@ Establish the plugin foundation so modules can load safely, requirements can fai
 - Completed: Add module and widget toggle storage.
 - Completed: Add read-only diagnostics foundation.
 - Completed: Run Phase 1 security review.
+- Completed: Run browser-based WordPress admin functional validation.
 
 ## Current Phase Progress
 
 - Implemented Phase 1 foundation code for plugin bootstrap, service container, activation, upgrades, capabilities, settings, admin menu, diagnostics, and module toggles.
 - PHP syntax checks pass for all plugin PHP files.
-- Code review finding was fixed and review verdict is PASS.
+- Initial Phase 1 foundation code review finding was fixed and review verdict is PASS.
 - Phase 1 testing report was created with PASS WITH MINOR ISSUES; PHP syntax, Composer validation, Composer lint, and WordPress runtime smoke validation pass.
 - Composer dependencies are installed and `vendor/bin/phpcs` is available.
 - PHPCS is aligned with the project's PSR-4 file naming policy and passes.
 - Latest re-run confirms `composer lint` and `composer phpcs` both pass.
 - Phase 1 security review was created with PASS verdict and no required fixes.
-- Phase 1 must not be marked complete until detailed admin validation, final release summary, dashboards, and acceptance criteria verification are complete.
+- Browser-based WordPress admin validation passed 22 of 22 checks for admin login, settings pages, diagnostics, module toggles, widget settings save, and Header/Footer Builder disabled behavior.
+- Fixed Header/Footer template metabox interactivity by using the classic editor for `apro_template`.
+- Metabox revalidation passed 8 of 8 checks for visibility, collapse/expand, condition checkbox toggling, template type selection, and Elementor edit button availability.
+- Moved Header/Footer template display conditions into a UAE-style `Display On` row directly below `Type of Template`.
+- Display Conditions layout validation passed 6 of 6 desktop browser checks for row order, label/control columns, condition card placement, and Elementor edit button availability.
+- Forced the Header/Footer template settings metabox into the main editor column even when a user account previously saved it in the sidebar.
+- Forced-position validation passed 6 of 6 browser checks and confirmed the metabox renders in `normal-sortables`.
+- Implemented a UAE-style Header/Footer display rule builder with `Display On`, `Do Not Display On`, and `User Roles` rows.
+- Added shared Header/Footer rule helpers for grouped rule options, sanitization, user role rules, and legacy condition compatibility.
+- Header/Footer condition evaluation now supports Blog Page, All Categories, Specific Category, UAE-style specific target tokens, exclusion rows, and user role rules.
+- Static validation for the UAE-style rule builder passed: `composer lint`, `composer phpcs`, `node --check assets/js/header-footer-admin.js`, and `git diff --check`.
+- Header/Footer rule builder code review was created with PASS WITH MINOR FIXES verdict.
+- Removed the Header/Footer template Language setting from UI, resolver code, admin columns, registered meta, and page override labels.
+- Added schema version `2` cleanup for legacy `_apro_language` post meta.
+- Local database cleanup was verified with WP-CLI: schema version is `2` and `_apro_language` meta count is `0`.
+- Browser validation for the new UAE-style rule builder remains pending.
+- Runtime baseline observed during admin validation: WordPress 7.0 and Elementor Free 4.1.3.
+- Temporary validation user `codex_admin` was deleted after browser testing.
+- Phase 1 must not be marked complete until exact minimum version baselines, final release summary, dashboards, and acceptance criteria verification are complete.
 
 ## Dependencies
 
@@ -163,8 +182,9 @@ Phase 2 - Elementor Integration
 
 ## Current Implementation Issues
 
-- Phase 1 code requires detailed WordPress admin functional validation for settings, diagnostics, notices, and module disabled behavior.
 - Exact minimum supported WordPress and Elementor Free versions remain pending decisions.
+- Header/Footer rule builder review requires minor fixes or explicit decisions for legacy empty condition behavior, specific target search/copy behavior, and User Roles scope documentation.
+- Browser validation for the newly implemented UAE-style Header/Footer rule builder remains pending.
 
 ## Pending Decisions
 
@@ -227,6 +247,13 @@ Phase 2 - Elementor Integration
 - 2026-06-15: Resolved remaining PHPCS findings and confirmed `composer phpcs` passes.
 - 2026-06-15: Re-ran `composer lint` and `composer phpcs`; both checks pass.
 - 2026-06-15: Created Phase 1 foundation security review report with PASS verdict and no required fixes.
+- 2026-06-15: Completed browser-based WordPress admin validation for Phase 1 with 22 of 22 checks passing.
+- 2026-06-15: Fixed Header/Footer template metabox interactivity and verified metabox controls with 8 of 8 browser checks passing.
+- 2026-06-15: Moved Header/Footer template display conditions to a UAE-style Display On row and verified the layout with 6 of 6 browser checks passing.
+- 2026-06-15: Forced the Header/Footer template settings metabox into the main editor column and verified the position with 6 of 6 browser checks passing.
+- 2026-06-15: Implemented UAE-style Header/Footer display rule builder rows for Display On, Do Not Display On, and User Roles with shared rule sanitization and condition evaluation support.
+- 2026-06-15: Created Header/Footer rule builder code review report with PASS WITH MINOR FIXES verdict.
+- 2026-06-20: Removed Header/Footer template Language setting from UI, code, registered meta, and local database metadata.
 
 ## Status Rules
 

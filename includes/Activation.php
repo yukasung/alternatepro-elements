@@ -29,6 +29,8 @@ final class Activation {
 		$settings = new SettingsRepository();
 		$settings->ensure_defaults();
 
+		Upgrades::delete_header_footer_language_meta();
+
 		update_option( Upgrades::SCHEMA_OPTION, APRO_ELEMENTS_SCHEMA_VERSION, false );
 
 		flush_rewrite_rules();

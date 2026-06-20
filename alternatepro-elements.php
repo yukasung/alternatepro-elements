@@ -15,7 +15,7 @@
 defined( 'ABSPATH' ) || exit;
 
 define( 'APRO_ELEMENTS_VERSION', '1.0.0' );
-define( 'APRO_ELEMENTS_SCHEMA_VERSION', '1' );
+define( 'APRO_ELEMENTS_SCHEMA_VERSION', '2' );
 define( 'APRO_ELEMENTS_FILE', __FILE__ );
 define( 'APRO_ELEMENTS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'APRO_ELEMENTS_URL', plugin_dir_url( __FILE__ ) );

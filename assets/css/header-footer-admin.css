@@ -1,54 +1,117 @@
-.apro-hfb-grid {
+.apro-hfb-options {
+	border-top: 1px solid #dcdcde;
+	margin: -6px -12px -12px;
+}
+
+.apro-hfb-option-row {
 	display: grid;
-	grid-template-columns: repeat(4, minmax(0, 1fr));
-	gap: 16px;
-	margin: 4px 0 18px;
+	grid-template-columns: 220px minmax(0, 1fr);
+	border-bottom: 1px solid #dcdcde;
+	min-height: 70px;
 }
 
-.apro-hfb-grid label {
-	display: block;
-	margin-bottom: 6px;
+.apro-hfb-option-row:last-child {
+	border-bottom: 0;
 }
 
-.apro-hfb-grid select,
-.apro-hfb-grid input[type="number"] {
+.apro-hfb-option-label {
+	background: #f6f7f7;
+	border-right: 1px solid #dcdcde;
+	color: #1d2327;
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	font-weight: 600;
+	padding: 18px 16px;
+}
+
+.apro-hfb-option-label .dashicons {
+	color: #646970;
+	cursor: help;
+	font-size: 16px;
+	height: 16px;
+	line-height: 16px;
+	width: 16px;
+}
+
+.apro-hfb-option-control {
+	padding: 16px;
+}
+
+.apro-hfb-option-control select,
+.apro-hfb-option-control input[type="number"],
+.apro-hfb-option-control textarea {
 	width: 100%;
 }
 
-.apro-hfb-conditions {
-	display: grid;
-	grid-template-columns: repeat(2, minmax(0, 1fr));
-	gap: 12px;
+.apro-hfb-rule,
+.apro-hfb-user-role-rule {
+	position: relative;
+	margin: 0 0 10px;
+	padding-right: 30px;
+}
+
+.apro-hfb-rule:last-child,
+.apro-hfb-user-role-rule:last-child {
+	margin-bottom: 0;
+}
+
+.apro-hfb-rule-select-wrap,
+.apro-hfb-rule-value-wrap {
+	width: 100%;
+}
+
+.apro-hfb-rule-value-wrap {
+	margin-top: 8px;
+}
+
+.apro-hfb-rule-value-wrap .description {
+	margin: 6px 0 0;
+}
+
+.apro-hfb-remove-rule,
+.apro-hfb-remove-user-rule {
+	position: absolute;
+	right: 0;
+	top: 7px;
+	color: #646970;
+	text-decoration: none;
+}
+
+.apro-hfb-remove-rule:hover,
+.apro-hfb-remove-user-rule:hover {
+	color: #b32d2e;
+}
+
+.apro-hfb-rule-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
 	margin-top: 12px;
 }
 
-.apro-hfb-condition {
-	border: 1px solid #dcdcde;
-	border-radius: 4px;
-	padding: 12px;
-	background: #fff;
-}
-
-.apro-hfb-condition label {
-	display: flex;
-	gap: 8px;
-	align-items: flex-start;
-	font-weight: 600;
-}
-
-.apro-hfb-condition textarea {
-	width: 100%;
-	margin-top: 10px;
-}
-
-.apro-hfb-condition textarea:disabled {
-	background: #f6f7f7;
-	color: #646970;
+.apro-is-hidden {
+	display: none !important;
 }
 
 @media (max-width: 960px) {
-	.apro-hfb-grid,
-	.apro-hfb-conditions {
+	.apro-hfb-option-row {
 		grid-template-columns: 1fr;
 	}
+
+	.apro-hfb-option-label {
+		border-right: 0;
+		border-bottom: 1px solid #dcdcde;
+	}
+}
+
+#side-sortables #apro_template_settings .apro-hfb-option-row,
+#side-sortables #apro_template_settings .apro-hfb-rule,
+#side-sortables #apro_template_settings .apro-hfb-user-role-rule {
+	grid-template-columns: 1fr;
+}
+
+#side-sortables #apro_template_settings .apro-hfb-option-label {
+	border-right: 0;
+	border-bottom: 1px solid #dcdcde;
 }

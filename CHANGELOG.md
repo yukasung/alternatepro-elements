@@ -26,11 +26,20 @@ The format is based on Keep a Changelog.
 * Dashboard documentation structure for HTML project visualization.
 * Phase 1 foundation implementation for bootstrap, service container, activation, upgrades, capabilities, settings, admin menu, diagnostics, and module toggles.
 * Phase 1 foundation testing report with static and CLI validation results.
+* Phase 1 browser-based WordPress admin validation results.
 * Phase 1 foundation security review report with PASS verdict.
 * Composer lockfile and installed development dependencies for project-local PHPCS tooling.
+* UAE-style Header/Footer display rule builder with Display On, Do Not Display On, and User Roles rule rows.
+* Shared Header/Footer `RuleOptions` helper for rule labels, sanitization, user role rules, and legacy condition compatibility.
 
 ### Changed
 
+* Replaced Header/Footer condition checkbox cards with UAE-style add/remove rule rows.
+* Updated Header/Footer condition evaluation to support Blog Page, All Categories, Specific Category, UAE-style specific target tokens, exclusion rules, and user role rules.
+* Changed empty Header/Footer display rule sets to not render templates automatically.
+* Moved Header/Footer template Display Conditions into a UAE-style `Display On` row below Type of Template.
+* Forced the Header/Footer template settings metabox into the main editor column when user preferences previously placed it in the sidebar.
+* Bumped the plugin schema version to remove legacy Header/Footer template language metadata.
 * Clarified v1.0 changelog scope by separating required, conditional, and deferred features.
 * Updated EditorConfig PHP, JavaScript, and CSS indentation to align with WordPress Coding Standards.
 * Standardized PHPCS configuration naming on `phpcs.xml`.
@@ -43,7 +52,12 @@ The format is based on Keep a Changelog.
 ### Fixed
 
 * Hid Theme Builder admin menu, tab, and links when the Header/Footer Builder module is disabled.
+* Fixed Header/Footer template metabox interactivity by using the classic editor for the `apro_template` post type while keeping Elementor editing available.
 * Resolved remaining PHPCS findings after aligning PHPCS configuration with PSR-4 class filenames.
+
+### Removed
+
+* Removed the Header/Footer template Language setting from the template settings UI, admin columns, matching logic, page override labels, registered meta, and local database metadata.
 
 ### Security
 

@@ -18,7 +18,7 @@ final class Module {
 	public const STATUS_META     = '_apro_template_status';
 	public const PRIORITY_META   = '_apro_template_priority';
 	public const CONDITIONS_META = '_apro_display_conditions';
-	public const LANGUAGE_META   = '_apro_language';
+	public const USER_ROLES_META = '_apro_user_roles';
 
 	public const PAGE_HEADER_META = '_apro_page_header_template';
 	public const PAGE_FOOTER_META = '_apro_page_footer_template';
@@ -29,15 +29,14 @@ final class Module {
 	 * @return void
 	 */
 	public function init() {
-		$language_resolver = new LanguageResolver();
-		$conditions        = new Conditions( $language_resolver );
-		$assets            = new Assets();
-		$page_override     = new PageOverride( $language_resolver );
+		$conditions    = new Conditions();
+		$assets        = new Assets();
+		$page_override = new PageOverride();
 
 		( new PostType() )->init();
-		( new MetaBox( $language_resolver ) )->init();
+		( new MetaBox() )->init();
 		$page_override->init();
-		( new AdminColumns( $language_resolver ) )->init();
+		( new AdminColumns() )->init();
 		$assets->init();
 		( new Renderer( $conditions, $page_override, $assets ) )->init();
 	}
@@ -72,21 +71,7 @@ final class Module {
 	 * @return array<string,string>
 	 */
 	public static function condition_types() {
-		return array(
-			'entire_site'       => __( 'Entire Site', 'alternatepro-elements' ),
-			'front_page'        => __( 'Front Page', 'alternatepro-elements' ),
-			'all_pages'         => __( 'All Pages', 'alternatepro-elements' ),
-			'specific_pages'    => __( 'Specific Pages', 'alternatepro-elements' ),
-			'all_posts'         => __( 'All Posts', 'alternatepro-elements' ),
-			'specific_posts'    => __( 'Specific Posts', 'alternatepro-elements' ),
-			'archives'          => __( 'Archives', 'alternatepro-elements' ),
-			'search_results'    => __( 'Search Results', 'alternatepro-elements' ),
-			'404_page'          => __( '404 Page', 'alternatepro-elements' ),
-			'url_path_starts'   => __( 'URL Path Starts With', 'alternatepro-elements' ),
-			'url_path_contains' => __( 'URL Path Contains', 'alternatepro-elements' ),
-			'exclude_pages'     => __( 'Exclude Specific Pages', 'alternatepro-elements' ),
-			'exclude_posts'     => __( 'Exclude Specific Posts', 'alternatepro-elements' ),
-		);
+		return RuleOptions::location_options();
 	}
 
 	/**

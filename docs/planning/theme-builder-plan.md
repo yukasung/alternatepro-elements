@@ -34,7 +34,7 @@ Recommended metadata:
 - Template status.
 - Template priority.
 - Display conditions.
-- Optional language context for future multilingual compatibility.
+- Language-specific template selection is excluded from v1.0.
 
 ## Template Types
 

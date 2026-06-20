@@ -88,6 +88,14 @@ final class Assets {
 			$this->asset_version( 'assets/js/header-footer-admin.js' ),
 			true
 		);
+
+		wp_localize_script(
+			self::ADMIN_SCRIPT,
+			'aproHeaderFooterRules',
+			array(
+				'valueRuleTypes' => RuleOptions::value_rule_types(),
+			)
+		);
 	}
 
 	/**

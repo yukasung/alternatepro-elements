@@ -50,7 +50,7 @@ final class PostType {
 				'public'              => false,
 				'show_ui'             => true,
 				'show_in_menu'        => true,
-				'show_in_rest'        => true,
+				'show_in_rest'        => false,
 				'exclude_from_search' => true,
 				'publicly_queryable'  => false,
 				'query_var'           => false,
@@ -134,19 +134,6 @@ final class PostType {
 				'show_in_rest'      => true,
 				'default'           => '',
 				'sanitize_callback' => 'sanitize_textarea_field',
-				'auth_callback'     => array( __CLASS__, 'can_edit_meta' ),
-			)
-		);
-
-		register_post_meta(
-			Module::POST_TYPE,
-			Module::LANGUAGE_META,
-			array(
-				'type'              => 'string',
-				'single'            => true,
-				'show_in_rest'      => true,
-				'default'           => 'all',
-				'sanitize_callback' => 'sanitize_key',
 				'auth_callback'     => array( __CLASS__, 'can_edit_meta' ),
 			)
 		);

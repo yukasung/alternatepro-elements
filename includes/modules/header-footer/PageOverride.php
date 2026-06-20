@@ -16,22 +16,6 @@ defined( 'ABSPATH' ) || exit;
  */
 final class PageOverride {
 	/**
-	 * Language resolver.
-	 *
-	 * @var LanguageResolver
-	 */
-	private $language_resolver;
-
-	/**
-	 * Constructor.
-	 *
-	 * @param LanguageResolver $language_resolver Language resolver.
-	 */
-	public function __construct( LanguageResolver $language_resolver ) {
-		$this->language_resolver = $language_resolver;
-	}
-
-	/**
 	 * Register hooks.
 	 *
 	 * @return void
@@ -225,12 +209,7 @@ final class PageOverride {
 		$templates = array();
 
 		foreach ( array_map( 'absint', $query->posts ) as $template_id ) {
-			$language                  = get_post_meta( $template_id, Module::LANGUAGE_META, true );
-			$templates[ $template_id ] = sprintf(
-				'%1$s (%2$s)',
-				get_the_title( $template_id ),
-				$this->language_resolver->get_label( $language ? $language : 'all' )
-			);
+			$templates[ $template_id ] = get_the_title( $template_id );
 		}
 
 		return $templates;

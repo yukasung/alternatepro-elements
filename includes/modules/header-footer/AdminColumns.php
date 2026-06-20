@@ -14,22 +14,6 @@ defined( 'ABSPATH' ) || exit;
  */
 final class AdminColumns {
 	/**
-	 * Language resolver.
-	 *
-	 * @var LanguageResolver
-	 */
-	private $language_resolver;
-
-	/**
-	 * Constructor.
-	 *
-	 * @param LanguageResolver $language_resolver Language resolver.
-	 */
-	public function __construct( LanguageResolver $language_resolver ) {
-		$this->language_resolver = $language_resolver;
-	}
-
-	/**
 	 * Register hooks.
 	 *
 	 * @return void
@@ -56,7 +40,6 @@ final class AdminColumns {
 			if ( 'title' === $key ) {
 				$new['apro_template_type'] = __( 'Template Type', 'alternatepro-elements' );
 				$new['apro_status']        = __( 'Status', 'alternatepro-elements' );
-				$new['apro_language']      = __( 'Language', 'alternatepro-elements' );
 				$new['apro_priority']      = __( 'Priority', 'alternatepro-elements' );
 				$new['apro_conditions']    = __( 'Conditions', 'alternatepro-elements' );
 				$new['apro_hook_info']     = __( 'Hook Info', 'alternatepro-elements' );
@@ -85,12 +68,6 @@ final class AdminColumns {
 				echo esc_html( Module::label_for( Module::statuses(), get_post_meta( $post_id, Module::STATUS_META, true ) ) );
 				break;
 
-			case 'apro_language':
-				$language = get_post_meta( $post_id, Module::LANGUAGE_META, true );
-				$language = ! empty( $language ) ? $language : 'all';
-				echo esc_html( $this->language_resolver->get_label( $language ) );
-				break;
-
 			case 'apro_priority':
 				echo esc_html( absint( get_post_meta( $post_id, Module::PRIORITY_META, true ) ) );
 				break;
@@ -115,7 +92,6 @@ final class AdminColumns {
 	public function sortable_columns( $columns ) {
 		$columns['apro_template_type'] = 'apro_template_type';
 		$columns['apro_status']        = 'apro_status';
-		$columns['apro_language']      = 'apro_language';
 		$columns['apro_priority']      = 'apro_priority';
 
 		return $columns;
@@ -136,7 +112,6 @@ final class AdminColumns {
 		$map     = array(
 			'apro_template_type' => Module::TYPE_META,
 			'apro_status'        => Module::STATUS_META,
-			'apro_language'      => Module::LANGUAGE_META,
 			'apro_priority'      => Module::PRIORITY_META,
 		);
 
