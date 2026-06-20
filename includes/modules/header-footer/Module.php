@@ -33,8 +33,11 @@ final class Module {
 		$page_override = new PageOverride();
 
 		( new PostType() )->init();
+		( new EditorScreen() )->init();
+		( new Preview() )->init();
 		( new MetaBox() )->init();
 		$page_override->init();
+		( new ThemeCompatibility( $conditions, $page_override ) )->init();
 		( new AdminColumns() )->init();
 		( new TargetSearch() )->init();
 		$assets->init();

@@ -55,7 +55,18 @@ Revalidated on 2026-06-15 after documentation workflow updates.
 - Header/Footer Display On target search results were refined on 2026-06-20 to remove link-style underlines and indent result items below group labels.
 - Header/Footer Display On target search ordering was fixed on 2026-06-20 so Posts and Pages are searched first and Pages are not dropped by the global result cap.
 - Header/Footer Display On target search was updated on 2026-06-20 to include draft Posts and Pages for users with edit permissions.
-- Browser validation for the new UAE-style rule builder remains pending.
+- Demo Content runtime import was completed on 2026-06-20 and created 9 pages, 8 posts, 4 categories, 5 tags, 4 menus, 22 menu items, 4 placeholder images, and 2 plugin custom post type samples.
+- Demo Content duplicate prevention was verified by running the importer a second time with zero new records created.
+- Demo Content generated posts and pages were verified to have placeholder featured images.
+- Demo Content admin form/tab was removed from the plugin UI after the local data import.
+- Header/Footer template edit screen was updated on 2026-06-20 to use Elementor's active switch panel by default while hiding the native WordPress content editor UI.
+- Header/Footer templates keep `editor` and `elementor` post type support so Elementor Free can render its edit panel correctly.
+- Header/Footer Elementor edit-panel update passed PHP syntax checks, JavaScript syntax check, PHPCS, Composer lint, Composer PHPCS, and `git diff --check`.
+- Header/Footer Elementor preview 404 errors were fixed on 2026-06-20 by making `apro_template` publicly queryable, loading Elementor's canvas template for template previews, and blocking direct frontend access for non-editors.
+- Header/Footer preview fix passed PHP syntax checks, JavaScript syntax check, PHPCS, Composer lint, Composer PHPCS, `git diff --check`, and HTTP redirect validation.
+- Active Header/Footer frontend rendering was fixed on 2026-06-20 by adding an HFE/UAE-style theme compatibility layer that replaces the active theme header/footer template when a matching AlternatePro template is active.
+- Headless Chrome frontend validation confirmed active Header template `142` renders `.apro-header-footer-template--header` and Elementor content `Header 2` before the main content.
+- Browser validation for the latest UAE-style rule builder and Elementor edit-panel layout remains pending.
 
 ## Functional Test Results
 
@@ -102,9 +113,18 @@ Revalidated on 2026-06-15 after documentation workflow updates.
 - Passed by static validation: Header/Footer Display On search result buttons no longer use WordPress link styling and have UAE-style result indentation.
 - Passed by static validation: Header/Footer Display On target search now forces Posts and Pages into the first search groups and removes the global result cap that could hide Pages.
 - Passed by static validation: Header/Footer Display On target search includes draft Posts and Pages only when the current user can edit the corresponding content type.
+- Passed by runtime validation: Demo Content importer generated pages, posts, categories, tags, menus, menu items, placeholder images, and plugin custom post type samples.
+- Passed by runtime validation: Demo Content importer avoided duplicates on a second import run.
+- Passed by runtime validation: generated demo posts and pages have placeholder featured images.
+- Passed by runtime validation: Header/Footer template post type supports both `editor` and `elementor`.
+- Passed by static validation: Header/Footer template edit CSS and JavaScript hide the native content editor UI and force Elementor's active edit panel for `apro_template` screens.
+- Passed by HTTP validation: `?post_type=apro_template&p=142` now resolves to the canonical `?apro_template=header-2` URL instead of returning 404.
+- Passed by HTTP validation: unauthenticated direct access to `?apro_template=header-1` redirects to the home page, preserving public access blocking.
+- Passed by browser validation: an active Header/Footer template with `Entire Website` display condition renders on the frontend through the theme compatibility wrapper.
+- Passed by browser validation: active Header template `142` outputs `.apro-header-footer-template--header` and Elementor content `Header 2` before the main content.
 - Not executed in runtime: plugin activation flow from inactive to active in WordPress admin.
 - Not executed in runtime: dependency notices for missing or unsupported Elementor.
-- Not executed in browser runtime: UAE-style rule builder add/remove interactions, specific target search/select behavior, chip removal, save flow, and reload behavior after the latest implementation because the local WordPress database connection is currently failing through WP-CLI/browser automation.
+- Not executed in browser runtime: UAE-style rule builder add/remove interactions, Elementor edit-panel visual layout, specific target search/select behavior, chip removal, save flow, and reload behavior after the latest implementation because browser automation is unavailable in the current session and some PHP CLI WordPress database checks still return connection errors.
 
 ### Environment Validation
 
@@ -121,7 +141,11 @@ Revalidated on 2026-06-15 after documentation workflow updates.
 
 ### Frontend Output
 
-No new frontend output is included in Phase 1. Frontend rendering for widgets and Theme Builder templates remains excluded until later phases.
+Header/Footer frontend output is now included for active Header/Footer templates.
+
+- Active Header templates can replace the theme header template when conditions match.
+- Active Footer templates can replace the theme footer template when conditions match.
+- Headless Chrome validation confirmed Header template `142` renders before the main content on the local Hello Elementor site.
 
 ### Backend Functionality
 
@@ -182,6 +206,7 @@ Runtime integration checks completed:
 - The template settings metabox remains in the main `normal-sortables` column after simulating a sidebar user preference.
 - Temporary validation user was deleted after testing.
 - Latest UAE-style rule builder browser integration validation remains pending.
+- Active Header/Footer frontend rendering integration passed in headless Chrome for the local Hello Elementor site.
 
 Runtime integration checks still pending:
 
@@ -208,7 +233,7 @@ Current pending validation:
 - Header/Footer template metabox placement was verified after simulating a saved sidebar position.
 - Header/Footer rule builder PHP, CSS, and JavaScript changes pass static regression checks.
 - No previously completed implementation phase exists before Phase 1, so regression scope is limited to existing plugin files and documentation.
-- Existing template rendering behavior was not runtime-tested in this pass.
+- Existing Header/Footer template rendering behavior was runtime-tested in headless Chrome and confirmed working for an active Header template.
 
 ## Risks
 

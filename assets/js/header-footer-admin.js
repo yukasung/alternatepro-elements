@@ -524,7 +524,24 @@
 		}
 	}
 
+	function forceTemplateElementorMode() {
+		var switchModeInput = document.getElementById("elementor-switch-mode-input");
+
+		if (!document.body.classList.contains("post-type-apro_template")) {
+			return;
+		}
+
+		document.body.classList.remove("elementor-editor-inactive");
+		document.body.classList.add("elementor-editor-active");
+
+		if (switchModeInput) {
+			switchModeInput.value = "1";
+		}
+	}
+
 	function init() {
+		forceTemplateElementorMode();
+
 		document.querySelectorAll(".apro-hfb-rule-builder--locations").forEach(initLocationBuilder);
 
 		document.addEventListener("click", function (event) {

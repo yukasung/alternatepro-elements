@@ -47,8 +47,8 @@ final class MetaBox {
 	 *
 	 * WordPress stores metabox positions per user, so a box moved to the side
 	 * column can stay there across reloads. This metabox contains wide controls
-	 * and condition cards, matching Header/Footer builder plugins that render
-	 * template settings below the editor instead of in the sidebar.
+	 * and condition controls, matching Header/Footer builder plugins that keep
+	 * template settings in the main edit area instead of in the sidebar.
 	 *
 	 * @param mixed $order User metabox order.
 	 * @return array<string,string>

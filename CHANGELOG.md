@@ -34,6 +34,8 @@ The format is based on Keep a Changelog.
 * Shared Header/Footer `RuleOptions` helper for rule labels, sanitization, and legacy condition compatibility.
 * UAE-style chip/token picker with admin AJAX target search for Header/Footer specific display rules.
 * UAE-style grouped target search results with minimum-character feedback for Header/Footer specific display rules.
+* HFE/UAE-style theme compatibility wrappers for active Header/Footer template rendering.
+* Local WordPress demo content for widget testing, including pages, posts, categories, tags, menus, placeholder featured images, and plugin custom post type samples.
 
 ### Changed
 
@@ -48,6 +50,9 @@ The format is based on Keep a Changelog.
 * Refined the Header/Footer specific target picker layout to match UAE-style selected chips, search focus state, and grouped dropdown results.
 * Removed the inner border from the Header/Footer Display On target search input to better match the UAE plugin field styling.
 * Removed link-style underlines from Header/Footer Display On target search results and added UAE-style result indentation.
+* Updated Header/Footer template editing to use Elementor's active switch panel by default and hide the native WordPress content editor UI.
+* Updated Header/Footer template preview handling so Elementor can load template previews through a queryable template URL and Elementor canvas template.
+* Updated Header/Footer frontend rendering to replace the active theme header/footer template when a matching AlternatePro template is active.
 * Clarified v1.0 changelog scope by separating required, conditional, and deferred features.
 * Updated EditorConfig PHP, JavaScript, and CSS indentation to align with WordPress Coding Standards.
 * Standardized PHPCS configuration naming on `phpcs.xml`.
@@ -65,12 +70,15 @@ The format is based on Keep a Changelog.
 * Replaced placeholder-only Header/Footer specific target behavior with real AJAX search/autocomplete, selected target chips, and token insertion.
 * Fixed Header/Footer Display On target search so Posts and Pages are searched first and Pages are not dropped by the global result limit.
 * Fixed Header/Footer Display On target search to include draft Posts and Pages for users with edit permissions.
+* Fixed Elementor editor preview 404 errors for Header/Footer templates by making `apro_template` publicly queryable while blocking direct frontend access for non-editors.
+* Fixed active Header/Footer templates not appearing on the frontend after being set to Active.
 * Resolved remaining PHPCS findings after aligning PHPCS configuration with PSR-4 class filenames.
 
 ### Removed
 
 * Removed the Header/Footer template Language setting from the template settings UI, admin columns, matching logic, page override labels, registered meta, and local database metadata.
 * Removed Header/Footer template User Roles targeting from the template settings UI, condition matching, helper code, JavaScript, CSS, and legacy database metadata.
+* Removed the Demo Content import/remove form from the AlternatePro admin UI after importing the local demo content.
 
 ### Security
 

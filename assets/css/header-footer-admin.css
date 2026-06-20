@@ -264,6 +264,101 @@ input.apro-hfb-target-search[type="search"]:focus {
 	margin-top: 12px;
 }
 
+body.post-type-apro_template #postdivrich {
+	display: none !important;
+}
+
+body.post-type-apro_template #elementor-switch-mode {
+	margin: 14px 0 15px;
+}
+
+body.post-type-apro_template #elementor-switch-mode-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 260px;
+	min-height: 48px;
+	background: #f7f7f7;
+	border-color: #dcdcde;
+	box-shadow: none !important;
+	color: #555;
+	font-weight: 600;
+	text-shadow: none;
+}
+
+body.post-type-apro_template #elementor-switch-mode-button:hover,
+body.post-type-apro_template #elementor-switch-mode-button:focus {
+	background: #f0f0f1;
+	border-color: #c3c4c7;
+	color: #3c434a;
+}
+
+body.post-type-apro_template #elementor-switch-mode-button .elementor-switch-mode-on {
+	display: inline-flex !important;
+	align-items: center;
+	gap: 4px;
+}
+
+body.post-type-apro_template #elementor-switch-mode-button .elementor-switch-mode-off {
+	display: none !important;
+}
+
+body.post-type-apro_template #elementor-editor {
+	position: relative;
+	display: flex !important;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
+	width: 100%;
+	height: 300px;
+	margin: 0 0 18px;
+	background: #fff;
+	border: 1px solid #dcdcde;
+}
+
+body.post-type-apro_template #elementor-go-to-edit-page-link {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: auto;
+	height: auto;
+	background: transparent;
+	border: 0;
+	box-shadow: none;
+	font-family: inherit;
+	outline: 0;
+	text-decoration: none;
+}
+
+body.post-type-apro_template #elementor-go-to-edit-page-link:hover,
+body.post-type-apro_template #elementor-go-to-edit-page-link:focus {
+	background: transparent;
+	border: 0;
+	box-shadow: none;
+	outline: 0;
+}
+
+body.post-type-apro_template #elementor-editor-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 214px;
+	min-height: 48px;
+	background: #3f5af6;
+	border-color: #3f5af6;
+	box-shadow: none;
+	color: #fff;
+	font-weight: 600;
+	text-shadow: none;
+}
+
+body.post-type-apro_template #elementor-editor-button:hover,
+body.post-type-apro_template #elementor-editor-button:focus {
+	background: #2448f2;
+	border-color: #2448f2;
+	color: #fff;
+}
+
 .apro-is-hidden {
 	display: none !important;
 }

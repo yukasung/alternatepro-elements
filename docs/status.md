@@ -153,7 +153,20 @@ Establish the plugin foundation so modules can load safely, requirements can fai
 - Header/Footer User Roles removal testing passed with minor issues limited to unavailable browser/runtime validation while the local WordPress database is unavailable.
 - Header/Footer User Roles removal security review passed with no required fixes.
 - Header/Footer User Roles removal refactor review completed with no refactor needed.
-- Browser validation for the new UAE-style rule builder remains pending.
+- Header/Footer template edit screen now uses Elementor's active switch panel by default and hides the native WordPress content editor UI.
+- Header/Footer templates keep `editor` and `elementor` post type support so Elementor Free can render its edit panel correctly.
+- Header/Footer Elementor edit-panel update passed PHP syntax checks, JavaScript syntax check, PHPCS, Composer lint, Composer PHPCS, and `git diff --check`.
+- Fixed Header/Footer Elementor preview 404 errors by making `apro_template` publicly queryable, loading Elementor's canvas template for template previews, and redirecting non-editors away from direct template frontend access.
+- Header/Footer preview fix passed PHP syntax checks, JavaScript syntax check, PHPCS, Composer lint, Composer PHPCS, and `git diff --check`.
+- HTTP validation confirms `?post_type=apro_template&p=142` now resolves to the canonical `?apro_template=header-2` URL instead of returning 404; unauthenticated direct access redirects to the home page.
+- Fixed active Header/Footer templates not appearing on the frontend by adding an HFE/UAE-style theme compatibility layer that replaces active theme header/footer templates when a matching AlternatePro template is active.
+- Header/Footer frontend rendering validation passed in headless Chrome: active Header template `142` with `Entire Website` condition outputs `.apro-header-footer-template--header` and Elementor content `Header 2` before the main content.
+- Demo content was imported into the local WordPress database: 9 pages, 8 posts, 4 categories, 5 tags, 4 menus, 22 menu items, 4 placeholder images, and 2 plugin custom post type samples.
+- Demo content duplicate prevention was verified by running the importer a second time with zero new records created.
+- Demo content featured image coverage was verified for generated posts and pages.
+- Demo Content admin form/tab was removed from the plugin UI after the local data import.
+- Browser validation for the latest UAE-style rule builder and Elementor edit-panel layout remains pending.
+- Browser validation for active Header/Footer frontend rendering passed after adding theme compatibility wrappers.
 - Runtime baseline observed during admin validation: WordPress 7.0 and Elementor Free 4.1.3.
 - Temporary validation user `codex_admin` was deleted after browser testing.
 - Phase 1 must not be marked complete until exact minimum version baselines, final release summary, dashboards, and acceptance criteria verification are complete.
@@ -203,6 +216,7 @@ Phase 2 - Elementor Integration
 - Runtime verification for the schema `3` empty condition migration is pending until WordPress database connectivity is available again.
 - Runtime verification for the schema `4` User Roles metadata cleanup is pending until WordPress database connectivity is available again.
 - Browser validation for the newly implemented UAE-style Header/Footer rule builder, including absence of User Roles controls, remains pending.
+- Active Header/Footer frontend output now passes browser validation for Hello Elementor using theme wrapper replacement.
 
 ## Pending Decisions
 
@@ -281,6 +295,12 @@ Phase 2 - Elementor Integration
 - 2026-06-20: Updated Header/Footer Display On target search to include draft Posts and Pages for users with edit permissions.
 - 2026-06-20: Removed Header/Footer User Roles targeting from v1.0 scope and added schema `4` cleanup for legacy `_apro_user_roles` metadata.
 - 2026-06-20: Completed Header/Footer User Roles removal review, testing, security, refactor, and dashboard documentation updates.
+- 2026-06-20: Generated WordPress sample content used in widget testing.
+- 2026-06-20: Imported AlternatePro demo content into the local WordPress database and verified duplicate prevention.
+- 2026-06-20: Removed the Demo Content import/remove form from the AlternatePro admin UI after completing the local demo content import.
+- 2026-06-20: Updated Header/Footer template add/edit screens to use Elementor's active switch panel by default while hiding the native WordPress content editor UI.
+- 2026-06-20: Fixed Header/Footer Elementor preview 404 errors by enabling queryable template previews with Elementor canvas and frontend access blocking for non-editors.
+- 2026-06-20: Fixed active Header/Footer templates not appearing on the frontend by adding HFE/UAE-style theme compatibility wrappers and validating Header template output in headless Chrome.
 
 ## Status Rules
 

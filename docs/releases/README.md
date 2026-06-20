@@ -17,6 +17,7 @@ No release has been prepared yet. v1.0 release criteria are currently defined in
 - [Commands Reference Summary](commands-reference-summary.md)
 - [Context Document Summary](context-document-summary.md)
 - [Dashboard Structure Summary](dashboard-structure-summary.md)
+- [Demo Content Import Summary](demo-content-import-summary.md)
 - [Composer Setup Summary](composer-setup-summary.md)
 - [Documentation Update Summary](documentation-update-summary.md)
 - [Development Rules Update Summary](development-rules-update-summary.md)

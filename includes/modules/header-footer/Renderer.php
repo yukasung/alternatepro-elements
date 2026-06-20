@@ -62,6 +62,10 @@ final class Renderer {
 	public function init() {
 		add_action( 'alternatepro_header', array( $this, 'render_header' ), 5 );
 		add_action( 'alternatepro_footer', array( $this, 'render_footer' ), 5 );
+		add_action( 'wp_body_open', array( $this, 'render_header' ), 5 );
+		add_action( 'wp_footer', array( $this, 'render_footer' ), 5 );
+		add_action( 'apro_header_footer_header', array( $this, 'render_header' ), 5 );
+		add_action( 'apro_header_footer_footer', array( $this, 'render_footer' ), 5 );
 	}
 
 	/**
@@ -95,11 +99,10 @@ final class Renderer {
 			return;
 		}
 
-		$this->rendered[ $type ] = true;
-
 		$override = $this->page_override->get_override_template_id( $type );
 
 		if ( 0 === $override ) {
+			$this->rendered[ $type ] = true;
 			do_action( 'apro_header_footer_template_suppressed', $type, absint( get_queried_object_id() ) );
 			return;
 		}
@@ -110,6 +113,8 @@ final class Renderer {
 		if ( ! $template_id || ! Module::is_active_template( $template_id, $type ) || ! $this->can_render_elementor() ) {
 			return;
 		}
+
+		$this->rendered[ $type ] = true;
 
 		$this->assets->enqueue_frontend();
 
