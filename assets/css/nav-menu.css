@@ -1,6 +1,9 @@
 .apro-nav-menu {
 	--ap-nav-accent: currentColor;
 	--ap-nav-gap: 1rem;
+	--ap-nav-link-padding-x: 0;
+	--ap-nav-link-padding-y: 0;
+	--ap-nav-pointer-width: 2px;
 }
 
 .apro-nav-menu .ap-nav {
@@ -23,6 +26,14 @@
 	display: inline-flex;
 	position: relative;
 	text-decoration: none;
+}
+
+.apro-nav-menu .ap-nav > li {
+	position: relative;
+}
+
+.apro-nav-menu .ap-nav > li > a {
+	padding: var(--ap-nav-link-padding-y) var(--ap-nav-link-padding-x);
 }
 
 .ap-nav-layout-horizontal .ap-nav {
@@ -99,11 +110,49 @@
 	width: 100%;
 }
 
+.ap-nav-divider-yes .ap-nav {
+	gap: 0;
+}
+
+.ap-nav-divider-yes.ap-nav-layout-horizontal .ap-nav > li + li {
+	margin-left: var(--ap-nav-gap);
+	padding-left: var(--ap-nav-gap);
+}
+
+.ap-nav-divider-yes.ap-nav-layout-horizontal .ap-nav > li + li::before {
+	background: currentColor;
+	bottom: 20%;
+	content: "";
+	left: 0;
+	opacity: 0.22;
+	position: absolute;
+	top: 20%;
+	width: 1px;
+}
+
+.ap-nav-divider-yes.ap-nav-layout-vertical .ap-nav > li + li,
+.ap-nav-divider-yes.ap-nav-layout-dropdown .ap-nav > li + li {
+	margin-top: var(--ap-nav-gap);
+	padding-top: var(--ap-nav-gap);
+}
+
+.ap-nav-divider-yes.ap-nav-layout-vertical .ap-nav > li + li::before,
+.ap-nav-divider-yes.ap-nav-layout-dropdown .ap-nav > li + li::before {
+	background: currentColor;
+	content: "";
+	height: 1px;
+	left: 0;
+	opacity: 0.22;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
 .ap-nav-pointer-underline .ap-nav a::after {
 	background: var(--ap-nav-accent);
 	bottom: -0.25em;
 	content: "";
-	height: 2px;
+	height: var(--ap-nav-pointer-width);
 	left: 0;
 	opacity: 0;
 	position: absolute;

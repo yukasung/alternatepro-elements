@@ -349,6 +349,174 @@ final class NavMenuWidget extends \Elementor\Widget_Base {
 		);
 
 		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'section_main_menu_style',
+			array(
+				'label' => __( 'Main Menu', 'alternatepro-elements' ),
+				'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
+			)
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			array(
+				'name'     => 'main_menu_typography',
+				'label'    => __( 'Typography', 'alternatepro-elements' ),
+				'selector' => '{{WRAPPER}} .apro-nav-menu .ap-nav > li > a',
+			)
+		);
+
+		$this->start_controls_tabs( 'main_menu_color_tabs' );
+
+		$this->start_controls_tab(
+			'main_menu_color_normal_tab',
+			array(
+				'label' => __( 'Normal', 'alternatepro-elements' ),
+			)
+		);
+
+		$this->add_control(
+			'main_menu_text_color',
+			array(
+				'label'     => __( 'Text Color', 'alternatepro-elements' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .apro-nav-menu .ap-nav > li > a' => 'color: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'main_menu_color_hover_tab',
+			array(
+				'label' => __( 'Hover', 'alternatepro-elements' ),
+			)
+		);
+
+		$this->add_control(
+			'main_menu_text_color_hover',
+			array(
+				'label'     => __( 'Text Color', 'alternatepro-elements' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .apro-nav-menu .ap-nav > li > a:hover, {{WRAPPER}} .apro-nav-menu .ap-nav > li > a:focus-visible' => 'color: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'main_menu_color_active_tab',
+			array(
+				'label' => __( 'Active', 'alternatepro-elements' ),
+			)
+		);
+
+		$this->add_control(
+			'main_menu_text_color_active',
+			array(
+				'label'     => __( 'Text Color', 'alternatepro-elements' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .apro-nav-menu .ap-nav > li.current-menu-item > a, {{WRAPPER}} .apro-nav-menu .ap-nav > li.current-menu-ancestor > a' => 'color: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_control(
+			'main_menu_divider',
+			array(
+				'label'        => __( 'Divider', 'alternatepro-elements' ),
+				'type'         => \Elementor\Controls_Manager::SWITCHER,
+				'label_on'     => __( 'On', 'alternatepro-elements' ),
+				'label_off'    => __( 'Off', 'alternatepro-elements' ),
+				'return_value' => 'yes',
+				'default'      => 'no',
+				'separator'    => 'before',
+			)
+		);
+
+		$this->add_responsive_control(
+			'main_menu_pointer_width',
+			array(
+				'label'      => __( 'Pointer Width', 'alternatepro-elements' ),
+				'type'       => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => array( 'px' ),
+				'range'      => array(
+					'px' => array(
+						'min' => 0,
+						'max' => 20,
+					),
+				),
+				'selectors'  => array(
+					'{{WRAPPER}} .apro-nav-menu' => '--ap-nav-pointer-width: {{SIZE}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'main_menu_horizontal_padding',
+			array(
+				'label'      => __( 'Horizontal Padding', 'alternatepro-elements' ),
+				'type'       => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => array( 'px' ),
+				'range'      => array(
+					'px' => array(
+						'min' => 0,
+						'max' => 80,
+					),
+				),
+				'selectors'  => array(
+					'{{WRAPPER}} .apro-nav-menu' => '--ap-nav-link-padding-x: {{SIZE}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'main_menu_vertical_padding',
+			array(
+				'label'      => __( 'Vertical Padding', 'alternatepro-elements' ),
+				'type'       => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => array( 'px' ),
+				'range'      => array(
+					'px' => array(
+						'min' => 0,
+						'max' => 80,
+					),
+				),
+				'selectors'  => array(
+					'{{WRAPPER}} .apro-nav-menu' => '--ap-nav-link-padding-y: {{SIZE}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'main_menu_space_between',
+			array(
+				'label'      => __( 'Space Between', 'alternatepro-elements' ),
+				'type'       => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => array( 'px' ),
+				'range'      => array(
+					'px' => array(
+						'min' => 0,
+						'max' => 120,
+					),
+				),
+				'selectors'  => array(
+					'{{WRAPPER}} .apro-nav-menu' => '--ap-nav-gap: {{SIZE}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->end_controls_section();
 	}
 
 	/**
@@ -421,6 +589,7 @@ final class NavMenuWidget extends \Elementor\Widget_Base {
 		$text_align   = $this->get_mobile_dropdown_text_align( $settings );
 		$button       = $this->get_mobile_dropdown_toggle_button( $settings );
 		$toggle_align = $this->get_mobile_dropdown_toggle_align( $settings );
+		$divider      = $this->get_main_menu_divider( $settings );
 
 		return array(
 			'apro-nav-menu',
@@ -434,7 +603,20 @@ final class NavMenuWidget extends \Elementor\Widget_Base {
 			'ap-nav-mobile-text-align-' . sanitize_html_class( $text_align ),
 			'ap-nav-toggle-button-' . sanitize_html_class( $button ),
 			'ap-nav-toggle-align-' . sanitize_html_class( $toggle_align ),
+			'ap-nav-divider-' . sanitize_html_class( $divider ),
 		);
+	}
+
+	/**
+	 * Get the sanitized main menu divider setting.
+	 *
+	 * @param array<string,mixed> $settings Widget settings.
+	 * @return string
+	 */
+	private function get_main_menu_divider( array $settings ) {
+		$value = isset( $settings['main_menu_divider'] ) ? $settings['main_menu_divider'] : '';
+
+		return $this->sanitize_choice( $value, array( 'yes', 'no' ), 'no' );
 	}
 
 	/**
