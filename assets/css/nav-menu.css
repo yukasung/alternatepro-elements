@@ -1,14 +1,25 @@
 .apro-nav-menu {
-	--ap-nav-accent: currentColor;
+	--ap-nav-accent: var(--e-global-color-accent, currentColor);
+	--ap-nav-dropdown-active-background: rgba(0, 0, 0, 0.035);
+	--ap-nav-dropdown-active-color: var(--e-global-color-accent, currentColor);
+	--ap-nav-dropdown-background: #fff;
 	--ap-nav-dropdown-divider-distance: 0;
-	--ap-nav-dropdown-item-padding-x: 0;
-	--ap-nav-dropdown-item-padding-y: 0;
-	--ap-nav-gap: 1rem;
-	--ap-nav-link-padding-x: 0;
-	--ap-nav-link-padding-y: 0;
+	--ap-nav-dropdown-hover-background: #3f444b;
+	--ap-nav-dropdown-hover-color: #fff;
+	--ap-nav-dropdown-item-padding-x: 20px;
+	--ap-nav-dropdown-item-padding-y: 13px;
+	--ap-nav-dropdown-min-width: 220px;
+	--ap-nav-dropdown-text-color: var(--e-global-color-text, currentColor);
+	--ap-nav-gap: 0;
+	--ap-nav-hover-color: var(--e-global-color-accent, currentColor);
+	--ap-nav-link-padding-x: 20px;
+	--ap-nav-link-padding-y: 13px;
 	--ap-nav-pointer-width: 2px;
+	--ap-nav-text-color: var(--e-global-color-text, currentColor);
 	--ap-nav-toggle-border-radius: 0;
 	--ap-nav-toggle-border-width: 0;
+	--ap-nav-toggle-color: var(--e-global-color-text, currentColor);
+	--ap-nav-toggle-hover-color: var(--e-global-color-accent, currentColor);
 	--ap-nav-toggle-size: 24px;
 }
 
@@ -33,15 +44,35 @@
 
 .apro-nav-menu .ap-nav a {
 	align-items: center;
-	color: inherit;
+	color: var(--ap-nav-text-color);
 	display: inline-flex;
+	font-family: var(--e-global-typography-primary-font-family, inherit);
+	font-weight: var(--e-global-typography-primary-font-weight, inherit);
+	line-height: 1.4;
 	position: relative;
 	text-decoration: none;
+	transition: color 180ms ease, background-color 180ms ease;
 }
 
 .apro-nav-menu .ap-nav .sub-menu a {
+	background-color: transparent;
+	color: var(--ap-nav-dropdown-text-color);
+	font-family: var(--e-global-typography-accent-font-family, inherit);
+	font-weight: var(--e-global-typography-accent-font-weight, inherit);
 	padding: var(--ap-nav-dropdown-item-padding-y) var(--ap-nav-dropdown-item-padding-x);
 	width: 100%;
+}
+
+.apro-nav-menu .ap-nav .sub-menu a:hover,
+.apro-nav-menu .ap-nav .sub-menu a:focus-visible {
+	background-color: var(--ap-nav-dropdown-hover-background);
+	color: var(--ap-nav-dropdown-hover-color);
+}
+
+.apro-nav-menu .ap-nav .sub-menu .current-menu-item > a,
+.apro-nav-menu .ap-nav .sub-menu .current-menu-ancestor > a {
+	background-color: var(--ap-nav-dropdown-active-background);
+	color: var(--ap-nav-dropdown-active-color);
 }
 
 .apro-nav-menu .ap-nav .sub-menu > li + li {
@@ -55,6 +86,13 @@
 
 .apro-nav-menu .ap-nav > li > a {
 	padding: var(--ap-nav-link-padding-y) var(--ap-nav-link-padding-x);
+}
+
+.apro-nav-menu .ap-nav > li > a:hover,
+.apro-nav-menu .ap-nav > li > a:focus-visible,
+.apro-nav-menu .ap-nav > li.current-menu-item > a,
+.apro-nav-menu .ap-nav > li.current-menu-ancestor > a {
+	color: var(--ap-nav-hover-color);
 }
 
 .apro-nav-menu .ap-navbar-toggle-wrap {
@@ -72,13 +110,18 @@
 	background: transparent;
 	border: var(--ap-nav-toggle-border-width) solid currentColor;
 	border-radius: var(--ap-nav-toggle-border-radius);
-	color: inherit;
+	color: var(--ap-nav-toggle-color);
 	cursor: pointer;
 	display: inline-flex;
 	font-size: var(--ap-nav-toggle-size);
 	justify-content: center;
 	line-height: 1;
 	padding: 0.35em;
+}
+
+.apro-nav-menu .ap-navbar-toggle:hover,
+.apro-nav-menu .ap-navbar-toggle:focus-visible {
+	color: var(--ap-nav-toggle-hover-color);
 }
 
 .apro-nav-menu .ap-navbar-toggle-icon {
@@ -162,12 +205,19 @@
 	width: 100%;
 }
 
-.ap-nav-align-justify .ap-nav > li {
-	flex: 1 1 auto;
+.ap-nav-layout-horizontal.ap-nav-align-justify .ap-nav > li {
+	flex: 1 1 0;
+	min-width: 0;
 }
 
-.ap-nav-align-justify .ap-nav > li > a {
+.ap-nav-layout-horizontal.ap-nav-align-justify .ap-nav > li > a {
 	justify-content: center;
+	white-space: nowrap;
+	width: 100%;
+}
+
+.ap-nav-layout-vertical.ap-nav-align-justify .ap-nav > li > a,
+.ap-nav-layout-dropdown.ap-nav-align-justify .ap-nav > li > a {
 	width: 100%;
 }
 
@@ -184,13 +234,23 @@
 }
 
 .apro-nav-menu:not(.ap-nav-is-collapsible) .ap-nav .sub-menu {
-	background: #fff;
+	background: var(--ap-nav-dropdown-background);
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 	display: none;
 	left: 0;
-	min-width: 12rem;
+	min-width: var(--ap-nav-dropdown-min-width);
 	position: absolute;
 	top: 100%;
 	z-index: 1000;
+}
+
+.apro-nav-menu:not(.ap-nav-is-collapsible) .ap-nav .sub-menu li {
+	position: relative;
+}
+
+.apro-nav-menu:not(.ap-nav-is-collapsible) .ap-nav .sub-menu a {
+	justify-content: space-between;
+	white-space: nowrap;
 }
 
 .apro-nav-menu:not(.ap-nav-is-collapsible) .ap-nav .sub-menu .sub-menu {
@@ -259,6 +319,7 @@
 	flex: 0 0 auto;
 	line-height: 1;
 	margin-left: 0.55em;
+	transition: transform 180ms ease;
 }
 
 .apro-nav-menu .ap-nav-submenu-indicator i,
@@ -271,6 +332,18 @@
 
 .apro-nav-menu .ap-nav-submenu-indicator svg {
 	fill: currentColor;
+}
+
+.apro-nav-menu:not(.ap-nav-is-collapsible) .ap-nav .sub-menu .menu-item-has-children > a > .ap-nav-submenu-indicator {
+	transform: rotate(-90deg);
+}
+
+[dir="rtl"] .apro-nav-menu:not(.ap-nav-is-collapsible) .ap-nav .sub-menu .menu-item-has-children > a > .ap-nav-submenu-indicator {
+	transform: rotate(90deg);
+}
+
+.apro-nav-menu.ap-nav-is-collapsible .ap-nav .sub-menu .menu-item-has-children > a > .ap-nav-submenu-indicator {
+	transform: none;
 }
 
 .ap-nav-layout-vertical.ap-nav-align-justify .ap-nav > li,
@@ -316,9 +389,9 @@
 	top: 0;
 }
 
-.ap-nav-pointer-underline .ap-nav a::after {
+.ap-nav-pointer-underline .ap-nav > li > a::after {
 	background: var(--ap-nav-accent);
-	bottom: -0.25em;
+	bottom: 0;
 	content: "";
 	height: var(--ap-nav-pointer-width);
 	left: 0;
@@ -329,24 +402,24 @@
 	transform-origin: center;
 }
 
-.ap-nav-pointer-underline.ap-nav-animation-fade .ap-nav a::after {
+.ap-nav-pointer-underline.ap-nav-animation-fade .ap-nav > li > a::after {
 	transition: opacity 180ms ease, transform 180ms ease;
 }
 
-.ap-nav-pointer-underline .ap-nav a:hover::after,
-.ap-nav-pointer-underline .ap-nav a:focus-visible::after,
-.ap-nav-pointer-underline .ap-nav .current-menu-item > a::after,
-.ap-nav-pointer-underline .ap-nav .current-menu-ancestor > a::after {
+.ap-nav-pointer-underline .ap-nav > li > a:hover::after,
+.ap-nav-pointer-underline .ap-nav > li > a:focus-visible::after,
+.ap-nav-pointer-underline .ap-nav > .current-menu-item > a::after,
+.ap-nav-pointer-underline .ap-nav > .current-menu-ancestor > a::after {
 	opacity: 1;
 	transform: scaleX(1);
 }
 
-.ap-nav-animation-none .ap-nav a::after {
+.ap-nav-animation-none .ap-nav > li > a::after {
 	transition: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.ap-nav-pointer-underline .ap-nav a::after {
+	.ap-nav-pointer-underline .ap-nav > li > a::after {
 		transition: none;
 	}
 }

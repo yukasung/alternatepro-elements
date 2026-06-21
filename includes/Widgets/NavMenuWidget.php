@@ -213,9 +213,9 @@ final class NavMenuWidget extends \Elementor\Widget_Base {
 				'default'     => $this->get_default_submenu_indicator_icon(),
 				'recommended' => array(
 					'fa-solid' => array(
+						'caret-down',
 						'chevron-down',
 						'angle-down',
-						'caret-down',
 						'arrow-down',
 					),
 				),
@@ -1405,7 +1405,7 @@ final class NavMenuWidget extends \Elementor\Widget_Base {
 	 */
 	private function get_default_submenu_indicator_icon() {
 		return array(
-			'value'   => 'fas fa-chevron-down',
+			'value'   => 'fas fa-caret-down',
 			'library' => 'fa-solid',
 		);
 	}
