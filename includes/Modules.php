@@ -9,6 +9,7 @@ namespace AlternatePro\Elements;
 
 use AlternatePro\Elements\Modules\HeaderFooter\Module as HeaderFooterModule;
 use AlternatePro\Elements\Settings\SettingsRepository;
+use AlternatePro\Elements\Widgets\WidgetsModule;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -59,6 +60,8 @@ final class Modules {
 	public function init( ?SettingsRepository $settings = null ) {
 		$this->settings = $settings ? $settings : new SettingsRepository();
 		$this->modules  = array();
+
+		$this->modules['widgets'] = new WidgetsModule();
 
 		if ( $this->settings->is_module_enabled( 'header_footer' ) ) {
 			$this->modules['header-footer'] = new HeaderFooterModule();
