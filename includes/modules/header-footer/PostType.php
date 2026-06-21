@@ -7,6 +7,8 @@
 
 namespace AlternatePro\Elements\Modules\HeaderFooter;
 
+use AlternatePro\Elements\Admin\SettingsPage;
+
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -33,6 +35,7 @@ final class PostType {
 			'name'               => __( 'AlternatePro Templates', 'alternatepro-elements' ),
 			'singular_name'      => __( 'Header Footer Template', 'alternatepro-elements' ),
 			'menu_name'          => __( 'Header Footer Templates', 'alternatepro-elements' ),
+			'all_items'          => __( 'Header Footer Templates', 'alternatepro-elements' ),
 			'add_new'            => __( 'Add New', 'alternatepro-elements' ),
 			'add_new_item'       => __( 'Add New Template', 'alternatepro-elements' ),
 			'edit_item'          => __( 'Edit Template', 'alternatepro-elements' ),
@@ -49,7 +52,7 @@ final class PostType {
 				'labels'              => $labels,
 				'public'              => true,
 				'show_ui'             => true,
-				'show_in_menu'        => true,
+				'show_in_menu'        => SettingsPage::SLUG,
 				'show_in_nav_menus'   => false,
 				'show_in_rest'        => false,
 				'exclude_from_search' => true,
@@ -58,7 +61,6 @@ final class PostType {
 				'rewrite'             => false,
 				'has_archive'         => false,
 				'capability_type'     => 'post',
-				'menu_icon'           => 'dashicons-layout',
 				'supports'            => array( 'title', 'editor', 'revisions', 'elementor' ),
 				'can_export'          => true,
 			)

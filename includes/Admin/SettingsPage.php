@@ -92,16 +92,6 @@ final class SettingsPage {
 			self::SLUG,
 			array( $this, 'render' )
 		);
-
-		if ( $this->is_header_footer_enabled() ) {
-			add_submenu_page(
-				self::SLUG,
-				__( 'Theme Builder', 'alternatepro-elements' ),
-				__( 'Theme Builder', 'alternatepro-elements' ),
-				Capabilities::SETTINGS,
-				'edit.php?post_type=' . HeaderFooterModule::POST_TYPE
-			);
-		}
 	}
 
 	/**
@@ -187,19 +177,19 @@ final class SettingsPage {
 		}
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Tab selection is read-only admin navigation.
-		$tab = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : 'overview';
+		$requested_tab = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : 'overview';
+		$tabs          = $this->tabs();
+		$tab           = array_key_exists( $requested_tab, $tabs ) || 'theme-builder' === $requested_tab ? $requested_tab : 'overview';
 		?>
 		<div class="wrap apro-elements-admin">
 			<h1><?php esc_html_e( 'AlternatePro Elements', 'alternatepro-elements' ); ?></h1>
 			<?php settings_errors( SettingsRepository::OPTION ); ?>
-			<?php $this->render_tabs( $tab ); ?>
+			<?php $this->render_tabs( $tab, $tabs ); ?>
 
 			<div class="apro-elements-panel">
 				<?php
 				if ( 'modules' === $tab ) {
 					$this->render_modules();
-				} elseif ( 'widgets' === $tab ) {
-					$this->render_widgets();
 				} elseif ( 'theme-builder' === $tab ) {
 					$this->render_theme_builder();
 				} elseif ( 'diagnostics' === $tab ) {
@@ -217,20 +207,10 @@ final class SettingsPage {
 	 * Render page tabs.
 	 *
 	 * @param string $active Active tab.
+	 * @param array  $tabs Tabs keyed by slug.
 	 * @return void
 	 */
-	private function render_tabs( $active ) {
-		$tabs = array(
-			'overview' => __( 'Overview', 'alternatepro-elements' ),
-			'modules'  => __( 'Modules', 'alternatepro-elements' ),
-			'widgets'  => __( 'Widgets', 'alternatepro-elements' ),
-		);
-
-		if ( $this->is_header_footer_enabled() ) {
-			$tabs['theme-builder'] = __( 'Theme Builder', 'alternatepro-elements' );
-		}
-
-		$tabs['diagnostics'] = __( 'Diagnostics', 'alternatepro-elements' );
+	private function render_tabs( $active, array $tabs ) {
 		?>
 		<nav class="nav-tab-wrapper" aria-label="<?php esc_attr_e( 'AlternatePro Elements settings sections', 'alternatepro-elements' ); ?>">
 			<?php foreach ( $tabs as $slug => $label ) : ?>
@@ -240,6 +220,26 @@ final class SettingsPage {
 			<?php endforeach; ?>
 		</nav>
 		<?php
+	}
+
+	/**
+	 * Get available settings tabs.
+	 *
+	 * @return array<string,string>
+	 */
+	private function tabs() {
+		$tabs = array(
+			'overview' => __( 'Overview', 'alternatepro-elements' ),
+			'modules'  => __( 'Modules', 'alternatepro-elements' ),
+		);
+
+		if ( $this->is_header_footer_enabled() ) {
+			$tabs['theme-builder'] = __( 'Theme Builder', 'alternatepro-elements' );
+		}
+
+		$tabs['diagnostics'] = __( 'Diagnostics', 'alternatepro-elements' );
+
+		return $tabs;
 	}
 
 	/**
@@ -253,7 +253,6 @@ final class SettingsPage {
 		<p><?php esc_html_e( 'AlternatePro Elements is ready for foundation configuration. Elementor widgets and full Theme Builder features are introduced in later phases.', 'alternatepro-elements' ); ?></p>
 			<ul class="apro-elements-links">
 				<li><a href="<?php echo esc_url( admin_url( 'admin.php?page=' . self::SLUG . '&tab=modules' ) ); ?>"><?php esc_html_e( 'Manage modules', 'alternatepro-elements' ); ?></a></li>
-				<li><a href="<?php echo esc_url( admin_url( 'admin.php?page=' . self::SLUG . '&tab=widgets' ) ); ?>"><?php esc_html_e( 'Manage widget toggles', 'alternatepro-elements' ); ?></a></li>
 				<?php if ( $this->is_header_footer_enabled() ) : ?>
 					<li><a href="<?php echo esc_url( admin_url( 'edit.php?post_type=' . HeaderFooterModule::POST_TYPE ) ); ?>"><?php esc_html_e( 'Open Theme Builder templates', 'alternatepro-elements' ); ?></a></li>
 				<?php else : ?>
@@ -286,39 +285,6 @@ final class SettingsPage {
 						</label>
 					</td>
 				</tr>
-			</table>
-			<?php submit_button(); ?>
-		</form>
-		<?php
-	}
-
-	/**
-	 * Render widgets tab.
-	 *
-	 * @return void
-	 */
-	private function render_widgets() {
-		$settings = $this->settings->get();
-		$widgets  = isset( $settings['widgets'] ) ? $settings['widgets'] : array();
-		$labels   = $this->widget_labels();
-		?>
-		<h2><?php esc_html_e( 'Widgets', 'alternatepro-elements' ); ?></h2>
-		<p><?php esc_html_e( 'Widget toggles are stored now and used when widgets are implemented in later phases.', 'alternatepro-elements' ); ?></p>
-		<form method="post" action="options.php">
-			<?php settings_fields( 'apro_elements_settings' ); ?>
-			<input type="hidden" name="<?php echo esc_attr( SettingsRepository::OPTION ); ?>[_section]" value="widgets">
-			<table class="form-table" role="presentation">
-				<?php foreach ( $labels as $key => $label ) : ?>
-					<tr>
-						<th scope="row"><?php echo esc_html( $label ); ?></th>
-						<td>
-							<label>
-								<input type="checkbox" name="<?php echo esc_attr( SettingsRepository::OPTION ); ?>[widgets][<?php echo esc_attr( $key ); ?>]" value="1" <?php checked( ! empty( $widgets[ $key ] ) ); ?>>
-								<?php esc_html_e( 'Enable widget when available.', 'alternatepro-elements' ); ?>
-							</label>
-						</td>
-					</tr>
-				<?php endforeach; ?>
 			</table>
 			<?php submit_button(); ?>
 		</form>
@@ -368,28 +334,6 @@ final class SettingsPage {
 			</tbody>
 		</table>
 		<?php
-	}
-
-	/**
-	 * Widget labels.
-	 *
-	 * @return array<string,string>
-	 */
-	private function widget_labels() {
-		return array(
-			'site_logo'            => __( 'Site Logo', 'alternatepro-elements' ),
-			'site_title'           => __( 'Site Title', 'alternatepro-elements' ),
-			'nav_menu'             => __( 'Nav Menu', 'alternatepro-elements' ),
-			'search_form'          => __( 'Search Form', 'alternatepro-elements' ),
-			'hero_section'         => __( 'Hero Section', 'alternatepro-elements' ),
-			'call_to_action'       => __( 'Call To Action', 'alternatepro-elements' ),
-			'image_box'            => __( 'Image Box', 'alternatepro-elements' ),
-			'icon_box'             => __( 'Icon Box', 'alternatepro-elements' ),
-			'team_member'          => __( 'Team Member', 'alternatepro-elements' ),
-			'testimonial_carousel' => __( 'Testimonial Carousel', 'alternatepro-elements' ),
-			'posts'                => __( 'Posts', 'alternatepro-elements' ),
-			'breadcrumbs'          => __( 'Breadcrumbs', 'alternatepro-elements' ),
-		);
 	}
 
 	/**
