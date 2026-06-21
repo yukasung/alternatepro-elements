@@ -1,9 +1,15 @@
 .apro-nav-menu {
 	--ap-nav-accent: currentColor;
+	--ap-nav-dropdown-divider-distance: 0;
+	--ap-nav-dropdown-item-padding-x: 0;
+	--ap-nav-dropdown-item-padding-y: 0;
 	--ap-nav-gap: 1rem;
 	--ap-nav-link-padding-x: 0;
 	--ap-nav-link-padding-y: 0;
 	--ap-nav-pointer-width: 2px;
+	--ap-nav-toggle-border-radius: 0;
+	--ap-nav-toggle-border-width: 0;
+	--ap-nav-toggle-size: 24px;
 }
 
 .apro-nav-menu .ap-nav {
@@ -12,6 +18,11 @@
 	list-style: none;
 	margin: 0;
 	padding: 0;
+}
+
+.apro-nav-menu .ap-nav[hidden],
+.apro-nav-menu .sub-menu[hidden] {
+	display: none;
 }
 
 .apro-nav-menu .ap-nav ul {
@@ -28,12 +39,88 @@
 	text-decoration: none;
 }
 
+.apro-nav-menu .ap-nav .sub-menu a {
+	padding: var(--ap-nav-dropdown-item-padding-y) var(--ap-nav-dropdown-item-padding-x);
+	width: 100%;
+}
+
+.apro-nav-menu .ap-nav .sub-menu > li + li {
+	margin-top: var(--ap-nav-dropdown-divider-distance);
+	padding-top: var(--ap-nav-dropdown-divider-distance);
+}
+
 .apro-nav-menu .ap-nav > li {
 	position: relative;
 }
 
 .apro-nav-menu .ap-nav > li > a {
 	padding: var(--ap-nav-link-padding-y) var(--ap-nav-link-padding-x);
+}
+
+.apro-nav-menu .ap-navbar-toggle-wrap {
+	display: none;
+	margin-bottom: var(--ap-nav-gap);
+	width: 100%;
+}
+
+.apro-nav-menu.ap-nav-is-collapsible .ap-navbar-toggle-wrap {
+	display: flex;
+}
+
+.apro-nav-menu .ap-navbar-toggle {
+	align-items: center;
+	background: transparent;
+	border: var(--ap-nav-toggle-border-width) solid currentColor;
+	border-radius: var(--ap-nav-toggle-border-radius);
+	color: inherit;
+	cursor: pointer;
+	display: inline-flex;
+	font-size: var(--ap-nav-toggle-size);
+	justify-content: center;
+	line-height: 1;
+	padding: 0.35em;
+}
+
+.apro-nav-menu .ap-navbar-toggle-icon {
+	align-items: center;
+	display: inline-flex;
+	justify-content: center;
+}
+
+.apro-nav-menu .ap-navbar-toggle-icon-hover,
+.apro-nav-menu .ap-navbar-toggle-icon-active {
+	display: none;
+}
+
+.apro-nav-menu .ap-navbar-toggle:hover .ap-navbar-toggle-icon-normal,
+.apro-nav-menu .ap-navbar-toggle:focus-visible .ap-navbar-toggle-icon-normal {
+	display: none;
+}
+
+.apro-nav-menu .ap-navbar-toggle:hover .ap-navbar-toggle-icon-hover,
+.apro-nav-menu .ap-navbar-toggle:focus-visible .ap-navbar-toggle-icon-hover {
+	display: inline-flex;
+}
+
+.apro-nav-menu .ap-navbar-toggle[aria-expanded="true"] .ap-navbar-toggle-icon-normal,
+.apro-nav-menu .ap-navbar-toggle[aria-expanded="true"] .ap-navbar-toggle-icon-hover {
+	display: none;
+}
+
+.apro-nav-menu .ap-navbar-toggle[aria-expanded="true"] .ap-navbar-toggle-icon-active {
+	display: inline-flex;
+}
+
+.apro-nav-menu .ap-navbar-toggle i,
+.apro-nav-menu .ap-navbar-toggle svg {
+	display: block;
+	font-size: 1em;
+	height: 1em;
+	width: 1em;
+}
+
+.apro-nav-menu .ap-navbar-toggle svg {
+	fill: currentColor;
 }
 
 .ap-nav-layout-horizontal .ap-nav {
@@ -82,6 +169,87 @@
 .ap-nav-align-justify .ap-nav > li > a {
 	justify-content: center;
 	width: 100%;
+}
+
+.ap-nav-toggle-align-left .ap-navbar-toggle-wrap {
+	justify-content: flex-start;
+}
+
+.ap-nav-toggle-align-center .ap-navbar-toggle-wrap {
+	justify-content: center;
+}
+
+.ap-nav-toggle-align-right .ap-navbar-toggle-wrap {
+	justify-content: flex-end;
+}
+
+.apro-nav-menu:not(.ap-nav-is-collapsible) .ap-nav .sub-menu {
+	background: #fff;
+	display: none;
+	left: 0;
+	min-width: 12rem;
+	position: absolute;
+	top: 100%;
+	z-index: 1000;
+}
+
+.apro-nav-menu:not(.ap-nav-is-collapsible) .ap-nav .sub-menu .sub-menu {
+	left: 100%;
+	top: 0;
+}
+
+.apro-nav-menu:not(.ap-nav-is-collapsible).ap-nav-layout-vertical .ap-nav > li > .sub-menu {
+	left: 100%;
+	top: 0;
+}
+
+.apro-nav-menu:not(.ap-nav-is-collapsible) .ap-nav li:hover > .sub-menu,
+.apro-nav-menu:not(.ap-nav-is-collapsible) .ap-nav li:focus-within > .sub-menu {
+	display: block;
+}
+
+.apro-nav-menu.ap-nav-is-collapsible .ap-nav {
+	align-items: stretch;
+	flex-direction: column;
+	gap: 0;
+}
+
+.apro-nav-menu.ap-nav-is-collapsible.ap-nav-mobile-full-width-yes .ap-nav {
+	width: 100%;
+}
+
+.apro-nav-menu.ap-nav-is-collapsible.ap-nav-mobile-full-width-no .ap-nav:not([hidden]) {
+	display: inline-flex;
+}
+
+.apro-nav-menu.ap-nav-is-collapsible .ap-nav > li,
+.apro-nav-menu.ap-nav-is-collapsible .ap-nav .sub-menu > li {
+	width: 100%;
+}
+
+.apro-nav-menu.ap-nav-is-collapsible .ap-nav a {
+	display: flex;
+	width: 100%;
+}
+
+.apro-nav-menu.ap-nav-is-collapsible .ap-nav .sub-menu {
+	margin-left: 1rem;
+	position: static;
+}
+
+.apro-nav-menu.ap-nav-is-collapsible.ap-nav-mobile-text-align-left .ap-nav a {
+	justify-content: flex-start;
+	text-align: left;
+}
+
+.apro-nav-menu.ap-nav-is-collapsible.ap-nav-mobile-text-align-center .ap-nav a {
+	justify-content: center;
+	text-align: center;
+}
+
+.apro-nav-menu.ap-nav-is-collapsible.ap-nav-mobile-text-align-right .ap-nav a {
+	justify-content: flex-end;
+	text-align: right;
 }
 
 .apro-nav-menu .ap-nav-submenu-indicator {

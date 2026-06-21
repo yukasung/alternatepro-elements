@@ -68,6 +68,15 @@ final class NavMenuWidget extends \Elementor\Widget_Base {
 	}
 
 	/**
+	 * Get widget script dependencies.
+	 *
+	 * @return string[]
+	 */
+	public function get_script_depends() {
+		return array( WidgetsModule::NAV_MENU_SCRIPT );
+	}
+
+	/**
 	 * Register widget controls.
 	 *
 	 * @return void
@@ -517,6 +526,368 @@ final class NavMenuWidget extends \Elementor\Widget_Base {
 		);
 
 		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'section_dropdown_style',
+			array(
+				'label' => __( 'Dropdown', 'alternatepro-elements' ),
+				'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
+			)
+		);
+
+		$this->add_control(
+			'dropdown_style_help',
+			array(
+				'type' => \Elementor\Controls_Manager::RAW_HTML,
+				'raw'  => esc_html__( 'On desktop, this will affect the submenu. On mobile, this will affect the entire menu.', 'alternatepro-elements' ),
+			)
+		);
+
+		$this->start_controls_tabs( 'dropdown_color_tabs' );
+
+		$this->start_controls_tab(
+			'dropdown_color_normal_tab',
+			array(
+				'label' => __( 'Normal', 'alternatepro-elements' ),
+			)
+		);
+
+		$this->add_control(
+			'dropdown_text_color',
+			array(
+				'label'     => __( 'Text Color', 'alternatepro-elements' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .apro-nav-menu .ap-nav .sub-menu a' => 'color: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->add_control(
+			'dropdown_background_color',
+			array(
+				'label'     => __( 'Background Color', 'alternatepro-elements' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .apro-nav-menu .ap-nav .sub-menu a' => 'background-color: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'dropdown_color_hover_tab',
+			array(
+				'label' => __( 'Hover', 'alternatepro-elements' ),
+			)
+		);
+
+		$this->add_control(
+			'dropdown_text_color_hover',
+			array(
+				'label'     => __( 'Text Color', 'alternatepro-elements' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .apro-nav-menu .ap-nav .sub-menu a:hover, {{WRAPPER}} .apro-nav-menu .ap-nav .sub-menu a:focus-visible' => 'color: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->add_control(
+			'dropdown_background_color_hover',
+			array(
+				'label'     => __( 'Background Color', 'alternatepro-elements' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .apro-nav-menu .ap-nav .sub-menu a:hover, {{WRAPPER}} .apro-nav-menu .ap-nav .sub-menu a:focus-visible' => 'background-color: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'dropdown_color_active_tab',
+			array(
+				'label' => __( 'Active', 'alternatepro-elements' ),
+			)
+		);
+
+		$this->add_control(
+			'dropdown_text_color_active',
+			array(
+				'label'     => __( 'Text Color', 'alternatepro-elements' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .apro-nav-menu .ap-nav .sub-menu .current-menu-item > a, {{WRAPPER}} .apro-nav-menu .ap-nav .sub-menu .current-menu-ancestor > a' => 'color: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->add_control(
+			'dropdown_background_color_active',
+			array(
+				'label'     => __( 'Background Color', 'alternatepro-elements' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .apro-nav-menu .ap-nav .sub-menu .current-menu-item > a, {{WRAPPER}} .apro-nav-menu .ap-nav .sub-menu .current-menu-ancestor > a' => 'background-color: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			array(
+				'name'      => 'dropdown_typography',
+				'label'     => __( 'Typography', 'alternatepro-elements' ),
+				'selector'  => '{{WRAPPER}} .apro-nav-menu .ap-nav .sub-menu a',
+				'separator' => 'before',
+			)
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Border::get_type(),
+			array(
+				'name'      => 'dropdown_border',
+				'label'     => __( 'Border Type', 'alternatepro-elements' ),
+				'selector'  => '{{WRAPPER}} .apro-nav-menu .ap-nav .sub-menu',
+				'separator' => 'before',
+			)
+		);
+
+		$this->add_responsive_control(
+			'dropdown_border_radius',
+			array(
+				'label'      => __( 'Border Radius', 'alternatepro-elements' ),
+				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px' ),
+				'selectors'  => array(
+					'{{WRAPPER}} .apro-nav-menu .ap-nav .sub-menu' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Box_Shadow::get_type(),
+			array(
+				'name'     => 'dropdown_box_shadow',
+				'label'    => __( 'Box Shadow', 'alternatepro-elements' ),
+				'selector' => '{{WRAPPER}} .apro-nav-menu .ap-nav .sub-menu',
+			)
+		);
+
+		$this->add_responsive_control(
+			'dropdown_horizontal_padding',
+			array(
+				'label'      => __( 'Horizontal Padding', 'alternatepro-elements' ),
+				'type'       => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => array( 'px' ),
+				'range'      => array(
+					'px' => array(
+						'min' => 0,
+						'max' => 80,
+					),
+				),
+				'separator'  => 'before',
+				'selectors'  => array(
+					'{{WRAPPER}} .apro-nav-menu' => '--ap-nav-dropdown-item-padding-x: {{SIZE}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'dropdown_vertical_padding',
+			array(
+				'label'      => __( 'Vertical Padding', 'alternatepro-elements' ),
+				'type'       => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => array( 'px' ),
+				'range'      => array(
+					'px' => array(
+						'min' => 0,
+						'max' => 80,
+					),
+				),
+				'selectors'  => array(
+					'{{WRAPPER}} .apro-nav-menu' => '--ap-nav-dropdown-item-padding-y: {{SIZE}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->add_control(
+			'dropdown_divider_heading',
+			array(
+				'label'     => __( 'Divider', 'alternatepro-elements' ),
+				'type'      => \Elementor\Controls_Manager::HEADING,
+				'separator' => 'before',
+			)
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Border::get_type(),
+			array(
+				'name'     => 'dropdown_divider_border',
+				'label'    => __( 'Border Type', 'alternatepro-elements' ),
+				'selector' => '{{WRAPPER}} .apro-nav-menu .ap-nav .sub-menu > li + li',
+			)
+		);
+
+		$this->add_responsive_control(
+			'dropdown_divider_distance',
+			array(
+				'label'      => __( 'Distance', 'alternatepro-elements' ),
+				'type'       => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => array( 'px' ),
+				'range'      => array(
+					'px' => array(
+						'min' => 0,
+						'max' => 80,
+					),
+				),
+				'selectors'  => array(
+					'{{WRAPPER}} .apro-nav-menu' => '--ap-nav-dropdown-divider-distance: {{SIZE}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'section_toggle_button_style',
+			array(
+				'label' => __( 'Toggle Button', 'alternatepro-elements' ),
+				'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
+			)
+		);
+
+		$this->start_controls_tabs( 'toggle_button_style_tabs' );
+
+		$this->start_controls_tab(
+			'toggle_button_style_normal_tab',
+			array(
+				'label' => __( 'Normal', 'alternatepro-elements' ),
+			)
+		);
+
+		$this->add_control(
+			'toggle_button_color',
+			array(
+				'label'     => __( 'Color', 'alternatepro-elements' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .apro-nav-menu .ap-navbar-toggle' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .apro-nav-menu .ap-navbar-toggle svg' => 'fill: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->add_control(
+			'toggle_button_background_color',
+			array(
+				'label'     => __( 'Background Color', 'alternatepro-elements' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .apro-nav-menu .ap-navbar-toggle' => 'background-color: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			'toggle_button_style_hover_tab',
+			array(
+				'label' => __( 'Hover', 'alternatepro-elements' ),
+			)
+		);
+
+		$this->add_control(
+			'toggle_button_color_hover',
+			array(
+				'label'     => __( 'Color', 'alternatepro-elements' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .apro-nav-menu .ap-navbar-toggle:hover, {{WRAPPER}} .apro-nav-menu .ap-navbar-toggle:focus-visible' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .apro-nav-menu .ap-navbar-toggle:hover svg, {{WRAPPER}} .apro-nav-menu .ap-navbar-toggle:focus-visible svg' => 'fill: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->add_control(
+			'toggle_button_background_color_hover',
+			array(
+				'label'     => __( 'Background Color', 'alternatepro-elements' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .apro-nav-menu .ap-navbar-toggle:hover, {{WRAPPER}} .apro-nav-menu .ap-navbar-toggle:focus-visible' => 'background-color: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->add_responsive_control(
+			'toggle_button_size',
+			array(
+				'label'      => __( 'Size', 'alternatepro-elements' ),
+				'type'       => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => array( 'px' ),
+				'range'      => array(
+					'px' => array(
+						'min' => 8,
+						'max' => 120,
+					),
+				),
+				'separator'  => 'before',
+				'selectors'  => array(
+					'{{WRAPPER}} .apro-nav-menu' => '--ap-nav-toggle-size: {{SIZE}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'toggle_button_border_width',
+			array(
+				'label'      => __( 'Border Width', 'alternatepro-elements' ),
+				'type'       => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => array( 'px' ),
+				'range'      => array(
+					'px' => array(
+						'min' => 0,
+						'max' => 20,
+					),
+				),
+				'selectors'  => array(
+					'{{WRAPPER}} .apro-nav-menu' => '--ap-nav-toggle-border-width: {{SIZE}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'toggle_button_border_radius',
+			array(
+				'label'      => __( 'Border Radius', 'alternatepro-elements' ),
+				'type'       => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => array( 'px' ),
+				'range'      => array(
+					'px' => array(
+						'min' => 0,
+						'max' => 80,
+					),
+				),
+				'selectors'  => array(
+					'{{WRAPPER}} .apro-nav-menu' => '--ap-nav-toggle-border-radius: {{SIZE}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->end_controls_section();
 	}
 
 	/**
@@ -531,6 +902,10 @@ final class NavMenuWidget extends \Elementor\Widget_Base {
 		$menu_name      = '' !== $menu_name ? $menu_name : __( 'Menu', 'alternatepro-elements' );
 		$classes        = $this->get_container_classes( $settings );
 		$indicator_html = $this->get_submenu_indicator_html( $settings );
+		$container_id   = 'apro-nav-menu-' . $this->get_id();
+		$layout         = $this->get_layout( $settings );
+		$breakpoint     = $this->get_mobile_dropdown_breakpoint( $settings );
+		$button         = $this->get_mobile_dropdown_toggle_button( $settings );
 
 		if ( ! $menu_id || ! wp_get_nav_menu_object( $menu_id ) ) {
 			$this->render_empty_message();
@@ -553,18 +928,31 @@ final class NavMenuWidget extends \Elementor\Widget_Base {
 		}
 
 		try {
+			printf(
+				'<nav id="%1$s" class="%2$s" aria-label="%3$s" data-ap-nav-menu="1" data-ap-nav-layout="%4$s" data-ap-nav-breakpoint="%5$d" data-ap-nav-breakpoint-key="%6$s" data-ap-nav-toggle-button="%7$s">',
+				esc_attr( $container_id ),
+				esc_attr( implode( ' ', $classes ) ),
+				esc_attr( $menu_name ),
+				esc_attr( $layout ),
+				absint( $this->get_mobile_dropdown_breakpoint_value( $settings ) ),
+				esc_attr( $breakpoint ),
+				esc_attr( $button )
+			);
+
+			$this->render_toggle_button( $settings, $container_id . '-menu' );
+
 			wp_nav_menu(
 				array(
-					'menu'                 => $menu_id,
-					'container'            => 'nav',
-					'container_class'      => implode( ' ', $classes ),
-					'container_id'         => 'apro-nav-menu-' . $this->get_id(),
-					'container_aria_label' => $menu_name,
-					'menu_class'           => 'ap-nav',
-					'fallback_cb'          => '__return_empty_string',
-					'depth'                => 0,
+					'menu'        => $menu_id,
+					'container'   => false,
+					'menu_class'  => 'ap-nav',
+					'menu_id'     => $container_id . '-menu',
+					'fallback_cb' => '__return_empty_string',
+					'depth'       => 0,
 				)
 			);
+
+			echo '</nav>';
 		} finally {
 			if ( null !== $indicator_filter ) {
 				remove_filter( 'nav_menu_item_title', $indicator_filter, 10 );
@@ -579,7 +967,7 @@ final class NavMenuWidget extends \Elementor\Widget_Base {
 	 * @return string[]
 	 */
 	private function get_container_classes( array $settings ) {
-		$layout       = $this->sanitize_choice( isset( $settings['layout'] ) ? $settings['layout'] : '', array( 'horizontal', 'vertical', 'dropdown' ), 'horizontal' );
+		$layout       = $this->get_layout( $settings );
 		$alignment    = $this->sanitize_choice( isset( $settings['alignment'] ) ? $settings['alignment'] : '', array( 'left', 'center', 'right', 'justify' ), 'left' );
 		$pointer      = $this->sanitize_choice( isset( $settings['pointer'] ) ? $settings['pointer'] : '', array( 'none', 'underline' ), 'underline' );
 		$animation    = $this->sanitize_choice( isset( $settings['animation'] ) ? $settings['animation'] : '', array( 'none', 'fade' ), 'fade' );
@@ -608,6 +996,18 @@ final class NavMenuWidget extends \Elementor\Widget_Base {
 	}
 
 	/**
+	 * Get the sanitized layout setting.
+	 *
+	 * @param array<string,mixed> $settings Widget settings.
+	 * @return string
+	 */
+	private function get_layout( array $settings ) {
+		$value = isset( $settings['layout'] ) ? $settings['layout'] : '';
+
+		return $this->sanitize_choice( $value, array( 'horizontal', 'vertical', 'dropdown' ), 'horizontal' );
+	}
+
+	/**
 	 * Get the sanitized main menu divider setting.
 	 *
 	 * @param array<string,mixed> $settings Widget settings.
@@ -617,6 +1017,83 @@ final class NavMenuWidget extends \Elementor\Widget_Base {
 		$value = isset( $settings['main_menu_divider'] ) ? $settings['main_menu_divider'] : '';
 
 		return $this->sanitize_choice( $value, array( 'yes', 'no' ), 'no' );
+	}
+
+	/**
+	 * Render the configured mobile menu toggle button.
+	 *
+	 * @param array<string,mixed> $settings Widget settings.
+	 * @param string              $controls_id Controlled menu ID.
+	 * @return void
+	 */
+	private function render_toggle_button( array $settings, $controls_id ) {
+		if ( 'none' === $this->get_mobile_dropdown_toggle_button( $settings ) ) {
+			return;
+		}
+
+		$normal_icon = $this->get_toggle_button_icon_html( $settings, 'normal' );
+		$hover_icon  = $this->get_toggle_button_icon_html( $settings, 'hover' );
+		$active_icon = $this->get_toggle_button_icon_html( $settings, 'active' );
+
+		if ( '' === $normal_icon ) {
+			return;
+		}
+
+		printf(
+			'<div class="ap-navbar-toggle-wrap"><button class="ap-navbar-toggle" type="button" aria-controls="%1$s" aria-expanded="false" aria-label="%2$s">%3$s%4$s%5$s</button></div>',
+			esc_attr( $controls_id ),
+			esc_attr__( 'Toggle navigation menu', 'alternatepro-elements' ),
+			$normal_icon, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Sanitized by get_toggle_button_icon_html().
+			$hover_icon, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Sanitized by get_toggle_button_icon_html().
+			$active_icon // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Sanitized by get_toggle_button_icon_html().
+		);
+	}
+
+	/**
+	 * Render a configured toggle button icon into safe HTML.
+	 *
+	 * @param array<string,mixed> $settings Widget settings.
+	 * @param string              $state Toggle state.
+	 * @return string
+	 */
+	private function get_toggle_button_icon_html( array $settings, $state ) {
+		$state = sanitize_key( (string) $state );
+		$key   = 'mobile_dropdown_toggle_icon_' . $state;
+		$icon  = isset( $settings[ $key ] ) ? $settings[ $key ] : array();
+
+		if ( ! is_array( $icon ) || empty( $icon['value'] ) || empty( $icon['library'] ) ) {
+			$icon = $this->get_default_toggle_icon( $state );
+		} else {
+			$icon = array(
+				'value'   => $this->sanitize_icon_value( $icon['value'] ),
+				'library' => sanitize_key( (string) $icon['library'] ),
+			);
+		}
+
+		if ( empty( $icon['value'] ) || empty( $icon['library'] ) || ! class_exists( '\Elementor\Icons_Manager' ) ) {
+			return '';
+		}
+
+		ob_start();
+		\Elementor\Icons_Manager::render_icon(
+			$icon,
+			array(
+				'aria-hidden' => 'true',
+				'class'       => 'ap-navbar-toggle-icon-glyph',
+			)
+		);
+		$icon_html = ob_get_clean();
+		$icon_html = wp_kses( $icon_html, $this->get_icon_allowed_html() );
+
+		if ( '' === trim( $icon_html ) ) {
+			return '';
+		}
+
+		return sprintf(
+			'<span class="ap-navbar-toggle-icon ap-navbar-toggle-icon-%1$s" aria-hidden="true">%2$s</span>',
+			esc_attr( $state ),
+			$icon_html // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Sanitized above.
+		);
 	}
 
 	/**
@@ -681,6 +1158,19 @@ final class NavMenuWidget extends \Elementor\Widget_Base {
 	}
 
 	/**
+	 * Get the current mobile dropdown breakpoint width.
+	 *
+	 * @param array<string,mixed> $settings Widget settings.
+	 * @return int
+	 */
+	private function get_mobile_dropdown_breakpoint_value( array $settings ) {
+		$breakpoint = $this->get_mobile_dropdown_breakpoint( $settings );
+		$values     = $this->get_mobile_dropdown_breakpoint_values();
+
+		return isset( $values[ $breakpoint ] ) ? absint( $values[ $breakpoint ] ) : 0;
+	}
+
+	/**
 	 * Get available mobile dropdown breakpoint options.
 	 *
 	 * @return array<string,string>
@@ -719,6 +1209,41 @@ final class NavMenuWidget extends \Elementor\Widget_Base {
 	}
 
 	/**
+	 * Get available mobile dropdown breakpoint values.
+	 *
+	 * @return array<string,int>
+	 */
+	private function get_mobile_dropdown_breakpoint_values() {
+		$values      = array(
+			'none' => 0,
+		);
+		$allowed     = array( 'mobile', 'mobile_extra', 'tablet' );
+		$breakpoints = $this->get_elementor_active_breakpoints();
+
+		foreach ( $breakpoints as $breakpoint_key => $breakpoint ) {
+			$breakpoint_key = sanitize_key( (string) $breakpoint_key );
+
+			if ( ! in_array( $breakpoint_key, $allowed, true ) || ! is_object( $breakpoint ) ) {
+				continue;
+			}
+
+			if ( ! method_exists( $breakpoint, 'get_value' ) ) {
+				continue;
+			}
+
+			$values[ $breakpoint_key ] = absint( $breakpoint->get_value() );
+		}
+
+		foreach ( $this->get_fallback_mobile_dropdown_breakpoint_values() as $breakpoint_key => $value ) {
+			if ( ! isset( $values[ $breakpoint_key ] ) ) {
+				$values[ $breakpoint_key ] = absint( $value );
+			}
+		}
+
+		return $values;
+	}
+
+	/**
 	 * Get Elementor active breakpoints when the manager is available.
 	 *
 	 * @return array<string,object>
@@ -746,6 +1271,18 @@ final class NavMenuWidget extends \Elementor\Widget_Base {
 		return array(
 			'mobile' => $this->format_mobile_dropdown_breakpoint_label( __( 'Mobile Portrait', 'alternatepro-elements' ), 767 ),
 			'tablet' => $this->format_mobile_dropdown_breakpoint_label( __( 'Tablet Portrait', 'alternatepro-elements' ), 1024 ),
+		);
+	}
+
+	/**
+	 * Get fallback breakpoint values for non-standard Elementor contexts.
+	 *
+	 * @return array<string,int>
+	 */
+	private function get_fallback_mobile_dropdown_breakpoint_values() {
+		return array(
+			'mobile' => 767,
+			'tablet' => 1024,
 		);
 	}
 

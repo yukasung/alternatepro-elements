@@ -24,6 +24,11 @@ final class WidgetsModule {
 	public const NAV_MENU_STYLE = 'apro-nav-menu';
 
 	/**
+	 * Nav Menu frontend script handle.
+	 */
+	public const NAV_MENU_SCRIPT = 'apro-nav-menu-frontend';
+
+	/**
 	 * Register hooks.
 	 *
 	 * @return void
@@ -31,6 +36,7 @@ final class WidgetsModule {
 	public function init() {
 		add_action( 'wp_enqueue_scripts', array( $this, 'register_assets' ) );
 		add_action( 'elementor/frontend/after_register_styles', array( $this, 'register_assets' ) );
+		add_action( 'elementor/frontend/after_register_scripts', array( $this, 'register_assets' ) );
 		add_action( 'elementor/elements/categories_registered', array( $this, 'register_category' ) );
 		add_action( 'elementor/widgets/register', array( $this, 'register_widgets' ) );
 	}
@@ -46,6 +52,14 @@ final class WidgetsModule {
 			APRO_ELEMENTS_URL . 'assets/css/nav-menu.css',
 			array(),
 			$this->asset_version( 'assets/css/nav-menu.css' )
+		);
+
+		wp_register_script(
+			self::NAV_MENU_SCRIPT,
+			APRO_ELEMENTS_URL . 'assets/js/nav-menu.js',
+			array(),
+			$this->asset_version( 'assets/js/nav-menu.js' ),
+			true
 		);
 	}
 
