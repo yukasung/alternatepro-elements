@@ -53,6 +53,12 @@ The format is based on Keep a Changelog.
 * Updated Header/Footer template editing to use Elementor's active switch panel by default and hide the native WordPress content editor UI.
 * Updated Header/Footer template preview handling so Elementor can load template previews through a queryable template URL and Elementor canvas template.
 * Updated Header/Footer frontend rendering to replace the active theme header/footer template when a matching AlternatePro template is active.
+* Updated AP Menu toggle button defaults to use Elementor Free eicons and normalize legacy saved Font Awesome default icons at render time.
+* Updated AP Menu default text colors to use a darker Elementor-style baseline while preserving user color controls.
+* Updated AP Menu mobile toggle and nested submenu behavior to use scale-based expand and collapse so items reveal together.
+* Added AP Menu main menu divider style controls for divider style, width, height, and color.
+* Updated AP Menu desktop submenu default font size and line height to match the Elementor-style dropdown baseline.
+* Added AP Menu main menu pointer color controls for hover and active underline states.
 * Clarified v1.0 changelog scope by separating required, conditional, and deferred features.
 * Updated EditorConfig PHP, JavaScript, and CSS indentation to align with WordPress Coding Standards.
 * Standardized PHPCS configuration naming on `phpcs.xml`.

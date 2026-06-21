@@ -22,7 +22,7 @@ Widget development has not started.
 
 These widgets may ship in v1.0 only if validation confirms accessibility, performance, and Elementor compatibility.
 
-- Nav Menu: Not Started
+- Nav Menu: In Progress - AP Menu widget foundation, scale-based responsive toggle and submenu animation, main menu divider/pointer styling, Elementor-style dropdown typography/styling, and Elementor Free eicon toggle defaults are under active validation.
 - Posts: Not Started
 
 ## v1.5 Candidate Widgets

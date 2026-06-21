@@ -169,6 +169,12 @@ Establish the plugin foundation so modules can load safely, requirements can fai
 - Browser validation for active Header/Footer frontend rendering passed after adding theme compatibility wrappers.
 - Runtime baseline observed during admin validation: WordPress 7.0 and Elementor Free 4.1.3.
 - Temporary validation user `codex_admin` was deleted after browser testing.
+- AP Menu toggle button defaults now use Elementor Free eicons, with legacy saved Font Awesome default toggle icons normalized at render time.
+- AP Menu default main and dropdown text colors now use a darker Elementor-style baseline while remaining overrideable from Style controls.
+- AP Menu mobile toggle and nested submenus now use scale-based expand and collapse so menu items reveal together instead of the last item appearing late.
+- AP Menu Main Menu divider styling now includes Elementor-style controls for divider style, width, height, and color.
+- AP Menu desktop submenu default typography now uses a 13px font size with a 20px line height to match the Elementor-style dropdown baseline.
+- AP Menu Main Menu pointer styling now includes hover and active pointer color controls for underline states.
 - Phase 1 must not be marked complete until exact minimum version baselines, final release summary, dashboards, and acceptance criteria verification are complete.
 
 ## Dependencies

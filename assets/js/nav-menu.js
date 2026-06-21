@@ -53,6 +53,10 @@
 		var menuId;
 		var open = false;
 		var ticking = false;
+		var disclosureAnimations = new WeakMap();
+		var transitionEndHandlers = new WeakMap();
+		var transitionFrames = new WeakMap();
+		var transitionTimers = new WeakMap();
 
 		if ( ! nav || "yes" === nav.getAttribute( "data-ap-nav-initialized" ) ) {
 			return;
@@ -102,17 +106,262 @@
 			return toArray( nav.querySelectorAll( ".menu-item-has-children" ) );
 		}
 
-		function setSubmenuState( item, expanded ) {
-			var link = getDirectLink( item );
-			var submenu = getDirectChildByClass( item, "sub-menu" );
+		function parseTransitionTime( value ) {
+			var numericValue = parseFloat( value );
 
-			if ( ! link || ! submenu ) {
+			if ( isNaN( numericValue ) ) {
+				return 0;
+			}
+
+			return -1 !== value.indexOf( "ms" ) ? numericValue : numericValue * 1000;
+		}
+
+		function getTransitionDuration( element ) {
+			var computedStyle = window.getComputedStyle( element );
+			var delays = computedStyle.transitionDelay.split( "," );
+			var durations = computedStyle.transitionDuration.split( "," );
+			var index;
+			var maxDuration = 0;
+			var total;
+
+			for ( index = 0; index < durations.length; index += 1 ) {
+				total = parseTransitionTime( durations[ index ] ) + parseTransitionTime( delays[ index ] || delays[ 0 ] || "0s" );
+				maxDuration = Math.max( maxDuration, total );
+			}
+
+			return maxDuration;
+		}
+
+		function getTransitionEasing( element ) {
+			var computedStyle = window.getComputedStyle( element );
+			var easing = computedStyle.transitionTimingFunction.match( /cubic-bezier\([^)]+\)|steps\([^)]+\)|ease-in-out|ease-in|ease-out|linear|ease/ );
+
+			return easing ? easing[ 0 ] : "ease";
+		}
+
+		function shouldReduceMotion() {
+			return window.matchMedia && window.matchMedia( "(prefers-reduced-motion: reduce)" ).matches;
+		}
+
+		function clearDisclosureTransition( element ) {
+			var animation = disclosureAnimations.get( element );
+			var transitionEnd = transitionEndHandlers.get( element );
+			var transitionFrame = transitionFrames.get( element );
+			var transitionTimer = transitionTimers.get( element );
+
+			if ( animation ) {
+				animation.cancel();
+				disclosureAnimations.delete( element );
+			}
+
+			if ( transitionFrame ) {
+				window.cancelAnimationFrame( transitionFrame );
+				transitionFrames.delete( element );
+			}
+
+			if ( transitionTimer ) {
+				window.clearTimeout( transitionTimer );
+				transitionTimers.delete( element );
+			}
+
+			if ( transitionEnd ) {
+				element.removeEventListener( "transitionend", transitionEnd );
+				transitionEndHandlers.delete( element );
+			}
+		}
+
+		function finishDisclosureState( element, isOpen, afterFinish ) {
+			clearDisclosureTransition( element );
+
+			if ( isOpen ) {
+				element.hidden = false;
+				element.style.maxHeight = "";
+				element.style.opacity = "";
+				element.style.overflow = "";
+				element.style.scale = "";
+				element.style.transformOrigin = "";
+
+				if ( "function" === typeof afterFinish ) {
+					afterFinish();
+				}
+
 				return;
 			}
 
-			item.classList.toggle( SUBMENU_OPEN_CLASS, expanded );
-			link.setAttribute( "aria-expanded", expanded ? "true" : "false" );
-			submenu.hidden = ! expanded;
+			element.hidden = true;
+			element.style.maxHeight = "";
+			element.style.opacity = "";
+			element.style.overflow = "";
+			element.style.scale = "";
+			element.style.transformOrigin = "";
+
+			if ( "function" === typeof afterFinish ) {
+				afterFinish();
+			}
+		}
+
+		function waitForDisclosureTransition( element, isOpen, afterFinish ) {
+			var transitionDuration = getTransitionDuration( element );
+			var transitionEnd;
+			var transitionTimer;
+
+			transitionEnd = function ( event ) {
+				if ( event && event.target !== element ) {
+					return;
+				}
+
+				if ( event && "scale" !== event.propertyName ) {
+					return;
+				}
+
+				finishDisclosureState( element, isOpen, afterFinish );
+			};
+
+			element.addEventListener( "transitionend", transitionEnd );
+			transitionEndHandlers.set( element, transitionEnd );
+
+			transitionTimer = window.setTimeout( function () {
+				finishDisclosureState( element, isOpen, afterFinish );
+			}, transitionDuration + 50 );
+			transitionTimers.set( element, transitionTimer );
+		}
+
+		function getFullDisclosureHeight( element ) {
+			var previousMaxHeight = element.style.maxHeight;
+			var previousScale = element.style.scale;
+			var height;
+
+			element.hidden = false;
+			element.style.maxHeight = "none";
+			element.style.scale = "1";
+			height = element.scrollHeight;
+			element.style.maxHeight = previousMaxHeight;
+			element.style.scale = previousScale;
+
+			return height;
+		}
+
+		function runAfterDisclosurePaint( element, callback ) {
+			var frame;
+
+			frame = window.requestAnimationFrame( function () {
+				transitionFrames.delete( element );
+
+				frame = window.requestAnimationFrame( function () {
+					transitionFrames.delete( element );
+					callback();
+				} );
+				transitionFrames.set( element, frame );
+			} );
+			transitionFrames.set( element, frame );
+		}
+
+		function animateDisclosureWithKeyframes( element, isOpen, afterFinish ) {
+			var animation;
+			var duration;
+
+			if ( ! element.animate ) {
+				return false;
+			}
+
+			duration = getTransitionDuration( element );
+
+			if ( 0 >= duration ) {
+				return false;
+			}
+
+			animation = element.animate(
+				isOpen ?
+					[
+						{ opacity: 0, scale: "1 0" },
+						{ opacity: 1, scale: "1 1" },
+					] :
+					[
+						{ opacity: 1, scale: "1 1" },
+						{ opacity: 0, scale: "1 0" },
+					],
+				{
+					duration: duration,
+					easing: getTransitionEasing( element ),
+					fill: "both",
+				}
+			);
+
+			disclosureAnimations.set( element, animation );
+			animation.onfinish = function () {
+				disclosureAnimations.delete( element );
+				finishDisclosureState( element, isOpen, afterFinish );
+			};
+
+			return true;
+		}
+
+		function animateDisclosure( element, isOpen, animate, afterFinish ) {
+			var endHeight;
+			var startHeight;
+
+			clearDisclosureTransition( element );
+
+			if ( ! animate || shouldReduceMotion() ) {
+				finishDisclosureState( element, isOpen, afterFinish );
+				return;
+			}
+
+			if ( isOpen ) {
+				endHeight = getFullDisclosureHeight( element );
+				element.hidden = false;
+				element.style.overflow = "hidden";
+				element.style.maxHeight = endHeight + "px";
+				element.style.opacity = "0";
+				element.style.scale = "1 0";
+				element.style.transformOrigin = "top";
+
+				if ( animateDisclosureWithKeyframes( element, true, afterFinish ) ) {
+					return;
+				}
+
+				runAfterDisclosurePaint( element, function () {
+					element.style.opacity = "1";
+					element.style.scale = "1 1";
+
+					waitForDisclosureTransition( element, true, afterFinish );
+				} );
+				return;
+			}
+
+			if ( element.hidden ) {
+				finishDisclosureState( element, false, afterFinish );
+				return;
+			}
+
+			startHeight = getFullDisclosureHeight( element ) || element.getBoundingClientRect().height || element.scrollHeight;
+			element.hidden = false;
+			element.style.overflow = "hidden";
+			element.style.maxHeight = startHeight + "px";
+			element.style.opacity = "1";
+			element.style.scale = "1 1";
+			element.style.transformOrigin = "top";
+
+			if ( animateDisclosureWithKeyframes( element, false, afterFinish ) ) {
+				return;
+			}
+
+			runAfterDisclosurePaint( element, function () {
+				element.style.opacity = "0";
+				element.style.scale = "1 0";
+
+				waitForDisclosureTransition( element, false, afterFinish );
+			} );
+		}
+
+		function resetChildSubmenusForCollapse( item ) {
+			toArray( item.querySelectorAll( ".menu-item-has-children" ) ).forEach( function ( child ) {
+				if ( child === item ) {
+					return;
+				}
+
+				setSubmenuState( child, false, false );
+			} );
 		}
 
 		function resetSubmenusForDesktop() {
@@ -127,9 +376,36 @@
 				}
 
 				if ( submenu ) {
-					submenu.hidden = false;
+					finishDisclosureState( submenu, true );
 				}
 			} );
+		}
+
+		function resetSubmenusForCollapse() {
+			getParentItems().forEach( function ( item ) {
+				setSubmenuState( item, false, false );
+			} );
+		}
+
+		function setSubmenuState( item, expanded, animate ) {
+			var link = getDirectLink( item );
+			var submenu = getDirectChildByClass( item, "sub-menu" );
+			var afterFinish = null;
+
+			if ( ! link || ! submenu ) {
+				return;
+			}
+
+			item.classList.toggle( SUBMENU_OPEN_CLASS, expanded );
+			link.setAttribute( "aria-expanded", expanded ? "true" : "false" );
+
+			if ( ! expanded ) {
+				afterFinish = function () {
+					resetChildSubmenusForCollapse( item );
+				};
+			}
+
+			animateDisclosure( submenu, expanded, Boolean( animate ), afterFinish );
 		}
 
 		function onSubmenuLinkClick( event ) {
@@ -146,14 +422,13 @@
 			}
 
 			event.preventDefault();
-			setSubmenuState( item, ! item.classList.contains( SUBMENU_OPEN_CLASS ) );
+			setSubmenuState( item, ! item.classList.contains( SUBMENU_OPEN_CLASS ), true );
 		}
 
 		function prepareSubmenusForCollapse() {
 			getParentItems().forEach( function ( item, index ) {
 				var link = getDirectLink( item );
 				var submenu = getDirectChildByClass( item, "sub-menu" );
-				var expanded;
 
 				if ( ! link || ! submenu ) {
 					return;
@@ -171,12 +446,11 @@
 					link.addEventListener( "click", onSubmenuLinkClick );
 				}
 
-				expanded = item.classList.contains( SUBMENU_OPEN_CLASS ) || item.classList.contains( "current-menu-ancestor" );
-				setSubmenuState( item, expanded );
+				setSubmenuState( item, item.classList.contains( SUBMENU_OPEN_CLASS ), false );
 			} );
 		}
 
-		function setMenuOpen( isOpen ) {
+		function setMenuOpen( isOpen, animate ) {
 			open = Boolean( isOpen );
 			nav.classList.toggle( OPEN_CLASS, open );
 
@@ -184,7 +458,12 @@
 				button.setAttribute( "aria-expanded", open ? "true" : "false" );
 			}
 
-			menu.hidden = nav.classList.contains( COLLAPSIBLE_CLASS ) && ! open;
+			if ( ! nav.classList.contains( COLLAPSIBLE_CLASS ) ) {
+				finishDisclosureState( menu, true );
+				return;
+			}
+
+			animateDisclosure( menu, open, Boolean( animate ), open ? null : resetSubmenusForCollapse );
 		}
 
 		function syncMode() {
@@ -197,7 +476,7 @@
 			if ( ! collapsible ) {
 				open = false;
 				nav.classList.remove( OPEN_CLASS );
-				menu.hidden = false;
+				finishDisclosureState( menu, true );
 				resetSubmenusForDesktop();
 
 				if ( button ) {
@@ -213,7 +492,7 @@
 				open = false;
 			}
 
-			setMenuOpen( open );
+			setMenuOpen( open, false );
 		}
 
 		function requestSync() {
@@ -235,7 +514,7 @@
 					return;
 				}
 
-				setMenuOpen( ! open );
+				setMenuOpen( ! open, true );
 			} );
 		}
 
@@ -244,7 +523,7 @@
 				return;
 			}
 
-			setMenuOpen( false );
+			setMenuOpen( false, true );
 
 			if ( button ) {
 				button.focus();
@@ -256,7 +535,7 @@
 				return;
 			}
 
-			setMenuOpen( false );
+			setMenuOpen( false, true );
 		} );
 
 		window.addEventListener( "resize", requestSync, { passive: true } );

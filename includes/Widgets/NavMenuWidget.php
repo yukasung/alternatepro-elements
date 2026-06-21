@@ -434,6 +434,20 @@ final class NavMenuWidget extends \Elementor\Widget_Base {
 			)
 		);
 
+		$this->add_control(
+			'main_menu_pointer_color_hover',
+			array(
+				'label'     => __( 'Pointer Color', 'alternatepro-elements' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'condition' => array(
+					'pointer' => 'underline',
+				),
+				'selectors' => array(
+					'{{WRAPPER}} .apro-nav-menu' => '--ap-nav-pointer-hover-color: {{VALUE}};',
+				),
+			)
+		);
+
 		$this->end_controls_tab();
 
 		$this->start_controls_tab(
@@ -454,6 +468,20 @@ final class NavMenuWidget extends \Elementor\Widget_Base {
 			)
 		);
 
+		$this->add_control(
+			'main_menu_pointer_color_active',
+			array(
+				'label'     => __( 'Pointer Color', 'alternatepro-elements' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'condition' => array(
+					'pointer' => 'underline',
+				),
+				'selectors' => array(
+					'{{WRAPPER}} .apro-nav-menu' => '--ap-nav-pointer-active-color: {{VALUE}};',
+				),
+			)
+		);
+
 		$this->end_controls_tab();
 
 		$this->end_controls_tabs();
@@ -468,6 +496,83 @@ final class NavMenuWidget extends \Elementor\Widget_Base {
 				'return_value' => 'yes',
 				'default'      => 'no',
 				'separator'    => 'before',
+			)
+		);
+
+		$this->add_control(
+			'main_menu_divider_style',
+			array(
+				'label'     => __( 'Style', 'alternatepro-elements' ),
+				'type'      => \Elementor\Controls_Manager::SELECT,
+				'default'   => 'solid',
+				'options'   => array(
+					'solid'  => __( 'Solid', 'alternatepro-elements' ),
+					'double' => __( 'Double', 'alternatepro-elements' ),
+					'dotted' => __( 'Dotted', 'alternatepro-elements' ),
+					'dashed' => __( 'Dashed', 'alternatepro-elements' ),
+				),
+				'condition' => array(
+					'main_menu_divider' => 'yes',
+				),
+				'selectors' => array(
+					'{{WRAPPER}} .apro-nav-menu' => '--ap-nav-divider-style: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'main_menu_divider_width',
+			array(
+				'label'      => __( 'Width', 'alternatepro-elements' ),
+				'type'       => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => array( 'px' ),
+				'range'      => array(
+					'px' => array(
+						'min' => 0,
+						'max' => 20,
+					),
+				),
+				'condition'  => array(
+					'main_menu_divider' => 'yes',
+				),
+				'selectors'  => array(
+					'{{WRAPPER}} .apro-nav-menu' => '--ap-nav-divider-width: {{SIZE}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'main_menu_divider_height',
+			array(
+				'label'      => __( 'Height', 'alternatepro-elements' ),
+				'type'       => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => array( 'px' ),
+				'range'      => array(
+					'px' => array(
+						'min' => 0,
+						'max' => 120,
+					),
+				),
+				'condition'  => array(
+					'main_menu_divider' => 'yes',
+				),
+				'selectors'  => array(
+					'{{WRAPPER}} .apro-nav-menu' => '--ap-nav-divider-height: {{SIZE}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->add_control(
+			'main_menu_divider_color',
+			array(
+				'label'     => __( 'Color', 'alternatepro-elements' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'condition' => array(
+					'main_menu_divider' => 'yes',
+				),
+				'selectors' => array(
+					'{{WRAPPER}} .apro-nav-menu' => '--ap-nav-divider-color: {{VALUE}};',
+				),
 			)
 		);
 
@@ -1125,6 +1230,7 @@ final class NavMenuWidget extends \Elementor\Widget_Base {
 				'library' => sanitize_key( (string) $icon['library'] ),
 			);
 		}
+		$icon = $this->normalize_toggle_icon( $icon, $state );
 
 		if ( empty( $icon['value'] ) || empty( $icon['library'] ) || ! class_exists( '\Elementor\Icons_Manager' ) ) {
 			return '';
@@ -1370,15 +1476,40 @@ final class NavMenuWidget extends \Elementor\Widget_Base {
 
 		if ( 'active' === $state ) {
 			return array(
-				'value'   => 'fas fa-times',
-				'library' => 'fa-solid',
+				'value'   => 'eicon-close',
+				'library' => 'eicons',
 			);
 		}
 
 		return array(
-			'value'   => 'fas fa-bars',
-			'library' => 'fa-solid',
+			'value'   => 'eicon-menu-bar',
+			'library' => 'eicons',
 		);
+	}
+
+	/**
+	 * Replace legacy saved default toggle icons with the current Elementor eicons.
+	 *
+	 * @param array<string,mixed> $icon Sanitized Elementor icon setting.
+	 * @param string              $state Toggle state.
+	 * @return array<string,mixed>
+	 */
+	private function normalize_toggle_icon( array $icon, $state ) {
+		$state   = sanitize_key( (string) $state );
+		$value   = isset( $icon['value'] ) && is_scalar( $icon['value'] ) ? (string) $icon['value'] : '';
+		$library = isset( $icon['library'] ) && is_scalar( $icon['library'] ) ? sanitize_key( (string) $icon['library'] ) : '';
+
+		if ( 'fa-solid' !== $library ) {
+			return $icon;
+		}
+
+		$legacy_default = 'active' === $state ? 'fas fa-times' : 'fas fa-bars';
+
+		if ( $legacy_default !== $value ) {
+			return $icon;
+		}
+
+		return $this->get_default_toggle_icon( $state );
 	}
 
 	/**
@@ -1388,6 +1519,10 @@ final class NavMenuWidget extends \Elementor\Widget_Base {
 	 */
 	private function get_toggle_icon_recommendations() {
 		return array(
+			'eicons'   => array(
+				'menu-bar',
+				'close',
+			),
 			'fa-solid' => array(
 				'bars',
 				'ellipsis-h',
