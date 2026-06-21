@@ -59,6 +59,7 @@ The format is based on Keep a Changelog.
 * Added AP Menu main menu divider style controls for divider style, width, height, and color.
 * Updated AP Menu desktop submenu default font size and line height to match the Elementor-style dropdown baseline.
 * Added AP Menu main menu pointer color controls for hover and active underline states.
+* Refactored AP Menu frontend direct-child lookup to reuse a shared helper for class and link matching.
 * Clarified v1.0 changelog scope by separating required, conditional, and deferred features.
 * Updated EditorConfig PHP, JavaScript, and CSS indentation to align with WordPress Coding Standards.
 * Standardized PHPCS configuration naming on `phpcs.xml`.

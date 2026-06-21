@@ -17,12 +17,12 @@
 		return Array.prototype.slice.call( collection );
 	}
 
-	function getDirectChildByClass( element, className ) {
+	function getDirectChild( element, matches ) {
 		var children = element ? element.children : [];
 		var index;
 
 		for ( index = 0; index < children.length; index += 1 ) {
-			if ( children[ index ].classList.contains( className ) ) {
+			if ( matches( children[ index ] ) ) {
 				return children[ index ];
 			}
 		}
@@ -30,17 +30,16 @@
 		return null;
 	}
 
+	function getDirectChildByClass( element, className ) {
+		return getDirectChild( element, function ( child ) {
+			return child.classList.contains( className );
+		} );
+	}
+
 	function getDirectLink( element ) {
-		var children = element ? element.children : [];
-		var index;
-
-		for ( index = 0; index < children.length; index += 1 ) {
-			if ( "A" === children[ index ].tagName ) {
-				return children[ index ];
-			}
-		}
-
-		return null;
+		return getDirectChild( element, function ( child ) {
+			return "A" === child.tagName;
+		} );
 	}
 
 	function shouldIgnoreMenuClick( event ) {

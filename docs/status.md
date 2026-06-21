@@ -175,6 +175,7 @@ Establish the plugin foundation so modules can load safely, requirements can fai
 - AP Menu Main Menu divider styling now includes Elementor-style controls for divider style, width, height, and color.
 - AP Menu desktop submenu default typography now uses a 13px font size with a 20px line height to match the Elementor-style dropdown baseline.
 - AP Menu Main Menu pointer styling now includes hover and active pointer color controls for underline states.
+- AP Menu refactor review was created with a recommended future control-registration split and a completed low-risk frontend helper cleanup.
 - Phase 1 must not be marked complete until exact minimum version baselines, final release summary, dashboards, and acceptance criteria verification are complete.
 
 ## Dependencies
