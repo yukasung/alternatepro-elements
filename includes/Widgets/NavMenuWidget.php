@@ -28,7 +28,7 @@ final class NavMenuWidget extends \Elementor\Widget_Base {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'AlternatePro Nav Menu', 'alternatepro-elements' );
+		return __( 'AP Menu', 'alternatepro-elements' );
 	}
 
 	/**
@@ -74,6 +74,24 @@ final class NavMenuWidget extends \Elementor\Widget_Base {
 	 */
 	public function get_script_depends() {
 		return array( WidgetsModule::NAV_MENU_SCRIPT );
+	}
+
+	/**
+	 * Adjust wrapper attributes before Elementor prints the widget.
+	 *
+	 * @return void
+	 */
+	public function before_render() {
+		parent::before_render();
+
+		$settings              = $this->get_settings_for_display();
+		$has_elementor_motion  = ! empty( $settings['_animation'] ) && 'none' !== $settings['_animation'];
+		$has_elementor_motion |= ! empty( $settings['_animation_tablet'] ) && 'none' !== $settings['_animation_tablet'];
+		$has_elementor_motion |= ! empty( $settings['_animation_mobile'] ) && 'none' !== $settings['_animation_mobile'];
+
+		if ( ! $has_elementor_motion ) {
+			$this->remove_render_attribute( '_wrapper', 'class', 'elementor-invisible' );
+		}
 	}
 
 	/**
@@ -175,7 +193,7 @@ final class NavMenuWidget extends \Elementor\Widget_Base {
 		);
 
 		$this->add_control(
-			'animation',
+			'pointer_animation',
 			array(
 				'label'   => __( 'Animation', 'alternatepro-elements' ),
 				'type'    => \Elementor\Controls_Manager::SELECT,
@@ -897,7 +915,7 @@ final class NavMenuWidget extends \Elementor\Widget_Base {
 	 */
 	protected function render() {
 		$settings       = $this->get_settings_for_display();
-		$menu_id        = isset( $settings['menu_id'] ) ? absint( $settings['menu_id'] ) : 0;
+		$menu_id        = $this->get_render_menu_id( $settings );
 		$menu_name      = isset( $settings['menu_name'] ) ? sanitize_text_field( $settings['menu_name'] ) : '';
 		$menu_name      = '' !== $menu_name ? $menu_name : __( 'Menu', 'alternatepro-elements' );
 		$classes        = $this->get_container_classes( $settings );
@@ -907,7 +925,7 @@ final class NavMenuWidget extends \Elementor\Widget_Base {
 		$breakpoint     = $this->get_mobile_dropdown_breakpoint( $settings );
 		$button         = $this->get_mobile_dropdown_toggle_button( $settings );
 
-		if ( ! $menu_id || ! wp_get_nav_menu_object( $menu_id ) ) {
+		if ( ! $menu_id ) {
 			$this->render_empty_message();
 
 			return;
@@ -961,6 +979,28 @@ final class NavMenuWidget extends \Elementor\Widget_Base {
 	}
 
 	/**
+	 * Get a valid menu ID for frontend rendering.
+	 *
+	 * @param array<string,mixed> $settings Widget settings.
+	 * @return int
+	 */
+	private function get_render_menu_id( array $settings ) {
+		$menu_id = isset( $settings['menu_id'] ) ? absint( $settings['menu_id'] ) : 0;
+
+		if ( $menu_id && wp_get_nav_menu_object( $menu_id ) ) {
+			return $menu_id;
+		}
+
+		$menus = wp_get_nav_menus();
+
+		if ( empty( $menus ) ) {
+			return 0;
+		}
+
+		return absint( $menus[0]->term_id );
+	}
+
+	/**
 	 * Get sanitized container classes from settings.
 	 *
 	 * @param array<string,mixed> $settings Widget settings.
@@ -970,7 +1010,7 @@ final class NavMenuWidget extends \Elementor\Widget_Base {
 		$layout       = $this->get_layout( $settings );
 		$alignment    = $this->sanitize_choice( isset( $settings['alignment'] ) ? $settings['alignment'] : '', array( 'left', 'center', 'right', 'justify' ), 'left' );
 		$pointer      = $this->sanitize_choice( isset( $settings['pointer'] ) ? $settings['pointer'] : '', array( 'none', 'underline' ), 'underline' );
-		$animation    = $this->sanitize_choice( isset( $settings['animation'] ) ? $settings['animation'] : '', array( 'none', 'fade' ), 'fade' );
+		$animation    = $this->get_pointer_animation( $settings );
 		$indicator    = empty( $this->get_submenu_indicator_icon( $settings ) ) ? 'none' : 'icon';
 		$breakpoint   = $this->get_mobile_dropdown_breakpoint( $settings );
 		$full_width   = $this->get_mobile_dropdown_full_width( $settings );
@@ -1005,6 +1045,22 @@ final class NavMenuWidget extends \Elementor\Widget_Base {
 		$value = isset( $settings['layout'] ) ? $settings['layout'] : '';
 
 		return $this->sanitize_choice( $value, array( 'horizontal', 'vertical', 'dropdown' ), 'horizontal' );
+	}
+
+	/**
+	 * Get the sanitized pointer animation setting.
+	 *
+	 * @param array<string,mixed> $settings Widget settings.
+	 * @return string
+	 */
+	private function get_pointer_animation( array $settings ) {
+		$value = isset( $settings['pointer_animation'] ) ? $settings['pointer_animation'] : '';
+
+		if ( '' === $value && isset( $settings['animation'] ) ) {
+			$value = $settings['animation'];
+		}
+
+		return $this->sanitize_choice( $value, array( 'none', 'fade' ), 'fade' );
 	}
 
 	/**
