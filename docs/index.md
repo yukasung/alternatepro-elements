@@ -88,6 +88,8 @@ The architecture document is the primary technical reference for module boundari
 
 - [Widgets List](planning/widgets-list.md)
 - [AP Custom CSS Shared Control](widgets/ap-custom-css-control.md)
+- [AP Media Carousel Phase 1](widgets/ap-media-carousel-phase1.md)
+- [AP Site Logo Phase 1](widgets/ap-site-logo-phase1.md)
 - [AP Slides Phase 1](widgets/ap-slides-phase1.md)
 
 ## Theme Builder
@@ -148,6 +150,8 @@ Detailed phase documents are generated from [Implementation Plan](planning/imple
 - [Pre-Development Audit Fixes](releases/pre-development-audit-fixes.md)
 - [Phase 1 Foundation Code Review](reviews/review-phase-1-foundation.md)
 - [Phase 1 Foundation Security Review](reviews/security-phase-1-foundation.md)
+- [AP Site Logo Custom CSS Review](reviews/review-ap-site-logo-custom-css.md)
+- [AP Site Logo Custom CSS Refactor Review](reviews/refactor-ap-site-logo-custom-css.md)
 
 ## Security Checklist
 
@@ -157,6 +161,7 @@ Detailed phase documents are generated from [Implementation Plan](planning/imple
 ## Testing Plan
 
 - [Testing Plan](testing/testing-plan.md)
+- [AP Site Logo Custom CSS Test Report](testing/test-ap-site-logo-custom-css.md)
 - [Phase 1 Foundation Test Report](testing/test-phase-1-foundation.md)
 
 ## Project Status

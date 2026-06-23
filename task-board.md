@@ -97,6 +97,57 @@
 - [x] Adjust AP Slides inside navigation arrow edge spacing to match the Elementor-style reference.
 - [x] Make AP Slides Content Animation Left and Right enter from outside the slide area with slower smooth timing.
 - [x] Make AP Slides Content Animation Down move the content group together like Up mode.
+- [x] Read available product, architecture, and coding standard documents for AP Site Logo.
+- [x] Create AP Site Logo Phase 1 widget class.
+- [x] Register AP Site Logo with Elementor through the widget module.
+- [x] Reuse the existing `site_logo` widget settings default and sanitizer allowlist key.
+- [x] Create `docs/widgets/ap-site-logo-phase1.md`.
+- [x] Review AP Site Logo skeleton code.
+- [x] Verify AP Site Logo registration path and placeholder output statically.
+- [x] Verify AP Site Logo Elementor runtime registration returns `ap-site-logo`.
+- [x] Verify AP Site Logo placeholder renders on a temporary Elementor frontend page.
+- [x] Add AP Site Logo `Site Logo` media option.
+- [x] Add AP Site Logo `Image Resolution` option with `Full` default.
+- [x] Add AP Site Logo `Caption` option with `None` default.
+- [x] Add AP Site Logo `Link` option with `Site URL` default.
+- [x] Render AP Site Logo selected/default image with optional link and caption.
+- [x] Verify AP Site Logo options render on a temporary Elementor frontend page.
+- [x] Add AP Site Logo Style tab `Image` section.
+- [x] Add AP Site Logo image alignment, width, max width, and height style controls.
+- [x] Add AP Site Logo image normal/hover opacity and CSS filter style controls.
+- [x] Add AP Site Logo image border type, border radius, and box shadow style controls.
+- [x] Verify AP Site Logo image style controls statically and through a temporary Elementor frontend smoke test.
+- [x] Apply shared AP Custom CSS control to AP Site Logo.
+- [x] Verify AP Site Logo shared AP Custom CSS trait usage statically.
+- [x] Verify AP Site Logo shared AP Custom CSS inline rendering through a temporary Elementor frontend smoke test.
+- [x] Run AP Site Logo shared AP Custom CSS testing workflow and create test report.
+- [x] Run AP Site Logo shared AP Custom CSS refactor workflow and create refactor report.
+- [x] Read available product, architecture, and coding standard documents for AP Media Carousel.
+- [x] Create AP Media Carousel Phase 1 widget class.
+- [x] Register AP Media Carousel with Elementor through the widget module.
+- [x] Add the `media_carousel` widget settings default and sanitizer allowlist key.
+- [x] Create `docs/widgets/ap-media-carousel-phase1.md`.
+- [x] Review AP Media Carousel skeleton code.
+- [x] Verify AP Media Carousel registration path and placeholder output statically.
+- [x] Verify AP Media Carousel Elementor runtime registration returns `ap-media-carousel`.
+- [x] Verify AP Media Carousel placeholder renders on a temporary Elementor frontend page.
+- [x] Add AP Media Carousel Content tab `Slides` section.
+- [x] Add AP Media Carousel `Slides Name` text control.
+- [x] Add AP Media Carousel `Slides` repeater shell with five default empty items.
+- [x] Keep AP Media Carousel `Skin` input deferred.
+- [x] Verify AP Media Carousel Content tab controls with static checks and Elementor runtime control-stack smoke validation.
+- [x] Add AP Media Carousel Style tab `Slides` section.
+- [x] Add AP Media Carousel `Space Between` style control with `10px` default.
+- [x] Add AP Media Carousel background color, border width, border radius, border color, and padding style controls.
+- [x] Verify AP Media Carousel Slides style controls with static checks.
+- [x] Verify AP Media Carousel style selector target classes on a temporary Elementor frontend page.
+- [x] Add AP Media Carousel Style tab `Navigation` section.
+- [x] Add AP Media Carousel arrows size and color style controls.
+- [x] Add AP Media Carousel pagination position, spacing, size, color, and active color style controls.
+- [x] Add AP Media Carousel play icon color, size, and shadow style controls.
+- [x] Keep AP Media Carousel navigation rendering and behavior deferred.
+- [ ] Verify AP Site Logo image style controls in the live Elementor editor.
+- [ ] Verify AP Site Logo live Elementor editor panel search and manual drag/drop.
 
 ## Issues
 
@@ -107,3 +158,7 @@
 - AP Slides button style browser validation is pending for the same temporary administrator account approval reason.
 - AP Slides navigation style browser validation is pending for the same temporary administrator account approval reason.
 - AP Slides AP Custom CSS browser validation is pending for the same temporary administrator account approval reason.
+- AP Site Logo AP Custom CSS live Elementor editor validation is pending because temporary administrator account creation was rejected by the sandbox approval layer.
+- AP Site Logo image style controls live Elementor editor validation is pending because temporary administrator account creation was rejected by the sandbox approval layer.
+- AP Site Logo live Elementor editor panel and manual drag/drop browser validation is pending because temporary administrator account creation was rejected by the sandbox approval layer.
+- AP Media Carousel live Elementor editor panel and manual drag/drop browser validation is pending because it requires an authenticated administrator browser session, and creating a temporary administrator account requires explicit user authorization.

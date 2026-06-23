@@ -39,6 +39,7 @@ final class SettingsSanitizer {
 			'call_to_action',
 			'image_box',
 			'image_carousel',
+			'media_carousel',
 			'slides',
 			'icon_box',
 			'team_member',

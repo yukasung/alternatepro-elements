@@ -36,7 +36,9 @@ The format is based on Keep a Changelog.
 * UAE-style grouped target search results with minimum-character feedback for Header/Footer specific display rules.
 * HFE/UAE-style theme compatibility wrappers for active Header/Footer template rendering.
 * Local WordPress demo content for widget testing, including pages, posts, categories, tags, menus, placeholder featured images, and plugin custom post type samples.
+* AP Site Logo Elementor widget foundation with Elementor Free registration, settings toggle support, and escaped placeholder output.
 * AP Image Carosel Elementor widget with local Owl Carousel assets, gallery-based image selection, responsive carousel controls, and widget-scoped frontend loading.
+* AP Media Carousel Elementor widget foundation with Elementor Free registration, settings toggle support, and escaped placeholder output.
 * AP Slides Elementor widget foundation with Elementor Free registration, settings toggle support, and escaped placeholder output.
 
 ### Changed
@@ -51,8 +53,14 @@ The format is based on Keep a Changelog.
 * Added AP Slides Button style controls for size, typography, border width, border radius, and normal/hover colors using plugin-owned Elementor Free control definitions.
 * Added AP Slides Navigation style controls for arrows and pagination position, size, spacing, and colors using plugin-owned Elementor Free control definitions.
 * Added AP Slides Advanced tab `AP Custom CSS` code editor with widget-scoped `selector` token support using plugin-owned Elementor Free control definitions.
+* Added AP Site Logo Content options for site logo media, image resolution, caption, and link using Elementor Free controls.
+* Added AP Site Logo Image style controls for alignment, width, max width, height, normal/hover opacity, normal/hover CSS filters, border type, border radius, and box shadow using Elementor Free controls.
+* Applied the shared AP Custom CSS control to AP Site Logo with widget-scoped `selector` support.
+* Added AP Media Carousel initial Content tab options for `Slides Name` and a `Slides` repeater shell with five default empty items, while keeping the Skin input deferred.
+* Added AP Media Carousel Slides style options for space between, background color, border width, border radius, border color, and padding using Elementor-generated selectors.
+* Added AP Media Carousel Navigation style options for arrows, pagination, and play icon controls without adding navigation rendering or JavaScript behavior.
 * Moved AP Slides `AP Custom CSS` to the bottom of the Elementor Advanced tab with an editor-only panel ordering script.
-* Extracted AP Custom CSS into a shared Elementor widget trait and shared editor asset for AP Slides, AP Menu, and AP Image Carosel reuse.
+* Extracted AP Custom CSS into a shared Elementor widget trait and shared editor asset for AP Slides, AP Menu, AP Image Carosel, and AP Site Logo reuse.
 * Extracted shared widget setting parsing helpers for carousel-style widgets.
 * Removed the AP Slides global `Background Color` control from Style > Slides; slide backgrounds remain configured per slide.
 * Replaced AP Slides placeholder-only output with multi-slide output that renders title, description, and button text using escaped plugin-owned markup.

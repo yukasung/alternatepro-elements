@@ -188,6 +188,23 @@ Establish the plugin foundation so modules can load safely, requirements can fai
 - AP Image Carosel security review was created with PASS verdict and no required fixes.
 - AP Image Carosel refactor review was created with NO REFACTOR NEEDED verdict after a low-risk `WidgetsModule` asset registration helper extraction passed targeted validation.
 - AP Image Carosel post-refactor smoke test passed targeted `WidgetsModule` syntax/PHPCS checks, isolated asset and widget toggle checks, homepage HTTP 200 validation, and no-global-carousel-asset validation.
+- Added the required AP Site Logo Phase 1 Elementor widget skeleton using Elementor Free public widget registration, the existing `site_logo` settings toggle key, and escaped placeholder output only.
+- AP Site Logo Phase 1 validation passed PHP syntax, targeted PHPCS, `git diff --check`, static registration checks, local Elementor runtime registration, and temporary Elementor frontend placeholder rendering. Live editor panel/drag validation remains pending because temporary administrator account creation was rejected by the sandbox approval layer.
+- Added AP Site Logo Content options for `Site Logo`, `Image Resolution`, `Caption`, and `Link`; temporary Elementor frontend validation confirmed `widgetType: ap-site-logo`, `.elementor-widget-ap-site-logo`, `.ap-site-logo`, default Site URL linking, and default logo/placeholder image rendering.
+- Added AP Site Logo Style tab Image controls for alignment, width, max width, height, normal/hover opacity, normal/hover CSS filters, border type, border radius, and box shadow using Elementor Free controls without adding widget CSS or JavaScript asset dependencies.
+- AP Site Logo Image style controls validation passed targeted PHP syntax, targeted PHPCS, static control/dependency checks, `git diff --check`, and temporary Elementor frontend smoke validation with saved Image style settings.
+- Applied the shared AP Custom CSS control to AP Site Logo so it reuses the common Advanced tab section, bottom panel ordering, sanitization, `selector` token handling, and inline render helper.
+- AP Site Logo shared AP Custom CSS validation passed targeted PHP syntax, targeted PHPCS, `node --check assets/js/custom-css-editor.js`, static trait usage checks, and temporary Elementor frontend smoke validation for inline CSS rendering.
+- AP Site Logo shared AP Custom CSS testing report was created with PASS WITH MINOR ISSUES verdict; static, unit-style sanitizer, integration, frontend smoke, and regression checks passed, with live Elementor editor validation still pending because authenticated editor access is unavailable in the sandbox.
+- AP Site Logo shared AP Custom CSS refactor review was created with NO REFACTOR NEEDED verdict after confirming the shared control reuse is appropriate and additional link/control abstractions would be premature.
+- Added the required AP Media Carousel Phase 1 Elementor widget skeleton using Elementor Free public widget registration, a new `media_carousel` settings toggle key, and escaped placeholder output only.
+- AP Media Carousel Phase 1 validation passed targeted PHP syntax, targeted PHPCS, `git diff --check`, static registration checks, local Elementor runtime registration, and temporary Elementor frontend placeholder rendering. Live editor panel/drag validation remains pending because it requires an authenticated administrator browser session, and creating a temporary administrator account requires explicit user authorization.
+- Added AP Media Carousel initial Content tab options for `Slides Name` and a `Slides` repeater shell with five default empty items. The Skin input, media fields, carousel behavior, CSS, JavaScript, and Owl Carousel integration remain deferred.
+- AP Media Carousel Content tab controls validation passed targeted PHP syntax, targeted PHPCS, `git diff --check`, static control checks, and local Elementor runtime control-stack smoke validation.
+- Added AP Media Carousel Style tab `Slides` controls for space between, background color, border width, border radius, border color, and padding using Elementor-generated selectors without adding widget CSS or JavaScript assets.
+- AP Media Carousel Slides style controls validation passed targeted PHP syntax, targeted PHPCS, `git diff --check`, static control checks, and temporary Elementor frontend smoke validation for the style selector target classes.
+- Added AP Media Carousel Style tab `Navigation` controls for arrows size/color, pagination position/spacing/size/color/active color, and play icon color/size/shadow without adding navigation rendering, CSS assets, JavaScript, or Owl Carousel integration.
+- AP Media Carousel Navigation style controls validation passed targeted PHP syntax, targeted PHPCS, `git diff --check`, and static control checks.
 - Added the explicitly requested AP Slides Phase 1 Elementor widget skeleton using Elementor Free public widget registration, a settings toggle key, and escaped placeholder output only.
 - AP Slides validation passed targeted PHP syntax checks, targeted PHPCS for changed PHP files, all-plugin PHP syntax fallback, `git diff --check`, runtime settings merge validation, and Elementor editor browser validation for panel visibility, drag/drop, and placeholder rendering.
 - AP Slides review, testing, security, widget documentation, and task-board updates were created.
@@ -214,7 +231,7 @@ Establish the plugin foundation so modules can load safely, requirements can fai
 - AP Slides AP Custom CSS static validation passed targeted PHP syntax, targeted PHPCS, all-plugin PHP syntax fallback, and `git diff --check`; Elementor browser validation remains pending for the same temporary administrator account approval reason.
 - Moved AP Slides `AP Custom CSS` to the bottom of the widget control stack so it appears after Elementor common Advanced controls.
 - Added an editor-only shared AP Custom CSS panel ordering script that places the `AP Custom CSS` section and code editor body as the bottom Advanced tab item.
-- Applied the shared AP Custom CSS control to AP Slides, AP Menu, and AP Image Carosel.
+- Applied the shared AP Custom CSS control to AP Slides, AP Menu, AP Image Carosel, and AP Site Logo.
 - AP Slides now renders configured slides with escaped title, description, and button text, using the existing safe HTML tag controls and default Elementor-generated preview styling.
 - AP Slides now renders interactive navigation arrows and pagination dots from the `Navigation` setting using widget-scoped JavaScript/CSS and the locally vendored OwlCarousel2 v2.3.4 dependency as the slide animation engine only, without copied Elementor Pro code.
 - Fixed AP Slides Owl animation review findings by extracting shared widget setting parsing helpers for AP Slides and AP Image Carosel, and by making AP Slides Autoplay disabled by default so automatic motion is opt-in.
@@ -354,6 +371,17 @@ Phase 2 - Elementor Integration
 - 2026-06-23: Slowed AP Slides Content Animation reveal timing again for a smoother Elementor-style entrance.
 - 2026-06-23: Updated AP Slides Content Animation Left and Right modes to enter from outside the slide area with slower timing.
 - 2026-06-23: Refined AP Slides Content Animation Down mode to move the content group together from above.
+- 2026-06-23: Added AP Site Logo Phase 1 Elementor widget skeleton.
+- 2026-06-23: Added AP Site Logo Content options for site logo media, image resolution, caption, and link.
+- 2026-06-23: Added AP Site Logo Image style options for alignment, sizing, opacity, CSS filters, border, radius, and shadow.
+- 2026-06-23: Validated AP Site Logo Image style options with targeted static checks and a temporary Elementor frontend smoke test.
+- 2026-06-23: Applied the shared AP Custom CSS control to AP Site Logo.
+- 2026-06-23: Created AP Site Logo shared AP Custom CSS testing report with PASS WITH MINOR ISSUES verdict.
+- 2026-06-23: Created AP Site Logo shared AP Custom CSS refactor review with NO REFACTOR NEEDED verdict.
+- 2026-06-23: Added AP Media Carousel Phase 1 Elementor widget skeleton with settings toggle support and placeholder runtime validation.
+- 2026-06-23: Added AP Media Carousel initial Content tab Slides options without adding the Skin input.
+- 2026-06-23: Added AP Media Carousel Style tab Slides options without adding carousel CSS or JavaScript assets.
+- 2026-06-23: Added AP Media Carousel Style tab Navigation options without adding navigation rendering or JavaScript behavior.
 - 2026-06-15: Created Code Review Agent workflow for post-implementation reviews.
 - 2026-06-15: Created Testing Agent workflow for post-review validation.
 - 2026-06-15: Enhanced Testing Agent workflow with functional, unit, integration, and regression testing strategy.

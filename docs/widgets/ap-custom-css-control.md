@@ -14,6 +14,7 @@ Date: 2026-06-23
 - `includes/Widgets/SlidesWidget.php`
 - `includes/Widgets/NavMenuWidget.php`
 - `includes/Widgets/ImageCarouselWidget.php`
+- `includes/Widgets/SiteLogoWidget.php`
 
 ## Usage
 
@@ -60,6 +61,7 @@ $this->render_ap_custom_css( $settings );
 - `AP Slides`
 - `AP Menu`
 - `AP Image Carosel`
+- `AP Site Logo`
 
 ## Validation
 
@@ -69,8 +71,10 @@ Passed:
 - `php -l includes/Widgets/SlidesWidget.php`
 - `php -l includes/Widgets/NavMenuWidget.php`
 - `php -l includes/Widgets/ImageCarouselWidget.php`
+- `php -l includes/Widgets/SiteLogoWidget.php`
 - `php -l includes/Widgets/WidgetsModule.php`
 - `node --check assets/js/custom-css-editor.js`
 - Targeted PHPCS for the shared control, AP widgets using the control, and widgets module.
 - All-plugin PHP syntax fallback.
 - `git diff --check`
+- AP Site Logo frontend smoke validation confirmed shared `selector` replacement and inline CSS rendering through the common trait.

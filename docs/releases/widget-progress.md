@@ -8,7 +8,7 @@ Widget development has started with conditional and explicitly requested widgets
 
 ## v1.0 Required Widgets
 
-- Site Logo: Not Started
+- Site Logo: Phase 1 skeleton plus requested Content, Image style, and shared AP Custom CSS options implemented - Elementor Free widget registration, widget class foundation, settings toggle key, `Site Logo` media control, `Image Resolution`, `Caption`, `Link`, default Site URL linking, responsive Image style controls for alignment, width, max width, height, normal/hover opacity, normal/hover CSS filters, border type, border radius, box shadow, shared Advanced tab `AP Custom CSS` support, escaped fallback placeholder output, and local runtime/frontend rendering validation. CSS files, JavaScript files, additional style sections, and advanced dynamic tag integration are intentionally deferred.
 - Site Title: Not Started
 - Search Form: Not Started
 - Breadcrumbs: Not Started
@@ -28,6 +28,7 @@ These widgets may ship in v1.0 only if validation confirms accessibility, perfor
 ## Explicitly Requested Widgets
 
 - AP Image Carosel: Implemented - gallery-based Elementor Free widget using locally vendored Owl Carousel assets, Elementor-style content and image style controls, responsive carousel controls, captions, links, navigation modes, opt-in autoplay with hover/interaction pauses, shared AP Custom CSS support, and widget-scoped asset dependencies.
+- AP Media Carousel: Phase 1 skeleton plus initial Content and Style tab options implemented - Elementor Free widget registration, widget class foundation, settings toggle key, `Slides Name` text control, `Slides` repeater shell with five default empty items, Slides style controls for space between, background color, border width, border radius, border color, and padding, Navigation style controls for arrows, pagination, and play icon styling, and escaped placeholder output. Skin input, image/video controls, media fields inside the repeater, carousel settings, navigation rendering/behavior, dots rendering/behavior, autoplay, responsive carousel controls, additional style sections, Owl Carousel integration, widget CSS, and widget JavaScript are intentionally deferred.
 - AP Slides: Phase 1 skeleton plus initial content, slider option, style option, and Advanced tab `AP Custom CSS` properties implemented - Elementor Free widget registration, widget class foundation, settings toggle key, `Slides Name` text control, `Slides` repeater with three default heading items, `Height` responsive slider, `Title HTML Tag` and `Description HTML Tag` safe-tag selects, `Slider Options` controls for navigation, opt-in autoplay, pause behavior, loop, transition, speed, and content animation, Style tab controls for content width, padding, positioning, text alignment, text shadow, title spacing/color/typography, description spacing/color/typography, button size/typography/border/normal/hover colors, navigation arrows/pagination position, size, spacing, and color controls, the shared Advanced tab `AP Custom CSS` control with widget-scoped `selector` token support and editor-only bottom ordering, slide output with title, description, and button text, and interactive arrows/pagination dots powered by widget-scoped JavaScript/CSS with locally vendored OwlCarousel2 v2.3.4 used as the slide animation engine only. Elementor Pro code is not copied.
 
 ## v1.5 Candidate Widgets

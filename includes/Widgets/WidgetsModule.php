@@ -267,8 +267,10 @@ final class WidgetsModule {
 			return;
 		}
 
+		$this->register_widget_if_enabled( $widgets_manager, 'site_logo', SiteLogoWidget::class );
 		$widgets_manager->register( new NavMenuWidget() );
 		$this->register_widget_if_enabled( $widgets_manager, 'image_carousel', ImageCarouselWidget::class );
+		$this->register_widget_if_enabled( $widgets_manager, 'media_carousel', MediaCarouselWidget::class );
 		$this->register_widget_if_enabled( $widgets_manager, 'slides', SlidesWidget::class );
 	}
 
