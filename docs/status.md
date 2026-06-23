@@ -220,7 +220,16 @@ Establish the plugin foundation so modules can load safely, requirements can fai
 - Fixed AP Slides Owl animation review findings by extracting shared widget setting parsing helpers for AP Slides and AP Image Carosel, and by making AP Slides Autoplay disabled by default so automatic motion is opt-in.
 - AP Slides Owl animation follow-up review passed, and follow-up testing passed with only the saved Elementor editor validation still pending because temporary administrator account creation remains blocked by the sandbox approval layer.
 - Fixed AP Slides arrow hover styling so navigation arrows keep a transparent background on hover, focus, and active states; Playwright computed style testing confirmed the AP rule wins over a global `button:hover` background.
+- Adjusted AP Slides inside navigation arrow edge spacing so the visible chevrons sit closer to the slide edges in line with the Elementor-style reference.
 - Fixed AP Slides `Content Animation` so the selected slider option targets the visible `.owl-item.active` slide, animates title, description, and button after OwlCarousel2 finishes the slide transition, then cleans up the temporary slide animation state after completion.
+- Refined AP Slides `Content Animation` Up mode so the content group starts below the clipped slide area, moves upward smoothly into place, and fades the title, description, and button in with a short stagger.
+- Updated AP Slides `Content Animation` timing so content is hidden before OwlCarousel2 starts translating or dragging to the next slide and revealed only after the new slide is active.
+- Updated AP Slides `Content Animation` hiding behavior so outgoing content fades out without a downward movement before the slide transition.
+- Slowed AP Slides `Content Animation` timing to use a smoother 950ms minimum reveal and wider title, description, and button stagger.
+- Fixed AP Slides outgoing content visibility so AP arrow and dot controls hide content immediately before triggering OwlCarousel2 movement.
+- Slowed AP Slides `Content Animation` reveal again to a smoother 1200ms minimum entrance with wider 180ms and 360ms child stagger timing.
+- Updated AP Slides `Content Animation` Left and Right modes so the content group starts outside the clipped slide area and enters smoothly with a 1500ms minimum duration.
+- Refined AP Slides `Content Animation` Down mode so the content group moves downward together from above and keeps the child title, description, and button opacity stagger.
 - Phase 1 must not be marked complete until exact minimum version baselines, final release summary, dashboards, and acceptance criteria verification are complete.
 
 ## Dependencies
@@ -335,7 +344,16 @@ Phase 2 - Elementor Integration
 - 2026-06-23: Fixed AP Slides Owl animation review findings by adding shared widget setting parsing helpers and making AP Slides Autoplay opt-in by default.
 - 2026-06-23: Completed AP Slides Owl animation follow-up review and testing after fixes.
 - 2026-06-23: Removed AP Slides arrow hover background color.
+- 2026-06-23: Adjusted AP Slides inside navigation arrow edge spacing.
 - 2026-06-23: Refined AP Slides Content Animation to trigger a staged title, description, and button reveal after OwlCarousel2 marks the new slide active.
+- 2026-06-23: Refined AP Slides Content Animation Up mode to move the content group upward from below the slide viewport for smoother entrance motion.
+- 2026-06-23: Updated AP Slides Content Animation timing to hide content before OwlCarousel2 translate/drag movement and reveal content after translation completes.
+- 2026-06-23: Updated AP Slides Content Animation hiding behavior so outgoing content fades out without moving downward.
+- 2026-06-23: Slowed AP Slides Content Animation reveal timing for smoother motion.
+- 2026-06-23: Fixed AP Slides outgoing content visibility during arrow and dot slide movement.
+- 2026-06-23: Slowed AP Slides Content Animation reveal timing again for a smoother Elementor-style entrance.
+- 2026-06-23: Updated AP Slides Content Animation Left and Right modes to enter from outside the slide area with slower timing.
+- 2026-06-23: Refined AP Slides Content Animation Down mode to move the content group together from above.
 - 2026-06-15: Created Code Review Agent workflow for post-implementation reviews.
 - 2026-06-15: Created Testing Agent workflow for post-review validation.
 - 2026-06-15: Enhanced Testing Agent workflow with functional, unit, integration, and regression testing strategy.

@@ -34,8 +34,8 @@ final class PostType {
 		$labels = array(
 			'name'               => __( 'AlternatePro Templates', 'alternatepro-elements' ),
 			'singular_name'      => __( 'Header Footer Template', 'alternatepro-elements' ),
-			'menu_name'          => __( 'Header Footer Templates', 'alternatepro-elements' ),
-			'all_items'          => __( 'Header Footer Templates', 'alternatepro-elements' ),
+			'menu_name'          => __( 'Theme Builder', 'alternatepro-elements' ),
+			'all_items'          => __( 'Theme Builder', 'alternatepro-elements' ),
 			'add_new'            => __( 'Add New', 'alternatepro-elements' ),
 			'add_new_item'       => __( 'Add New Template', 'alternatepro-elements' ),
 			'edit_item'          => __( 'Edit Template', 'alternatepro-elements' ),

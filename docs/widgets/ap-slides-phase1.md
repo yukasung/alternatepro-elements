@@ -208,6 +208,14 @@ Passed:
 - Follow-up Playwright smoke validation confirmed OwlCarousel2 initializes with autoplay disabled by default, arrows and dots update the active slide and dot `aria-selected` state, fade transition classes are applied, and reduced-motion mode disables autoplay, drag, and transition speed.
 - Validation for the AP Slides arrow hover background fix passed after locking arrow hover, focus, and active background states to transparent; Playwright computed style testing confirmed hover background remains transparent even when a global `button:hover` rule is present.
 - Static validation confirmed the `Content Animation` slider option now applies the selected frontend mode after OwlCarousel2 finishes the slide transition, targets the visible `.owl-item.active` slide first, animates title, description, and button with a short staged reveal, cleans up the temporary animation class after completion, disables animation for `None`, and keeps reduced-motion mode animation-free.
+- Static validation confirmed `Content Animation` Up mode now starts the content group below the clipped slide area, moves it upward smoothly into place, and fades child content in with the existing short stagger.
+- Static validation confirmed the content animation reveal now uses a smoother 1200ms minimum duration with title, description, and button staggered at `0ms`, `180ms`, and `360ms`.
+- Static validation confirmed AP arrow and dot controls hide outgoing content immediately before starting OwlCarousel2 movement, preventing text from sliding with the carousel stage.
+- Static validation confirmed the default inside navigation arrow edge offset is `12px` in both CSS and the Elementor control selector dictionary.
+- Static validation confirmed content is hidden before OwlCarousel2 starts translating or dragging to the next slide, then revealed after the new slide becomes active.
+- Static validation confirmed outgoing content is hidden without moving downward before the slide transition.
+- Static validation confirmed `Content Animation` Left and Right modes now move the content wrapper in from outside the slide area with a slower 1500ms minimum reveal while title, description, and button retain the staggered opacity reveal.
+- Static validation confirmed `Content Animation` Down mode now moves the content wrapper downward from above with the same grouped motion pattern as Up mode.
 
 Notes:
 

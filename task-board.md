@@ -88,6 +88,15 @@
 - [x] Refine AP Slides `Content Animation` to staged title, description, and button reveal.
 - [x] Trigger AP Slides `Content Animation` after OwlCarousel2 marks the new slide active.
 - [x] Target the visible Owl active item for AP Slides `Content Animation`.
+- [x] Smooth AP Slides `Content Animation` Up mode by moving content upward from below the slide viewport.
+- [x] Hide AP Slides content before OwlCarousel2 slide movement and reveal it after translation completes.
+- [x] Remove downward movement from AP Slides outgoing content hiding behavior.
+- [x] Slow AP Slides content animation reveal timing for smoother motion.
+- [x] Hide AP Slides outgoing content immediately before AP arrow and dot slide movement.
+- [x] Slow AP Slides content animation reveal timing to 1200ms with wider child stagger.
+- [x] Adjust AP Slides inside navigation arrow edge spacing to match the Elementor-style reference.
+- [x] Make AP Slides Content Animation Left and Right enter from outside the slide area with slower smooth timing.
+- [x] Make AP Slides Content Animation Down move the content group together like Up mode.
 
 ## Issues
 

@@ -31,6 +31,14 @@ Passed:
 - Playwright confirmed the `Fade` transition maps to AP-owned OwlCarousel2 `animateIn` and `animateOut` classes.
 - Static validation confirmed `Content Animation` now applies the selected mode through an AP-owned slide state after OwlCarousel2 `translated.owl.carousel`, targets the visible `.owl-item.active` slide first, and animates the title, description, and button with a short staged reveal.
 - Static validation confirmed the animated title, description, and button elements are transformable boxes, so movement-based animation modes can affect links and custom inline HTML tags.
+- Static validation confirmed `Content Animation` Up mode now animates the content group from below the clipped slide area, uses a minimum 1200ms duration for smoother upward motion, and keeps child title, description, and button opacity staggered.
+- Static validation confirmed the AP Slides content animation stagger now spaces title, description, and button reveals at `0ms`, `180ms`, and `360ms`.
+- Static validation confirmed AP arrow and dot controls now call the content hide path before triggering OwlCarousel2 movement, and the hidden state suppresses content immediately without opacity transition.
+- Static validation confirmed the AP Slides inside arrow offset is now `12px` in both the frontend CSS fallback and Elementor selector dictionary.
+- Static validation confirmed AP Slides now adds a root hidden-content state on OwlCarousel2 translate, drag, and position changes, removes it during the post-translation reveal, and skips the hide/reveal path for `None` and reduced-motion modes.
+- Static validation confirmed the hidden-content state now hides outgoing content with opacity only and does not apply the Up-mode downward transform before slide movement.
+- Static validation confirmed `Content Animation` Left and Right modes now animate the content group from outside the slide area, keep child title, description, and button elements on the opacity stagger, and use a 1500ms minimum duration.
+- Static validation confirmed `Content Animation` Down mode now animates the content group downward from above while title, description, and button use the same staged opacity reveal as Up mode.
 - Static validation confirmed the temporary slide animation state is cleaned up after the configured transition duration plus the staged reveal offset.
 - Static validation confirmed `Content Animation` does not add the temporary slide animation state when set to `None`.
 - Static validation confirmed reduced-motion mode skips the content animation restart path while the existing Owl reduced-motion behavior remains in place.

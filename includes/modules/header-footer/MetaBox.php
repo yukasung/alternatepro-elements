@@ -84,7 +84,9 @@ final class MetaBox {
 		wp_nonce_field( 'apro_template_meta', 'apro_template_meta_nonce' );
 
 		$type       = get_post_meta( $post->ID, Module::TYPE_META, true );
-		$status     = get_post_meta( $post->ID, Module::STATUS_META, true );
+		$status     = metadata_exists( 'post', $post->ID, Module::STATUS_META )
+			? get_post_meta( $post->ID, Module::STATUS_META, true )
+			: '';
 		$priority   = get_post_meta( $post->ID, Module::PRIORITY_META, true );
 		$conditions = Conditions::decode_conditions( get_post_meta( $post->ID, Module::CONDITIONS_META, true ) );
 
@@ -93,7 +95,7 @@ final class MetaBox {
 		}
 
 		if ( '' === $status ) {
-			$status = 'inactive';
+			$status = 'active';
 		}
 
 		if ( '' === $priority ) {

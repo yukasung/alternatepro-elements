@@ -16,8 +16,11 @@
 	var INITIALIZED_ATTRIBUTE = "data-ap-slides-initialized";
 	var CONTENT_ANIMATION_CLASS_PREFIX = "ap-slides--content-animation-";
 	var CONTENT_ANIMATING_CLASS        = "ap-slides__slide--content-animating";
+	var CONTENT_HIDDEN_CLASS           = "ap-slides--content-hidden";
+	var CONTENT_ANIMATION_MIN_DURATION_MS = 1200;
+	var CONTENT_ANIMATION_HORIZONTAL_MIN_DURATION_MS = 1500;
 	var CONTENT_ANIMATION_TIMER_KEY    = "apSlidesContentAnimationTimer";
-	var CONTENT_ANIMATION_STAGGER_MS   = 90;
+	var CONTENT_ANIMATION_STAGGER_MS   = 180;
 	var CONTENT_ANIMATION_MODES        = [ "none", "up", "down", "left", "right", "zoom" ];
 
 	function parseOptions( element ) {
@@ -146,12 +149,16 @@
 
 	function getContentAnimationDuration( options ) {
 		var duration = options && options.smartSpeed ? parseInt( options.smartSpeed, 10 ) : 500;
+		var mode     = getContentAnimationMode( options );
+		var minimum  = "left" === mode || "right" === mode
+			? CONTENT_ANIMATION_HORIZONTAL_MIN_DURATION_MS
+			: CONTENT_ANIMATION_MIN_DURATION_MS;
 
 		if ( isNaN( duration ) || duration < 0 ) {
-			return 500;
+			return minimum;
 		}
 
-		return duration;
+		return Math.max( duration, minimum );
 	}
 
 	function clearContentAnimationTimer( $root ) {
@@ -161,6 +168,12 @@
 			window.clearTimeout( timer );
 			$root.removeData( CONTENT_ANIMATION_TIMER_KEY );
 		}
+	}
+
+	function removeContentHiddenState( $root ) {
+		$root
+			.removeClass( CONTENT_HIDDEN_CLASS )
+			.removeAttr( "data-ap-slides-content-hidden" );
 	}
 
 	function updateArrowState( $root, currentIndex, slideCount, options ) {
@@ -215,6 +228,7 @@
 		$slides.removeClass( CONTENT_ANIMATING_CLASS );
 
 		if ( "none" === mode || shouldReduceMotion() ) {
+			removeContentHiddenState( $root );
 			return;
 		}
 
@@ -225,6 +239,7 @@
 		}
 
 		if ( ! $active.length ) {
+			removeContentHiddenState( $root );
 			return;
 		}
 
@@ -237,6 +252,7 @@
 		window.requestAnimationFrame(
 			function () {
 				$active.addClass( CONTENT_ANIMATING_CLASS );
+				removeContentHiddenState( $root );
 				$root.attr( "data-ap-slides-content-animation", mode );
 
 				timer = window.setTimeout(
@@ -250,6 +266,22 @@
 				$root.data( CONTENT_ANIMATION_TIMER_KEY, timer );
 			}
 		);
+	}
+
+	function hideContentBeforeTransition( $root, $track, options ) {
+		var mode = getContentAnimationMode( options );
+
+		clearContentAnimationTimer( $root );
+		$track.find( SLIDE_SELECTOR ).removeClass( CONTENT_ANIMATING_CLASS );
+
+		if ( "none" === mode || shouldReduceMotion() ) {
+			removeContentHiddenState( $root );
+			return;
+		}
+
+		$root
+			.addClass( CONTENT_HIDDEN_CLASS )
+			.attr( "data-ap-slides-content-hidden", "yes" );
 	}
 
 	function getOwlOptions( options ) {
@@ -312,6 +344,7 @@
 					return;
 				}
 
+				hideContentBeforeTransition( $root, $track, options );
 				stopAutoplayOnInteraction( $track, options );
 
 				if ( $control.is( "[data-ap-slides-prev]" ) ) {
@@ -383,7 +416,7 @@
 					"data-ap-slides-initialized": "yes"
 				}
 			)
-			.css( "--ap-slides-content-animation-duration", ( owlOptions.smartSpeed || 0 ) + "ms" );
+			.css( "--ap-slides-content-animation-duration", getContentAnimationDuration( options ) + "ms" );
 
 		function syncSlides( animateContent, $targetItem ) {
 			window.requestAnimationFrame(
@@ -408,6 +441,7 @@
 			"changed.owl.carousel",
 			function ( event ) {
 				if ( event.property && "position" === event.property.name ) {
+					hideContentBeforeTransition( $root, $track, options );
 					syncSlides( false );
 					return;
 				}
@@ -417,6 +451,13 @@
 						updateSlideAccessibility( $root, $track, options );
 					}
 				);
+			}
+		);
+
+		$track.on(
+			"translate.owl.carousel drag.owl.carousel",
+			function () {
+				hideContentBeforeTransition( $root, $track, options );
 			}
 		);
 

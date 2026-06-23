@@ -1060,7 +1060,7 @@ final class SlidesWidget extends \Elementor\Widget_Base {
 					'outside' => __( 'Outside', 'alternatepro-elements' ),
 				),
 				'selectors_dictionary' => array(
-					'inside'  => '--ap-slides-arrow-offset: 28px;',
+					'inside'  => '--ap-slides-arrow-offset: 12px;',
 					'outside' => '--ap-slides-arrow-offset: -52px;',
 				),
 				'selectors'            => array(

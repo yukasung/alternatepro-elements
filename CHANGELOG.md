@@ -95,7 +95,16 @@ The format is based on Keep a Changelog.
 * Fixed AP Image Carosel accessibility baseline by making autoplay opt-in instead of enabled by default.
 * Fixed AP Slides autoplay accessibility baseline by making autoplay opt-in instead of enabled by default.
 * Fixed AP Slides navigation arrow hover background so arrows remain transparent in hover, focus, and active states.
+* Adjusted AP Slides inside navigation arrow edge spacing to better match the Elementor-style visual inset.
 * Fixed AP Slides Content Animation option so the selected mode animates the visible `.owl-item.active` slide title, description, and button after OwlCarousel2 finishes the slide transition, while cleaning up the temporary slide animation state after completion.
+* Refined AP Slides `Content Animation` Up mode so the content group starts below the slide viewport, moves upward smoothly into place, and fades child content in with a short stagger.
+* Updated AP Slides content animation timing so slide content is hidden before OwlCarousel2 translate/drag movement starts, then revealed after the new slide is active.
+* Updated AP Slides `Content Animation` hiding behavior so the outgoing slide content fades out without moving downward before slide movement.
+* Slowed AP Slides content animation timing for a smoother 950ms entrance with wider title, description, and button stagger.
+* Fixed AP Slides outgoing content visibility so AP arrow and dot controls hide content immediately before triggering OwlCarousel2 movement.
+* Slowed AP Slides content animation reveal again to a smoother 1200ms entrance with wider 180ms and 360ms child stagger timing.
+* Updated AP Slides `Content Animation` Left and Right modes to slide the content group in from outside the slide area with a slower 1500ms minimum reveal.
+* Refined AP Slides `Content Animation` Down mode so the content group moves downward together from above while child content fades in with the staged reveal.
 * Fixed AP Image Carosel Elementor registration so the widget is only registered when the `image_carousel` widget setting is enabled.
 * Updated AP Image Carosel default navigation dot colors to use black active dots and gray inactive dots instead of inheriting the site accent color.
 * Updated AP Image Carosel default navigation dot size and spacing to better match Elementor-style carousel pagination.
