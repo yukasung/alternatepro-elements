@@ -61,7 +61,7 @@ final class Modules {
 		$this->settings = $settings ? $settings : new SettingsRepository();
 		$this->modules  = array();
 
-		$this->modules['widgets'] = new WidgetsModule();
+		$this->modules['widgets'] = new WidgetsModule( $this->settings );
 
 		if ( $this->settings->is_module_enabled( 'header_footer' ) ) {
 			$this->modules['header-footer'] = new HeaderFooterModule();

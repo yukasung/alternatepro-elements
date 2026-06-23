@@ -7,12 +7,16 @@
 
 namespace AlternatePro\Elements\Widgets;
 
+use AlternatePro\Elements\Controls\ApCustomCssControl;
+
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Renders a selected WordPress navigation menu in Elementor.
  */
 final class NavMenuWidget extends \Elementor\Widget_Base {
+	use ApCustomCssControl;
+
 	/**
 	 * Get widget name.
 	 *
@@ -1011,6 +1015,13 @@ final class NavMenuWidget extends \Elementor\Widget_Base {
 		);
 
 		$this->end_controls_section();
+
+		$this->register_ap_custom_css_controls(
+			array(
+				'placeholder' => "selector .apro-nav-menu {\n\t/* CSS */\n}",
+				'description' => __( 'Use selector to scope rules to this AP Menu widget.', 'alternatepro-elements' ),
+			)
+		);
 	}
 
 	/**
@@ -1029,6 +1040,8 @@ final class NavMenuWidget extends \Elementor\Widget_Base {
 		$layout         = $this->get_layout( $settings );
 		$breakpoint     = $this->get_mobile_dropdown_breakpoint( $settings );
 		$button         = $this->get_mobile_dropdown_toggle_button( $settings );
+
+		$this->render_ap_custom_css( $settings );
 
 		if ( ! $menu_id ) {
 			$this->render_empty_message();

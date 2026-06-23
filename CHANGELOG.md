@@ -36,9 +36,30 @@ The format is based on Keep a Changelog.
 * UAE-style grouped target search results with minimum-character feedback for Header/Footer specific display rules.
 * HFE/UAE-style theme compatibility wrappers for active Header/Footer template rendering.
 * Local WordPress demo content for widget testing, including pages, posts, categories, tags, menus, placeholder featured images, and plugin custom post type samples.
+* AP Image Carosel Elementor widget with local Owl Carousel assets, gallery-based image selection, responsive carousel controls, and widget-scoped frontend loading.
+* AP Slides Elementor widget foundation with Elementor Free registration, settings toggle support, and escaped placeholder output.
 
 ### Changed
 
+* Added AP Slides initial Content controls: `Slides Name` and a `Slides` repeater with three default heading items.
+* Added AP Slides slide repeater item tabs for Background, Content, and Style controls.
+* Added AP Slides Elementor-style options for `Height`, `Title HTML Tag`, and `Description HTML Tag` using plugin-owned Elementor Free control definitions.
+* Added AP Slides `Slider Options` controls for navigation, autoplay, pause behavior, loop, transition, speed, and content animation using plugin-owned Elementor Free control definitions.
+* Added AP Slides Style tab controls for content width, padding, horizontal position, vertical position, text alignment, and text shadow using plugin-owned Elementor Free control definitions.
+* Added AP Slides Title style controls for spacing, text color, and typography using plugin-owned Elementor Free control definitions.
+* Added AP Slides Description style controls for spacing, text color, and typography using plugin-owned Elementor Free control definitions.
+* Added AP Slides Button style controls for size, typography, border width, border radius, and normal/hover colors using plugin-owned Elementor Free control definitions.
+* Added AP Slides Navigation style controls for arrows and pagination position, size, spacing, and colors using plugin-owned Elementor Free control definitions.
+* Added AP Slides Advanced tab `AP Custom CSS` code editor with widget-scoped `selector` token support using plugin-owned Elementor Free control definitions.
+* Moved AP Slides `AP Custom CSS` to the bottom of the Elementor Advanced tab with an editor-only panel ordering script.
+* Extracted AP Custom CSS into a shared Elementor widget trait and shared editor asset for AP Slides, AP Menu, and AP Image Carosel reuse.
+* Extracted shared widget setting parsing helpers for carousel-style widgets.
+* Removed the AP Slides global `Background Color` control from Style > Slides; slide backgrounds remain configured per slide.
+* Replaced AP Slides placeholder-only output with multi-slide output that renders title, description, and button text using escaped plugin-owned markup.
+* Updated AP Slides to use locally vendored OwlCarousel2 v2.3.4 as the animation engine while keeping plugin-owned AP arrows, pagination, markup, and styling.
+* Updated AP Image Carosel controls to match the requested Elementor-style option set: Carousel Name, Image Resolution, Slides to Show, Slides to Scroll, Image Stretch, Navigation, Link, Caption, and Additional Options.
+* Added AP Image Carosel Image style controls for vertical alignment, image spacing mode, border type, and border radius.
+* Refactored widget asset registration into per-widget helper methods while preserving existing asset handles and widget-scoped loading behavior.
 * Replaced Header/Footer condition checkbox cards with UAE-style add/remove rule rows.
 * Updated Header/Footer condition evaluation to support Blog Page, All Categories, Specific Category, UAE-style specific target tokens, and exclusion rules.
 * Updated Header/Footer condition evaluation to support UAE-style All Singulars, Date Archive, Author Archive, post type archive, and taxonomy archive rules.
@@ -71,6 +92,13 @@ The format is based on Keep a Changelog.
 
 ### Fixed
 
+* Fixed AP Image Carosel accessibility baseline by making autoplay opt-in instead of enabled by default.
+* Fixed AP Slides autoplay accessibility baseline by making autoplay opt-in instead of enabled by default.
+* Fixed AP Slides navigation arrow hover background so arrows remain transparent in hover, focus, and active states.
+* Fixed AP Slides Content Animation option so the selected mode animates the visible `.owl-item.active` slide title, description, and button after OwlCarousel2 finishes the slide transition, while cleaning up the temporary slide animation state after completion.
+* Fixed AP Image Carosel Elementor registration so the widget is only registered when the `image_carousel` widget setting is enabled.
+* Updated AP Image Carosel default navigation dot colors to use black active dots and gray inactive dots instead of inheriting the site accent color.
+* Updated AP Image Carosel default navigation dot size and spacing to better match Elementor-style carousel pagination.
 * Hid Theme Builder admin menu, tab, and links when the Header/Footer Builder module is disabled.
 * Fixed Header/Footer template metabox interactivity by using the classic editor for the `apro_template` post type while keeping Elementor editing available.
 * Added a schema migration that fills active Header/Footer templates with empty display conditions using an explicit `Entire Site` include rule.

@@ -4,7 +4,7 @@ This file tracks widget implementation progress once widget development begins.
 
 ## Current Status
 
-Widget development has not started.
+Widget development has started with conditional and explicitly requested widgets.
 
 ## v1.0 Required Widgets
 
@@ -22,8 +22,13 @@ Widget development has not started.
 
 These widgets may ship in v1.0 only if validation confirms accessibility, performance, and Elementor compatibility.
 
-- Nav Menu: In Progress - AP Menu widget foundation, scale-based responsive toggle and submenu animation, main menu divider/pointer styling, Elementor-style dropdown typography/styling, and Elementor Free eicon toggle defaults are under active validation.
+- Nav Menu: In Progress - AP Menu widget foundation, scale-based responsive toggle and submenu animation, main menu divider/pointer styling, Elementor-style dropdown typography/styling, Elementor Free eicon toggle defaults, and shared AP Custom CSS support are under active validation.
 - Posts: Not Started
+
+## Explicitly Requested Widgets
+
+- AP Image Carosel: Implemented - gallery-based Elementor Free widget using locally vendored Owl Carousel assets, Elementor-style content and image style controls, responsive carousel controls, captions, links, navigation modes, opt-in autoplay with hover/interaction pauses, shared AP Custom CSS support, and widget-scoped asset dependencies.
+- AP Slides: Phase 1 skeleton plus initial content, slider option, style option, and Advanced tab `AP Custom CSS` properties implemented - Elementor Free widget registration, widget class foundation, settings toggle key, `Slides Name` text control, `Slides` repeater with three default heading items, `Height` responsive slider, `Title HTML Tag` and `Description HTML Tag` safe-tag selects, `Slider Options` controls for navigation, opt-in autoplay, pause behavior, loop, transition, speed, and content animation, Style tab controls for content width, padding, positioning, text alignment, text shadow, title spacing/color/typography, description spacing/color/typography, button size/typography/border/normal/hover colors, navigation arrows/pagination position, size, spacing, and color controls, the shared Advanced tab `AP Custom CSS` control with widget-scoped `selector` token support and editor-only bottom ordering, slide output with title, description, and button text, and interactive arrows/pagination dots powered by widget-scoped JavaScript/CSS with locally vendored OwlCarousel2 v2.3.4 used as the slide animation engine only. Elementor Pro code is not copied.
 
 ## v1.5 Candidate Widgets
 

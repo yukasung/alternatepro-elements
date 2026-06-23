@@ -87,6 +87,8 @@ The architecture document is the primary technical reference for module boundari
 ## Widgets
 
 - [Widgets List](planning/widgets-list.md)
+- [AP Custom CSS Shared Control](widgets/ap-custom-css-control.md)
+- [AP Slides Phase 1](widgets/ap-slides-phase1.md)
 
 ## Theme Builder
 

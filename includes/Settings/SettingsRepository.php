@@ -52,6 +52,8 @@ final class SettingsRepository {
 				'hero_section'         => true,
 				'call_to_action'       => true,
 				'image_box'            => true,
+				'image_carousel'       => true,
+				'slides'               => true,
 				'icon_box'             => true,
 				'team_member'          => true,
 				'testimonial_carousel' => false,

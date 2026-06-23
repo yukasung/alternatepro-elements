@@ -44,6 +44,11 @@ These may ship in v1.0 only if validation confirms accessibility, performance, a
 - Nav Menu
 - Posts
 
+## Explicitly Requested Widgets
+
+- AP Image Carosel
+- AP Slides
+
 ## v1.5 Widget Candidate
 
 - Testimonial Carousel
@@ -242,6 +247,82 @@ Displays an image with title, description, and optional link.
 
 - Support alt text.
 - Avoid duplicate linked content.
+
+## Additional Widget: AP Image Carosel
+
+Status: Explicitly requested implementation.
+
+### Purpose
+
+Displays selected gallery images in an Owl Carousel powered slider while remaining compatible with Elementor Free.
+
+### Key Controls
+
+- Gallery images.
+- Carousel name.
+- Image resolution.
+- Slides to show and slides to scroll.
+- Image stretch.
+- Navigation: none, arrows, dots, or both.
+- Link behavior.
+- Caption source.
+- Space between slides.
+- Opt-in autoplay, pause on hover, pause on interaction, autoplay speed, infinite loop, and animation speed.
+- Image vertical alignment, spacing mode, border type, and border radius.
+- Caption, arrow, and dot styling.
+
+### Dynamic Support
+
+- Not required for v1.0.
+
+### Accessibility Notes
+
+- Load carousel assets only when the widget is used.
+- Provide keyboard-focusable arrows and dots.
+- Label carousel region, slide groups, arrows, and dots.
+- Keep autoplay opt-in by default and respect reduced-motion preferences by disabling autoplay and animation speed.
+
+## Additional Widget: AP Slides
+
+Status: Explicitly requested Phase 1 skeleton with requested control properties.
+
+### Purpose
+
+Provides the Elementor Free widget foundation for a future AP Slides widget.
+
+### Phase 1 Scope
+
+- Register widget with Elementor.
+- Provide widget class methods for name, title, icon, category, and keywords.
+- Provide a `Slides` content section.
+- Provide a `Slides Name` text control.
+- Provide a `Slides` repeater with three default slide heading items.
+- Provide a `Height` responsive slider option.
+- Provide `Title HTML Tag` and `Description HTML Tag` select options using a safe tag allowlist.
+- Provide a `Slider Options` section with navigation, autoplay, pause, loop, transition, speed, and content animation controls.
+- Provide a Style tab `Slides` section with content width, padding, horizontal position, vertical position, text alignment, and text shadow controls.
+- Provide a Style tab `Title` section with spacing, text color, and typography controls.
+- Provide a Style tab `Description` section with spacing, text color, and typography controls.
+- Provide a Style tab `Button` section with size, typography, border width, border radius, and normal/hover color controls.
+- Provide a Style tab `Navigation` section with arrows and pagination position, size, spacing, and color controls.
+- Provide an Advanced tab `AP Custom CSS` section with a CSS code editor and widget-scoped `selector` token support.
+- Render the placeholder text `AP Slides Widget`.
+
+### Excluded From Current Scope
+
+- Frontend carousel setting execution.
+- Owl Carousel integration.
+- JavaScript.
+- External CSS assets.
+- Frontend animation behavior.
+- Frontend navigation output.
+- Frontend dots output.
+- Frontend autoplay behavior.
+- Frontend carousel output mapping for the options.
+
+### Accessibility Notes
+
+No interactive carousel behavior exists in Phase 1. Future phases must define keyboard, motion, and announcement behavior before carousel functionality is added.
 
 ## 8. Icon Box
 

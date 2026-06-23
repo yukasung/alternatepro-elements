@@ -25,6 +25,9 @@ yarn-error.log*
 /phpunit.xml
 .phpunit.result.cache
 
+# Playwright CLI Artifacts
+/.playwright-cli/
+
 # Coverage
 /coverage/
 

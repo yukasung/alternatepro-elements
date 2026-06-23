@@ -38,6 +38,8 @@ final class SettingsSanitizer {
 			'hero_section',
 			'call_to_action',
 			'image_box',
+			'image_carousel',
+			'slides',
 			'icon_box',
 			'team_member',
 			'testimonial_carousel',

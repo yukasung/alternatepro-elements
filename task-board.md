@@ -1,0 +1,100 @@
+# Task Board
+
+## 2026-06-22
+
+- [x] Read available product, architecture, and coding standard documents.
+- [x] Create AP Slides Phase 1 widget class.
+- [x] Register AP Slides with Elementor through the widget module.
+- [x] Add the `slides` widget settings default and sanitizer allowlist key.
+- [x] Create `docs/widgets/ap-slides-phase1.md`.
+- [x] Verify AP Slides appears in the Elementor panel.
+- [x] Verify AP Slides can be dragged into an Elementor page.
+- [x] Verify placeholder renders as `AP Slides Widget`.
+- [x] Create review, test, and security reports.
+- [x] Update status, changelog, widget progress, and widget planning docs.
+
+## 2026-06-23
+
+- [x] Add AP Slides `Slides Name` text control.
+- [x] Render AP Slides `Slides Name` as the widget wrapper `aria-label`.
+- [x] Add AP Slides `Slides` repeater control.
+- [x] Add default repeater rows: `Slide 1 Heading`, `Slide 2 Heading`, and `Slide 3 Heading`.
+- [x] Add AP Slides slide repeater item tabs: `Background`, `Content`, and `Style`.
+- [x] Verify controls render in Elementor editor.
+- [x] Verify AP Slides placeholder still renders.
+- [x] Clean up temporary Elementor validation page and user.
+- [x] Update AP Slides documentation and progress tracking.
+- [x] Add AP Slides `Height` responsive slider option.
+- [x] Add AP Slides `Title HTML Tag` select option.
+- [x] Add AP Slides `Description HTML Tag` select option.
+- [x] Verify AP Slides options in Elementor editor.
+- [x] Clean up temporary options validation page and user.
+- [x] Add AP Slides `Slider Options` section.
+- [x] Add AP Slides navigation, autoplay, pause, loop, transition, speed, and content animation controls.
+- [x] Verify AP Slides slider options in Elementor editor.
+- [x] Clean up temporary slider options validation page and user.
+- [x] Add AP Slides Style tab `Slides` section.
+- [x] Add AP Slides default per-slide background color.
+- [x] Remove AP Slides Style tab global `Background Color` control.
+- [x] Add AP Slides content width, padding, horizontal position, vertical position, text align, and text shadow style controls.
+- [x] Verify AP Slides style options in Elementor editor.
+- [x] Clean up temporary style options validation page and user.
+- [x] Add AP Slides Style tab `Title` section.
+- [x] Add AP Slides title spacing, text color, and typography style controls.
+- [x] Verify AP Slides title style options in Elementor editor.
+- [x] Clean up temporary title style validation page and user.
+- [x] Add AP Slides Style tab `Description` section.
+- [x] Add AP Slides description spacing, text color, and typography style controls.
+- [ ] Verify AP Slides description style options in Elementor editor.
+- [x] Add AP Slides Style tab `Button` section.
+- [x] Add AP Slides button size, typography, border width, border radius, and normal/hover style controls.
+- [ ] Verify AP Slides button style options in Elementor editor.
+- [x] Add AP Slides Style tab `Navigation` section.
+- [x] Add AP Slides arrows and pagination position, size, spacing, and color style controls.
+- [ ] Verify AP Slides navigation style options in Elementor editor.
+- [x] Add AP Slides Advanced tab `AP Custom CSS` section.
+- [x] Add AP Slides `AP Custom CSS` code editor with scoped `selector` support.
+- [ ] Verify AP Slides AP Custom CSS option in Elementor editor.
+- [x] Confirm AP Slides labels use `AP Custom CSS`.
+- [x] Move AP Slides `AP Custom CSS` to the bottom of the Advanced control list.
+- [x] Move AP Slides `AP Custom CSS` code editor body into the bottom collapse section.
+- [x] Keep AP Slides `AP Custom CSS` at the bottom after collapsing the section.
+- [x] Extract `AP Custom CSS` into a shared Elementor widget control trait.
+- [x] Apply shared `AP Custom CSS` to AP Slides, AP Menu, and AP Image Carosel.
+- [x] Render AP Slides title, description, and button text.
+- [x] Add AP Slides defaults for title, description, button, and background output.
+- [x] Review AP Slides slide output.
+- [x] Update AP Slides slide output documentation.
+- [x] Render AP Slides navigation arrow buttons.
+- [x] Render AP Slides pagination dot buttons.
+- [x] Review AP Slides navigation output.
+- [x] Update AP Slides navigation documentation.
+- [x] Make AP Slides navigation arrows switch slides.
+- [x] Make AP Slides pagination dots switch slides.
+- [x] Add AP Slides widget-scoped frontend CSS and JavaScript assets.
+- [x] Update AP Slides navigation behavior documentation.
+- [x] Use OwlCarousel2 as the AP Slides animation engine.
+- [x] Keep AP Slides arrows and pagination as plugin-owned controls while delegating slide animation to OwlCarousel2.
+- [x] Map AP Slides transition, speed, autoplay, hover pause, interaction pause, and loop settings into sanitized OwlCarousel2 options.
+- [x] Update AP Slides OwlCarousel2 animation documentation.
+- [x] Fix AP Slides autoplay accessibility by making automatic motion opt-in by default.
+- [x] Extract shared widget setting parsing helpers for AP Slides and AP Image Carosel.
+- [x] Document locally vendored OwlCarousel2 v2.3.4 in AP Slides release notes.
+- [x] Run AP Slides Owl animation follow-up review after fixes.
+- [x] Run AP Slides Owl animation follow-up tests after fixes.
+- [x] Remove AP Slides arrow hover background color.
+- [x] Fix AP Slides `Content Animation` slider option behavior.
+- [x] Smooth AP Slides `Content Animation` timing during OwlCarousel2 slide changes.
+- [x] Refine AP Slides `Content Animation` to staged title, description, and button reveal.
+- [x] Trigger AP Slides `Content Animation` after OwlCarousel2 marks the new slide active.
+- [x] Target the visible Owl active item for AP Slides `Content Animation`.
+
+## Issues
+
+- The requested files `docs/product-overview.md`, `docs/architecture.md`, and `docs/coding-standards.md` do not exist in this checkout. Used `PRODUCT.md`, `docs/planning/project-overview.md`, `docs/planning/architecture.md`, and `docs/development-rules.md` instead.
+- `composer` is not available on the shell PATH, so direct PHP syntax checks were used as the lint fallback.
+- Local WordPress database access through CLI required escalation for temporary validation setup and cleanup.
+- AP Slides description style browser validation is pending because the sandbox approval layer rejected creating a temporary administrator account for Elementor editor access.
+- AP Slides button style browser validation is pending for the same temporary administrator account approval reason.
+- AP Slides navigation style browser validation is pending for the same temporary administrator account approval reason.
+- AP Slides AP Custom CSS browser validation is pending for the same temporary administrator account approval reason.

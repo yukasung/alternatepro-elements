@@ -45,7 +45,7 @@ No development session should begin without reviewing the governance documents.
 - Current Version: 1.0.0 planned
 - Current Phase: Phase 1 - Foundation
 - Phase Status: In Progress
-- Last Updated: 2026-06-20
+- Last Updated: 2026-06-23
 
 ## Overall Progress
 
@@ -176,6 +176,51 @@ Establish the plugin foundation so modules can load safely, requirements can fai
 - AP Menu desktop submenu default typography now uses a 13px font size with a 20px line height to match the Elementor-style dropdown baseline.
 - AP Menu Main Menu pointer styling now includes hover and active pointer color controls for underline states.
 - AP Menu refactor review was created with a recommended future control-registration split and a completed low-risk frontend helper cleanup.
+- Added the explicitly requested AP Image Carosel Elementor widget using Elementor Free public APIs, locally vendored Owl Carousel assets, gallery-based image selection, responsive carousel controls, accessible control labels, and widget-scoped asset dependencies.
+- Updated AP Image Carosel controls to match the requested Elementor-style option set while keeping original plugin-owned rendering logic and Owl Carousel behavior.
+- Added AP Image Carosel Image style controls for vertical alignment, image spacing mode, border type, and border radius.
+- Updated AP Image Carosel default navigation dot colors to use black active dots and gray inactive dots instead of inheriting the Elementor/site accent color.
+- Updated AP Image Carosel default navigation dot size and spacing to better match Elementor-style carousel pagination.
+- Fixed AP Image Carosel widget registration to respect the `image_carousel` admin widget toggle.
+- Fixed AP Image Carosel autoplay accessibility baseline after browser validation by keeping Infinite Loop enabled by default while making Autoplay disabled by default in the live Elementor control panel.
+- AP Image Carosel static validation passed PHP syntax checks, `node --check assets/js/image-carousel.js`, targeted PHPCS for changed PHP/CSS/JS files, and `git diff --check`; full project PHPCS remains blocked by existing `assets/js/nav-menu.js` formatting findings outside this widget change.
+- AP Image Carosel browser testing report was updated with PASS WITH MINOR ISSUES verdict; Elementor editor search, drag/drop, content panel, style panel, and Autoplay default-off checks passed, while frontend visual testing with selected images remains pending.
+- AP Image Carosel security review was created with PASS verdict and no required fixes.
+- AP Image Carosel refactor review was created with NO REFACTOR NEEDED verdict after a low-risk `WidgetsModule` asset registration helper extraction passed targeted validation.
+- AP Image Carosel post-refactor smoke test passed targeted `WidgetsModule` syntax/PHPCS checks, isolated asset and widget toggle checks, homepage HTTP 200 validation, and no-global-carousel-asset validation.
+- Added the explicitly requested AP Slides Phase 1 Elementor widget skeleton using Elementor Free public widget registration, a settings toggle key, and escaped placeholder output only.
+- AP Slides validation passed targeted PHP syntax checks, targeted PHPCS for changed PHP files, all-plugin PHP syntax fallback, `git diff --check`, runtime settings merge validation, and Elementor editor browser validation for panel visibility, drag/drop, and placeholder rendering.
+- AP Slides review, testing, security, widget documentation, and task-board updates were created.
+- Added AP Slides initial Content controls for `Slides Name` and a `Slides` repeater with three default heading rows matching the requested Elementor panel layout.
+- AP Slides controls validation passed targeted PHP syntax, targeted PHPCS, `git diff --check`, and Elementor browser validation for `Slides Name`, default repeater rows, duplicate/remove controls, `Add Item`, and placeholder rendering.
+- AP Slides now renders the `Slides Name` setting as the wrapper `aria-label` with a `Slides` fallback.
+- Added AP Slides slide repeater item tabs for `Background`, `Content`, and `Style` controls using plugin-owned Elementor Free control definitions.
+- Added AP Slides Elementor-style options for `Height`, `Title HTML Tag`, and `Description HTML Tag` using plugin-owned Elementor Free control definitions and a safe HTML tag allowlist.
+- AP Slides options validation passed targeted PHP syntax, targeted PHPCS, `git diff --check`, and Elementor browser validation for the `400px` height default, responsive device toggles, `div` HTML tag defaults, and unchanged placeholder rendering.
+- Added AP Slides `Slider Options` controls for navigation, autoplay, pause behavior, loop, transition, speed, and content animation using plugin-owned Elementor Free control definitions.
+- AP Slides slider options validation passed targeted PHP syntax, targeted PHPCS, `git diff --check`, and Elementor browser validation for the `Arrows and Dots`, pause/loop `Yes`, `5000`, `Slide`, `500`, and `Up` defaults while leaving placeholder rendering unchanged. AP Slides Autoplay was later changed to disabled by default for accessibility.
+- Added AP Slides Style tab controls for content width, padding, horizontal position, vertical position, text alignment, and text shadow using plugin-owned Elementor Free control definitions.
+- AP Slides style options validation passed targeted PHP syntax, targeted PHPCS, Elementor browser validation for the Style tab `Slides` section, `66%` content width default, positioning/text controls, text shadow control, placeholder rendering, and default generated styles.
+- Removed the AP Slides global Style tab `Background Color` control; slide backgrounds remain configured per slide in the repeater `Background` tab.
+- Added AP Slides Title style controls for spacing, text color, and typography using plugin-owned Elementor Free control definitions.
+- AP Slides title style validation passed targeted PHP syntax, targeted PHPCS, Elementor browser validation for the Style tab `Title` section, `Spacing`, `Text Color`, and `Typography` controls, plus placeholder rendering with the `ap-slides__title` target class.
+- Added AP Slides Description style controls for spacing, text color, and typography using plugin-owned Elementor Free control definitions.
+- AP Slides description style static validation passed targeted PHP syntax, targeted PHPCS, all-plugin PHP syntax fallback, and `git diff --check`; Elementor browser validation is pending because temporary administrator account creation was rejected by the sandbox approval layer.
+- Added AP Slides Button style controls for size, typography, border width, border radius, and normal/hover text/background/border colors using plugin-owned Elementor Free control definitions.
+- AP Slides button style static validation passed targeted PHP syntax, targeted PHPCS, all-plugin PHP syntax fallback, and `git diff --check`; Elementor browser validation remains pending for the same temporary administrator account approval reason.
+- Added AP Slides Navigation style controls for arrows and pagination position, size, spacing, and color options using plugin-owned Elementor Free control definitions.
+- AP Slides navigation style static validation passed targeted PHP syntax, targeted PHPCS, all-plugin PHP syntax fallback, and `git diff --check`; Elementor browser validation remains pending for the same temporary administrator account approval reason.
+- Added AP Slides Advanced tab `AP Custom CSS` code editor with widget-scoped `selector` token support and sanitized inline CSS output.
+- AP Slides AP Custom CSS static validation passed targeted PHP syntax, targeted PHPCS, all-plugin PHP syntax fallback, and `git diff --check`; Elementor browser validation remains pending for the same temporary administrator account approval reason.
+- Moved AP Slides `AP Custom CSS` to the bottom of the widget control stack so it appears after Elementor common Advanced controls.
+- Added an editor-only shared AP Custom CSS panel ordering script that places the `AP Custom CSS` section and code editor body as the bottom Advanced tab item.
+- Applied the shared AP Custom CSS control to AP Slides, AP Menu, and AP Image Carosel.
+- AP Slides now renders configured slides with escaped title, description, and button text, using the existing safe HTML tag controls and default Elementor-generated preview styling.
+- AP Slides now renders interactive navigation arrows and pagination dots from the `Navigation` setting using widget-scoped JavaScript/CSS and the locally vendored OwlCarousel2 v2.3.4 dependency as the slide animation engine only, without copied Elementor Pro code.
+- Fixed AP Slides Owl animation review findings by extracting shared widget setting parsing helpers for AP Slides and AP Image Carosel, and by making AP Slides Autoplay disabled by default so automatic motion is opt-in.
+- AP Slides Owl animation follow-up review passed, and follow-up testing passed with only the saved Elementor editor validation still pending because temporary administrator account creation remains blocked by the sandbox approval layer.
+- Fixed AP Slides arrow hover styling so navigation arrows keep a transparent background on hover, focus, and active states; Playwright computed style testing confirmed the AP rule wins over a global `button:hover` background.
+- Fixed AP Slides `Content Animation` so the selected slider option targets the visible `.owl-item.active` slide, animates title, description, and button after OwlCarousel2 finishes the slide transition, then cleans up the temporary slide animation state after completion.
 - Phase 1 must not be marked complete until exact minimum version baselines, final release summary, dashboards, and acceptance criteria verification are complete.
 
 ## Dependencies
@@ -266,6 +311,31 @@ Phase 2 - Elementor Integration
 - 2026-06-15: Completed pre-development audit with PASS WITH MINOR FIXES verdict.
 - 2026-06-15: Resolved pre-development audit findings with PASS verdict. Project ready for Phase 1 Foundation development.
 - 2026-06-15: Created project context document as the primary session startup entry point.
+- 2026-06-22: Added AP Slides Phase 1 Elementor widget skeleton and verification documentation.
+- 2026-06-23: Added AP Slides initial content controls and Elementor editor validation notes.
+- 2026-06-23: Added AP Slides wrapper `aria-label` output from the `Slides Name` setting.
+- 2026-06-23: Added AP Slides slide repeater item tabs for Background, Content, and Style.
+- 2026-06-23: Added AP Slides height and HTML tag options with Elementor editor validation notes.
+- 2026-06-23: Added AP Slides slider options controls with Elementor editor validation notes.
+- 2026-06-23: Added AP Slides style options controls with Elementor editor validation notes.
+- 2026-06-23: Removed AP Slides global Style tab Background Color control.
+- 2026-06-23: Added AP Slides title style controls with Elementor editor validation notes.
+- 2026-06-23: Added AP Slides description style controls with static validation notes.
+- 2026-06-23: Added AP Slides button style controls with static validation notes.
+- 2026-06-23: Added AP Slides navigation style controls with static validation notes.
+- 2026-06-23: Added AP Slides Advanced tab AP Custom CSS control with static validation notes.
+- 2026-06-23: Moved AP Slides AP Custom CSS to the bottom of the Advanced control list.
+- 2026-06-23: Added shared AP Custom CSS editor-only panel ordering script for bottom placement.
+- 2026-06-23: Fixed AP Slides AP Custom CSS panel ordering so the code editor body moves with the bottom collapse section.
+- 2026-06-23: Extracted AP Custom CSS into a shared Elementor widget trait for reuse by other AlternatePro widgets.
+- 2026-06-23: Applied the shared AP Custom CSS control to AP Slides, AP Menu, and AP Image Carosel.
+- 2026-06-23: Replaced AP Slides placeholder-only output with configured slide title, description, and button output.
+- 2026-06-23: Added AP Slides interactive navigation arrows and pagination dots with widget-scoped vanilla JavaScript and CSS.
+- 2026-06-23: Updated AP Slides navigation animation to use locally vendored OwlCarousel2 v2.3.4 as the slide animation engine while keeping AP-owned arrows, pagination, markup, and styling.
+- 2026-06-23: Fixed AP Slides Owl animation review findings by adding shared widget setting parsing helpers and making AP Slides Autoplay opt-in by default.
+- 2026-06-23: Completed AP Slides Owl animation follow-up review and testing after fixes.
+- 2026-06-23: Removed AP Slides arrow hover background color.
+- 2026-06-23: Refined AP Slides Content Animation to trigger a staged title, description, and button reveal after OwlCarousel2 marks the new slide active.
 - 2026-06-15: Created Code Review Agent workflow for post-implementation reviews.
 - 2026-06-15: Created Testing Agent workflow for post-review validation.
 - 2026-06-15: Enhanced Testing Agent workflow with functional, unit, integration, and regression testing strategy.
