@@ -166,13 +166,31 @@
 - [x] Increase AP Media Carousel default navigation arrow size to 32px.
 - [x] Increase AP Media Carousel default pagination dot spacing to 10px.
 - [x] Add AP Media Carousel widget-scoped frontend CSS for default placeholder layout.
-- [x] Keep AP Media Carousel Owl Carousel integration and autoplay deferred.
+- [x] Keep AP Media Carousel Owl Carousel integration and autoplay pause settings deferred.
 - [x] Verify AP Media Carousel default image output on a temporary Elementor frontend page.
 - [x] Register AP Media Carousel widget-scoped frontend JavaScript.
-- [x] Render AP Media Carousel arrows and pagination dots as accessible buttons.
-- [x] Make AP Media Carousel pagination dots move the carousel track and update active state.
+- [x] Render AP Media Carousel arrows and JavaScript-generated pagination page dots as accessible buttons.
+- [x] Make AP Media Carousel pagination page dots move the carousel track to real snap positions and update active state.
 - [x] Make AP Media Carousel arrows move the carousel track using `Slides to Scroll`.
 - [x] Verify AP Media Carousel pagination fix with PHP lint, PHPCS, JS syntax check, `git diff --check`, and Playwright smoke testing.
+- [x] Fix AP Media Carousel pagination dot count so five items with three visible slides renders three page dots.
+- [x] Verify AP Media Carousel page dots and arrows move through page positions with Playwright smoke testing.
+- [x] Add AP Media Carousel Content tab `Additional Options` section.
+- [x] Add AP Media Carousel Additional Options controls for arrows, pagination, transition duration, autoplay, infinite loop, overlay, overlay icon, overlay animation, image resolution, image fit, and lazy load.
+- [x] Wire AP Media Carousel Additional Options to frontend render output and widget-scoped JavaScript behavior.
+- [x] Verify AP Media Carousel Additional Options with PHP lint, PHPCS, JS syntax checks, and a Playwright smoke fixture.
+- [x] Add AP Media Carousel Style tab `Overlay` section.
+- [x] Add AP Media Carousel overlay background color, text color, and icon size style controls.
+- [x] Verify AP Media Carousel Overlay style controls with PHP lint and PHPCS.
+- [x] Fix AP Media Carousel overlay hover behavior so the background covers the full slide and fades in with a centered icon.
+- [x] Verify AP Media Carousel full-slide overlay behavior with a Playwright smoke fixture.
+- [x] Replace AP Media Carousel overlay emoji glyphs with Elementor Free `eicons` classes.
+- [x] Add AP Media Carousel `elementor-icons` style dependency for frontend overlay icons.
+- [x] Add AP Media Carousel Style tab `Lightbox` section.
+- [x] Add AP Media Carousel lightbox color, UI color, UI hover color, and video width style controls.
+- [x] Verify AP Media Carousel Lightbox style controls with PHP lint and PHPCS.
+- [x] Add AP Media Carousel lightbox runtime for image overlays and video play icons.
+- [x] Verify AP Media Carousel lightbox runtime with PHP lint, PHPCS, JS syntax checks, `git diff --check`, and Playwright smoke testing.
 
 ## Issues
 

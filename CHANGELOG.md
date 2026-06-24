@@ -59,13 +59,21 @@ The format is based on Keep a Changelog.
 * Added AP Media Carousel initial Content tab options for `Slides Name` and a `Slides` repeater shell with five default empty items, while keeping the Skin input deferred.
 * Added AP Media Carousel repeater item controls for Type, Image, conditional Video Link, image Link, and conditional Custom URL using Elementor Free controls.
 * Added AP Media Carousel inline Content tab carousel options for Effect, Slides Per View, Slides to Scroll, Height, and Width inside the Slides section.
+* Added AP Media Carousel Content tab Additional Options for arrows, pagination, transition duration, opt-in autoplay, loop, overlay icon/animation, image resolution, image fit, and lazy load using Elementor Free controls.
 * Added AP Media Carousel play icon overlay rendering for video slide thumbnails.
 * Added AP Media Carousel Slides style options for space between, background color, border width, border radius, border color, and padding using Elementor-generated selectors.
 * Added AP Media Carousel Navigation style options for arrows, pagination, and play icon controls without adding navigation rendering or JavaScript behavior.
+* Added AP Media Carousel Overlay style options for overlay background color, text color, and responsive icon size.
+* Added AP Media Carousel Lightbox style options for color, UI color, UI hover color, and responsive video width.
+* Added AP Media Carousel lightbox runtime for image overlays and video play icons, including image display, YouTube/Vimeo iframe embeds, unsupported video URL fallback links, close/previous/next controls, keyboard close/navigation, and autoplay pause while the lightbox is open.
 * Updated AP Media Carousel default navigation arrow size to better match Elementor-style media carousel arrows.
 * Updated AP Media Carousel default pagination dot spacing to better match Elementor-style media carousel dots.
 * Added AP Media Carousel default Elementor placeholder image output with arrows, pagination markers, and widget-scoped frontend CSS.
 * Fixed AP Media Carousel pagination by registering a widget-scoped frontend script and rendering arrow/dot controls as accessible buttons that move the carousel track.
+* Fixed AP Media Carousel pagination dot count and movement so dots are generated from real carousel page positions instead of one dot per media item.
+* Fixed AP Media Carousel overlay styling so the overlay background covers the full image area and fades in on hover while the icon color and size controls affect the centered icon.
+* Updated AP Media Carousel image overlay icons to render with Elementor Free `eicons` classes instead of emoji glyphs.
+* Wired AP Media Carousel Additional Options to frontend rendering and widget-scoped JavaScript for show/hide arrows, dot pagination, transition duration, loop/autoplay behavior, overlay icons, image size, image fit, and image loading mode.
 * Moved AP Slides `AP Custom CSS` to the bottom of the Elementor Advanced tab with an editor-only panel ordering script.
 * Extracted AP Custom CSS into a shared Elementor widget trait and shared editor asset for AP Slides, AP Menu, AP Image Carosel, and AP Site Logo reuse.
 * Extracted shared widget setting parsing helpers for carousel-style widgets.

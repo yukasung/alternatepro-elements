@@ -205,10 +205,12 @@ Establish the plugin foundation so modules can load safely, requirements can fai
 - AP Media Carousel Slides style controls validation passed targeted PHP syntax, targeted PHPCS, `git diff --check`, static control checks, and temporary Elementor frontend smoke validation for the style selector target classes.
 - Added AP Media Carousel Style tab `Navigation` controls for arrows size/color, pagination position/spacing/size/color/active color, and play icon color/size/shadow without adding JavaScript or Owl Carousel integration.
 - AP Media Carousel Navigation style controls validation passed targeted PHP syntax, targeted PHPCS, `git diff --check`, and static control checks.
-- Added AP Media Carousel default Elementor placeholder image output with five slides, arrow controls, pagination markers, and widget-scoped frontend CSS while keeping Owl Carousel integration and autoplay deferred.
+- Added AP Media Carousel default Elementor placeholder image output with five slides, arrow controls, page-based pagination dots, and widget-scoped frontend CSS while keeping Owl Carousel integration deferred.
 - AP Media Carousel default image output validation passed targeted PHP syntax, targeted PHPCS for PHP/CSS, `git diff --check`, and temporary Elementor frontend smoke validation for five placeholder images, arrows, five pagination markers, and the `apro-media-carousel-css` asset.
 - Fixed AP Media Carousel pagination by registering a widget-scoped frontend script, rendering arrows and pagination dots as accessible buttons, and moving the flex track from dot/arrow clicks.
 - AP Media Carousel pagination fix validation passed targeted PHP syntax, targeted PHPCS for changed PHP/CSS/JS files, `node --check assets/js/media-carousel.js`, `git diff --check`, and Playwright smoke validation for dot and arrow clicks.
+- Fixed AP Media Carousel pagination dot count and movement so dots are generated from real snap/page positions. Playwright confirmed five items with three visible slides renders three dots and the third dot moves to the last page.
+- Added AP Media Carousel lightbox runtime for image overlays and video play icons, including image display, YouTube/Vimeo iframe embeds, lightbox UI controls, keyboard close/navigation, and autoplay pause while open. Validation passed targeted PHP syntax, targeted PHPCS for changed PHP/CSS/JS files, `node --check assets/js/media-carousel.js`, `git diff --check`, and Playwright smoke validation for image and video lightbox flows.
 - Added the explicitly requested AP Slides Phase 1 Elementor widget skeleton using Elementor Free public widget registration, a settings toggle key, and escaped placeholder output only.
 - AP Slides validation passed targeted PHP syntax checks, targeted PHPCS for changed PHP files, all-plugin PHP syntax fallback, `git diff --check`, runtime settings merge validation, and Elementor editor browser validation for panel visibility, drag/drop, and placeholder rendering.
 - AP Slides review, testing, security, widget documentation, and task-board updates were created.
@@ -389,10 +391,17 @@ Phase 2 - Elementor Integration
 - 2026-06-24: Added AP Media Carousel default placeholder image output with arrows/dots and widget-scoped frontend CSS.
 - 2026-06-24: Added AP Media Carousel repeater item controls for Type, Image, conditional Video Link, image Link, and conditional Custom URL, with selected image/link rendering.
 - 2026-06-24: Added AP Media Carousel inline Content tab carousel options for Effect, Slides Per View, Slides to Scroll, Height, and Width inside the Slides section, with preview support for Slides Per View, Height, and Width.
-- 2026-06-24: Added AP Media Carousel play icon overlay rendering for video slide thumbnails while keeping video playback deferred.
+- 2026-06-24: Added AP Media Carousel play icon overlay rendering for video slide thumbnails while keeping inline video playback deferred.
 - 2026-06-24: Increased AP Media Carousel default navigation arrow size to 32px to better match Elementor-style media carousel arrows.
 - 2026-06-24: Increased AP Media Carousel default pagination dot spacing to 10px to better match Elementor-style media carousel dots.
 - 2026-06-24: Fixed AP Media Carousel pagination and arrow controls with widget-scoped JavaScript.
+- 2026-06-24: Fixed AP Media Carousel pagination dot count and movement to use carousel page/snap positions.
+- 2026-06-24: Added AP Media Carousel Content tab Additional Options for arrows, pagination, transition duration, opt-in autoplay, loop, overlay icon/animation, image resolution, image fit, and lazy load.
+- 2026-06-24: Added AP Media Carousel Style tab Overlay controls for overlay background color, text color, and responsive icon size.
+- 2026-06-24: Fixed AP Media Carousel overlay behavior so the overlay background covers the full slide and fades in on hover with a centered icon.
+- 2026-06-24: Updated AP Media Carousel image overlay icons to use Elementor Free `eicons` classes with the `elementor-icons` frontend style dependency.
+- 2026-06-24: Added AP Media Carousel Style tab Lightbox controls for color, UI color, UI hover color, and responsive video width.
+- 2026-06-24: Added AP Media Carousel lightbox runtime for image overlays and video play icons with image display, YouTube/Vimeo iframe embeds, close/previous/next controls, keyboard close/navigation, and autoplay pause while open.
 - 2026-06-15: Created Code Review Agent workflow for post-implementation reviews.
 - 2026-06-15: Created Testing Agent workflow for post-review validation.
 - 2026-06-15: Enhanced Testing Agent workflow with functional, unit, integration, and regression testing strategy.

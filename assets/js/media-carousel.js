@@ -10,6 +10,10 @@
 	var CAROUSEL_SELECTOR     = "[data-ap-media-carousel]";
 	var OPTIONS_ATTRIBUTE     = "data-ap-media-carousel-options";
 	var INITIALIZED_ATTRIBUTE = "data-ap-media-carousel-initialized";
+	var LIGHTBOX_TRIGGER      = "[data-ap-media-carousel-lightbox-trigger]";
+	var LIGHTBOX_OPEN_CLASS   = "ap-media-carousel-lightbox--open";
+	var BODY_LIGHTBOX_CLASS   = "ap-media-carousel-lightbox-open";
+	var lightbox              = null;
 
 	function parseOptions( element ) {
 		var rawOptions = element ? element.getAttribute( OPTIONS_ATTRIBUTE ) : "";
@@ -35,12 +39,453 @@
 		return value;
 	}
 
+	function getBooleanOption( options, key, defaultValue ) {
+		if ( ! Object.prototype.hasOwnProperty.call( options, key ) ) {
+			return defaultValue;
+		}
+
+		return true === options[ key ] || "true" === options[ key ] || "yes" === options[ key ] || 1 === options[ key ] || "1" === options[ key ];
+	}
+
+	function getPaginationType( options ) {
+		return "none" === options.pagination ? "none" : "dots";
+	}
+
+	function getTransitionDuration( options ) {
+		var duration = parseInt( options.transitionDuration, 10 );
+
+		if ( isNaN( duration ) ) {
+			return 500;
+		}
+
+		return clamp( duration, 0, 5000 );
+	}
+
+	function prefersReducedMotion() {
+		return window.matchMedia && window.matchMedia( "(prefers-reduced-motion: reduce)" ).matches;
+	}
+
+	function getDotLabel( state, page ) {
+		return state.dotLabel + " " + ( page.slideIndex + 1 );
+	}
+
 	function toArray( items ) {
 		return Array.prototype.slice.call( items || [] );
 	}
 
 	function clamp( value, min, max ) {
 		return Math.min( Math.max( value, min ), max );
+	}
+
+	function getLightboxItemFromSlide( slide ) {
+		var source = slide ? slide.getAttribute( "data-ap-media-carousel-lightbox-src" ) : "";
+		var type   = slide ? slide.getAttribute( "data-ap-media-carousel-lightbox-type" ) : "image";
+
+		if ( ! source ) {
+			return null;
+		}
+
+		return {
+			slide: slide,
+			source: source,
+			type: "video" === type ? "video" : "image"
+		};
+	}
+
+	function getLightboxItems( state ) {
+		var items = [];
+
+		state.slides.forEach(
+			function ( slide ) {
+				var item = getLightboxItemFromSlide( slide );
+
+				if ( item ) {
+					items.push( item );
+				}
+			}
+		);
+
+		return items;
+	}
+
+	function getLightboxIndexBySlide( state, slide ) {
+		var matchedIndex = -1;
+
+		state.lightboxItems.forEach(
+			function ( item, index ) {
+				if ( item.slide === slide ) {
+					matchedIndex = index;
+				}
+			}
+		);
+
+		return matchedIndex;
+	}
+
+	function createLightboxButton( className, label, text ) {
+		var button = document.createElement( "button" );
+
+		button.className   = className;
+		button.type        = "button";
+		button.textContent = text;
+
+		button.setAttribute( "aria-label", label );
+
+		return button;
+	}
+
+	function createLightbox() {
+		var root;
+		var content;
+		var closeButton;
+		var previousButton;
+		var nextButton;
+
+		if ( lightbox ) {
+			return lightbox;
+		}
+
+		root           = document.createElement( "div" );
+		content        = document.createElement( "div" );
+		closeButton    = createLightboxButton( "ap-media-carousel-lightbox__close", "Close lightbox", "\u00d7" );
+		previousButton = createLightboxButton( "ap-media-carousel-lightbox__arrow ap-media-carousel-lightbox__arrow--prev", "Previous media", "\u2039" );
+		nextButton     = createLightboxButton( "ap-media-carousel-lightbox__arrow ap-media-carousel-lightbox__arrow--next", "Next media", "\u203a" );
+
+		root.className    = "ap-media-carousel-lightbox";
+		content.className = "ap-media-carousel-lightbox__content";
+		root.hidden       = true;
+
+		root.setAttribute( "role", "dialog" );
+		root.setAttribute( "aria-modal", "true" );
+		root.setAttribute( "aria-label", "Media lightbox" );
+
+		root.appendChild( content );
+		root.appendChild( closeButton );
+		root.appendChild( previousButton );
+		root.appendChild( nextButton );
+		document.body.appendChild( root );
+
+		lightbox = {
+			activeIndex: 0,
+			activeState: null,
+			activeTrigger: null,
+			closeButton: closeButton,
+			content: content,
+			nextButton: nextButton,
+			previousButton: previousButton,
+			root: root
+		};
+
+		root.addEventListener(
+			"click",
+			function ( event ) {
+				if ( event.target === root ) {
+					closeLightbox();
+				}
+			}
+		);
+
+		closeButton.addEventListener( "click", closeLightbox );
+
+		previousButton.addEventListener(
+			"click",
+			function () {
+				moveLightbox( -1 );
+			}
+		);
+
+		nextButton.addEventListener(
+			"click",
+			function () {
+				moveLightbox( 1 );
+			}
+		);
+
+		document.addEventListener( "keydown", handleLightboxKeydown );
+
+		return lightbox;
+	}
+
+	function setLightboxVariable( root, sourceStyle, property ) {
+		var value = sourceStyle.getPropertyValue( property );
+
+		if ( value ) {
+			root.style.setProperty( property, value.trim() );
+		}
+	}
+
+	function applyLightboxStyles( box, carousel ) {
+		var sourceStyle = window.getComputedStyle( carousel );
+
+		setLightboxVariable( box.root, sourceStyle, "--ap-media-carousel-lightbox-color" );
+		setLightboxVariable( box.root, sourceStyle, "--ap-media-carousel-lightbox-ui-color" );
+		setLightboxVariable( box.root, sourceStyle, "--ap-media-carousel-lightbox-ui-hover-color" );
+		setLightboxVariable( box.root, sourceStyle, "--ap-media-carousel-lightbox-video-width" );
+	}
+
+	function getYoutubeId( url ) {
+		var pathParts;
+
+		if ( "youtu.be" === url.hostname.replace( /^www\./, "" ) ) {
+			pathParts = url.pathname.split( "/" );
+
+			return pathParts[ 1 ] || "";
+		}
+
+		if ( -1 === url.hostname.indexOf( "youtube.com" ) ) {
+			return "";
+		}
+
+		if ( 0 === url.pathname.indexOf( "/embed/" ) ) {
+			pathParts = url.pathname.split( "/" );
+
+			return pathParts[ 2 ] || "";
+		}
+
+		if ( 0 === url.pathname.indexOf( "/shorts/" ) ) {
+			pathParts = url.pathname.split( "/" );
+
+			return pathParts[ 2 ] || "";
+		}
+
+		return url.searchParams ? url.searchParams.get( "v" ) || "" : "";
+	}
+
+	function getVimeoId( url ) {
+		var pathParts;
+
+		if ( -1 === url.hostname.indexOf( "vimeo.com" ) ) {
+			return "";
+		}
+
+		pathParts = url.pathname.split( "/" ).filter(
+			function ( item ) {
+				return "" !== item;
+			}
+		);
+
+		if ( "video" === pathParts[ 0 ] ) {
+			return pathParts[ 1 ] || "";
+		}
+
+		return pathParts[ 0 ] || "";
+	}
+
+	function getVideoEmbedUrl( source ) {
+		var url;
+		var youtubeId;
+		var vimeoId;
+
+		try {
+			url = new URL( source, window.location.href );
+		} catch ( error ) {
+			return "";
+		}
+
+		youtubeId = getYoutubeId( url );
+
+		if ( youtubeId ) {
+			return "https://www.youtube.com/embed/" + encodeURIComponent( youtubeId ) + "?autoplay=1&rel=0";
+		}
+
+		vimeoId = getVimeoId( url );
+
+		if ( vimeoId ) {
+			return "https://player.vimeo.com/video/" + encodeURIComponent( vimeoId ) + "?autoplay=1";
+		}
+
+		return "";
+	}
+
+	function renderLightboxItem( box, item ) {
+		var image;
+		var video;
+		var frame;
+		var embedSource;
+		var fallbackLink;
+
+		box.content.innerHTML = "";
+
+		if ( "video" === item.type ) {
+			embedSource = getVideoEmbedUrl( item.source );
+
+			if ( ! embedSource ) {
+				fallbackLink             = document.createElement( "a" );
+				fallbackLink.className   = "ap-media-carousel-lightbox__fallback-link";
+				fallbackLink.href        = item.source;
+				fallbackLink.target      = "_blank";
+				fallbackLink.rel         = "noopener";
+				fallbackLink.textContent = "Open video";
+				box.content.appendChild( fallbackLink );
+
+				return;
+			}
+
+			video           = document.createElement( "div" );
+			frame           = document.createElement( "iframe" );
+			video.className = "ap-media-carousel-lightbox__video";
+			frame.src       = embedSource;
+
+			frame.setAttribute( "allow", "autoplay; fullscreen; picture-in-picture" );
+			frame.setAttribute( "title", "Video" );
+
+			video.appendChild( frame );
+			box.content.appendChild( video );
+
+			return;
+		}
+
+		image           = document.createElement( "img" );
+		image.className = "ap-media-carousel-lightbox__image";
+		image.src       = item.source;
+		image.alt       = "";
+
+		box.content.appendChild( image );
+	}
+
+	function updateLightboxControls( box ) {
+		var hasMultipleItems = box.activeState && 1 < box.activeState.lightboxItems.length;
+
+		box.previousButton.hidden = ! hasMultipleItems;
+		box.nextButton.hidden     = ! hasMultipleItems;
+	}
+
+	function openLightbox( state, index, trigger ) {
+		var box  = createLightbox();
+		var item = state.lightboxItems[ index ];
+
+		if ( ! item ) {
+			return;
+		}
+
+		box.activeIndex   = index;
+		box.activeState   = state;
+		box.activeTrigger = trigger;
+
+		applyLightboxStyles( box, state.carousel );
+		renderLightboxItem( box, item );
+		updateLightboxControls( box );
+		stopAutoplay( state );
+
+		box.root.hidden = false;
+		document.body.classList.add( BODY_LIGHTBOX_CLASS );
+
+		window.requestAnimationFrame(
+			function () {
+				box.root.classList.add( LIGHTBOX_OPEN_CLASS );
+				box.closeButton.focus();
+			}
+		);
+	}
+
+	function closeLightbox() {
+		var box = lightbox;
+		var trigger;
+		var state;
+
+		if ( ! box || box.root.hidden ) {
+			return;
+		}
+
+		trigger = box.activeTrigger;
+		state   = box.activeState;
+
+		box.root.classList.remove( LIGHTBOX_OPEN_CLASS );
+		document.body.classList.remove( BODY_LIGHTBOX_CLASS );
+		box.activeState   = null;
+		box.activeTrigger = null;
+
+		window.setTimeout(
+			function () {
+				if ( ! box.root.classList.contains( LIGHTBOX_OPEN_CLASS ) ) {
+					box.content.innerHTML = "";
+					box.root.hidden       = true;
+				}
+			},
+			200
+		);
+
+		if ( state ) {
+			startAutoplay( state );
+		}
+
+		if ( trigger && trigger.focus ) {
+			trigger.focus();
+		}
+	}
+
+	function moveLightbox( direction ) {
+		var box = lightbox;
+		var items;
+		var maxIndex;
+
+		if ( ! box || ! box.activeState ) {
+			return;
+		}
+
+		items    = box.activeState.lightboxItems;
+		maxIndex = items.length - 1;
+
+		if ( 0 >= maxIndex ) {
+			return;
+		}
+
+		box.activeIndex += direction;
+
+		if ( 0 > box.activeIndex ) {
+			box.activeIndex = maxIndex;
+		} else if ( box.activeIndex > maxIndex ) {
+			box.activeIndex = 0;
+		}
+
+		renderLightboxItem( box, items[ box.activeIndex ] );
+	}
+
+	function handleLightboxKeydown( event ) {
+		if ( ! lightbox || lightbox.root.hidden ) {
+			return;
+		}
+
+		if ( "Escape" === event.key ) {
+			event.preventDefault();
+			closeLightbox();
+		}
+
+		if ( "ArrowLeft" === event.key ) {
+			event.preventDefault();
+			moveLightbox( -1 );
+		}
+
+		if ( "ArrowRight" === event.key ) {
+			event.preventDefault();
+			moveLightbox( 1 );
+		}
+	}
+
+	function bindLightboxTriggers( state ) {
+		state.carousel.addEventListener(
+			"click",
+			function ( event ) {
+				var trigger = event.target.closest ? event.target.closest( LIGHTBOX_TRIGGER ) : null;
+				var slide;
+				var lightboxIndex;
+
+				if ( ! trigger || ! state.carousel.contains( trigger ) ) {
+					return;
+				}
+
+				slide         = trigger.closest ? trigger.closest( ".ap-media-carousel__slide" ) : null;
+				lightboxIndex = getLightboxIndexBySlide( state, slide );
+
+				if ( 0 > lightboxIndex ) {
+					return;
+				}
+
+				event.preventDefault();
+				event.stopPropagation();
+				openLightbox( state, lightboxIndex, trigger );
+			}
+		);
 	}
 
 	function getMaxOffset( state ) {
@@ -55,6 +500,124 @@
 		}
 
 		return Math.min( Math.max( slide.offsetLeft, 0 ), getMaxOffset( state ) );
+	}
+
+	function getMaxStartIndex( state ) {
+		var maxOffset     = getMaxOffset( state );
+		var maxStartIndex = 0;
+
+		state.slides.forEach(
+			function ( slide, index ) {
+				if ( slide.offsetLeft <= maxOffset + 1 ) {
+					maxStartIndex = index;
+				}
+			}
+		);
+
+		return maxStartIndex;
+	}
+
+	function getPages( state ) {
+		var maxStartIndex = getMaxStartIndex( state );
+		var pages         = [];
+		var index         = 0;
+		var lastPage;
+
+		if ( 0 >= maxStartIndex ) {
+			pages.push(
+				{
+					offset: 0,
+					slideIndex: 0
+				}
+			);
+
+			return pages;
+		}
+
+		while ( index < maxStartIndex ) {
+			pages.push(
+				{
+					offset: getSlideOffset( state, index ),
+					slideIndex: index
+				}
+			);
+
+			index += state.slidesToScroll;
+		}
+
+		lastPage = pages[ pages.length - 1 ];
+
+		if ( ! lastPage || lastPage.slideIndex !== maxStartIndex ) {
+			pages.push(
+				{
+					offset: getSlideOffset( state, maxStartIndex ),
+					slideIndex: maxStartIndex
+				}
+			);
+		}
+
+		return pages;
+	}
+
+	function createDot( state, page, pageIndex ) {
+		var dot = document.createElement( "button" );
+
+		dot.className = "ap-media-carousel__dot";
+		dot.type      = "button";
+
+		dot.setAttribute( "role", "tab" );
+		dot.setAttribute( "aria-label", getDotLabel( state, page ) );
+		dot.setAttribute( "aria-current", "false" );
+		dot.setAttribute( "aria-selected", "false" );
+		dot.setAttribute( "data-ap-media-carousel-page", String( pageIndex ) );
+
+		dot.addEventListener(
+			"click",
+			function () {
+				goToPageAfterInteraction( state, pageIndex );
+			}
+		);
+
+		return dot;
+	}
+
+	function renderDots( state ) {
+		if ( state.pagination ) {
+			state.pagination.innerHTML = "";
+		}
+
+		if ( ! state.pagination || "dots" !== state.paginationType ) {
+			state.dots = [];
+
+			return;
+		}
+
+		state.dots = [];
+
+		state.pages.forEach(
+			function ( page, pageIndex ) {
+				var dot = createDot( state, page, pageIndex );
+
+				state.pagination.appendChild( dot );
+				state.dots.push( dot );
+			}
+		);
+	}
+
+	function syncControlVisibility( state ) {
+		var hasMultiplePages = 1 < state.pages.length;
+
+		if ( state.pagination ) {
+			state.pagination.hidden = ! hasMultiplePages || "dots" !== state.paginationType;
+		}
+
+		if ( state.previousButton ) {
+			state.previousButton.hidden = ! hasMultiplePages || ! state.showArrows;
+		}
+
+		if ( state.nextButton ) {
+			state.nextButton.hidden = ! hasMultiplePages || ! state.showArrows;
+		}
 	}
 
 	function updateSlideVisibility( state, offset ) {
@@ -74,7 +637,7 @@
 	function updateControls( state, offset ) {
 		state.dots.forEach(
 			function ( dot, index ) {
-				var isActive = index === state.currentIndex;
+				var isActive = index === state.currentPageIndex;
 
 				dot.classList.toggle( "ap-media-carousel__dot--active", isActive );
 				dot.setAttribute( "aria-current", isActive ? "true" : "false" );
@@ -83,26 +646,106 @@
 		);
 
 		if ( state.previousButton ) {
-			state.previousButton.disabled = 0 >= state.currentIndex;
+			state.previousButton.disabled = ! state.loop && 0 >= state.currentPageIndex;
 		}
 
 		if ( state.nextButton ) {
-			state.nextButton.disabled = state.currentIndex >= state.slides.length - 1;
+			state.nextButton.disabled = ! state.loop && state.currentPageIndex >= state.pages.length - 1;
 		}
 
 		updateSlideVisibility( state, offset );
 	}
 
-	function goToSlide( state, index ) {
-		var maxIndex = Math.max( state.slides.length - 1, 0 );
-		var offset;
+	function goToPage( state, pageIndex ) {
+		var maxPageIndex = Math.max( state.pages.length - 1, 0 );
+		var targetPageIndex;
+		var page;
 
-		state.currentIndex = clamp( index, 0, maxIndex );
-		offset             = getSlideOffset( state, state.currentIndex );
+		if ( state.loop && 0 < state.pages.length ) {
+			if ( 0 > pageIndex ) {
+				targetPageIndex = maxPageIndex;
+			} else if ( pageIndex > maxPageIndex ) {
+				targetPageIndex = 0;
+			} else {
+				targetPageIndex = pageIndex;
+			}
+		} else {
+			targetPageIndex = clamp( pageIndex, 0, maxPageIndex );
+		}
 
-		state.track.style.transform = "translate3d(" + ( -1 * offset ) + "px, 0, 0)";
+		state.currentPageIndex  = targetPageIndex;
+		page                    = state.pages[ state.currentPageIndex ] || state.pages[ 0 ];
+		state.currentSlideIndex = page ? page.slideIndex : 0;
 
-		updateControls( state, offset );
+		state.track.style.transform = "translate3d(" + ( -1 * ( page ? page.offset : 0 ) ) + "px, 0, 0)";
+
+		updateControls( state, page ? page.offset : 0 );
+	}
+
+	function stopAutoplay( state ) {
+		if ( ! state.autoplayTimer ) {
+			return;
+		}
+
+		window.clearInterval( state.autoplayTimer );
+		state.autoplayTimer = null;
+	}
+
+	function startAutoplay( state ) {
+		stopAutoplay( state );
+
+		if ( ! state.autoplay || 1 >= state.pages.length ) {
+			return;
+		}
+
+		state.autoplayTimer = window.setInterval(
+			function () {
+				if ( ! state.loop && state.currentPageIndex >= state.pages.length - 1 ) {
+					stopAutoplay( state );
+
+					return;
+				}
+
+				goToPage( state, state.currentPageIndex + 1 );
+			},
+			state.autoplayDelay
+		);
+	}
+
+	function restartAutoplay( state ) {
+		stopAutoplay( state );
+		startAutoplay( state );
+	}
+
+	function goToPageAfterInteraction( state, pageIndex ) {
+		goToPage( state, pageIndex );
+		restartAutoplay( state );
+	}
+
+	function getPageIndexForSlideIndex( state, slideIndex ) {
+		var matchedIndex = 0;
+
+		state.pages.forEach(
+			function ( page, pageIndex ) {
+				if ( page.slideIndex <= slideIndex ) {
+					matchedIndex = pageIndex;
+				}
+			}
+		);
+
+		return matchedIndex;
+	}
+
+	function refreshPages( state ) {
+		var currentSlideIndex = state.currentSlideIndex || 0;
+
+		state.pages            = getPages( state );
+		state.currentPageIndex = getPageIndexForSlideIndex( state, currentSlideIndex );
+
+		renderDots( state );
+		syncControlVisibility( state );
+		goToPage( state, state.currentPageIndex );
+		restartAutoplay( state );
 	}
 
 	function scheduleRefresh( state ) {
@@ -112,13 +755,14 @@
 
 		state.refreshFrame = window.requestAnimationFrame(
 			function () {
-				goToSlide( state, state.currentIndex );
+				refreshPages( state );
 			}
 		);
 	}
 
 	function initCarousel( carousel ) {
-		var options = parseOptions( carousel );
+		var options      = parseOptions( carousel );
+		var reduceMotion = prefersReducedMotion();
 		var state;
 
 		if ( "yes" === carousel.getAttribute( INITIALIZED_ATTRIBUTE ) ) {
@@ -126,20 +770,37 @@
 		}
 
 		state = {
-			currentIndex: 0,
-			dots: toArray( carousel.querySelectorAll( ".ap-media-carousel__dot" ) ),
+			autoplay: ! reduceMotion && getBooleanOption( options, "autoplay", false ),
+			autoplayDelay: 5000,
+			autoplayTimer: null,
+			carousel: carousel,
+			currentPageIndex: 0,
+			currentSlideIndex: 0,
+			dotLabel: "",
+			dots: [],
+			lightboxItems: [],
+			loop: getBooleanOption( options, "loop", false ),
 			nextButton: carousel.querySelector( ".ap-media-carousel__arrow--next" ),
+			pages: [],
+			pagination: carousel.querySelector( ".ap-media-carousel__pagination" ),
+			paginationType: getPaginationType( options ),
 			previousButton: carousel.querySelector( ".ap-media-carousel__arrow--prev" ),
 			refreshFrame: null,
+			showArrows: getBooleanOption( options, "arrows", true ),
 			slides: toArray( carousel.querySelectorAll( ".ap-media-carousel__slide" ) ),
 			slidesToScroll: getSlidesToScroll( options ),
 			track: carousel.querySelector( ".ap-media-carousel__slides" ),
+			transitionDuration: reduceMotion ? 0 : getTransitionDuration( options ),
 			viewport: carousel.querySelector( ".ap-media-carousel__viewport" )
 		};
 
 		if ( ! state.track || ! state.viewport || ! state.slides.length ) {
 			return;
 		}
+
+		state.dotLabel                       = state.pagination ? state.pagination.getAttribute( "data-ap-media-carousel-dot-label" ) || "Go to slide" : "Go to slide";
+		state.lightboxItems                  = getLightboxItems( state );
+		state.track.style.transitionDuration = state.transitionDuration + "ms";
 
 		carousel.setAttribute( INITIALIZED_ATTRIBUTE, "yes" );
 		carousel.apMediaCarousel = state;
@@ -148,7 +809,7 @@
 			state.previousButton.addEventListener(
 				"click",
 				function () {
-					goToSlide( state, state.currentIndex - state.slidesToScroll );
+					goToPageAfterInteraction( state, state.currentPageIndex - 1 );
 				}
 			);
 		}
@@ -157,21 +818,12 @@
 			state.nextButton.addEventListener(
 				"click",
 				function () {
-					goToSlide( state, state.currentIndex + state.slidesToScroll );
+					goToPageAfterInteraction( state, state.currentPageIndex + 1 );
 				}
 			);
 		}
 
-		state.dots.forEach(
-			function ( dot, index ) {
-				dot.addEventListener(
-					"click",
-					function () {
-						goToSlide( state, index );
-					}
-				);
-			}
-		);
+		bindLightboxTriggers( state );
 
 		window.addEventListener(
 			"resize",
@@ -180,7 +832,7 @@
 			}
 		);
 
-		goToSlide( state, 0 );
+		refreshPages( state );
 	}
 
 	function initCarousels( scope ) {

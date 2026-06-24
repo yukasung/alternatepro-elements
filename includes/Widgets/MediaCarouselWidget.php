@@ -64,7 +64,7 @@ final class MediaCarouselWidget extends \Elementor\Widget_Base {
 	 * @return string[]
 	 */
 	public function get_style_depends() {
-		return array( WidgetsModule::MEDIA_CAROUSEL_STYLE );
+		return array( 'elementor-icons', WidgetsModule::MEDIA_CAROUSEL_STYLE );
 	}
 
 	/**
@@ -228,6 +228,7 @@ final class MediaCarouselWidget extends \Elementor\Widget_Base {
 
 		$this->add_carousel_options_controls();
 		$this->end_controls_section();
+		$this->register_additional_options_controls();
 	}
 
 	/**
@@ -314,6 +315,195 @@ final class MediaCarouselWidget extends \Elementor\Widget_Base {
 				),
 			)
 		);
+	}
+
+	/**
+	 * Register additional carousel option controls.
+	 *
+	 * @return void
+	 */
+	private function register_additional_options_controls() {
+		$this->start_controls_section(
+			'section_additional_options',
+			array(
+				'label' => __( 'Additional Options', 'alternatepro-elements' ),
+				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
+			)
+		);
+
+		$this->add_control(
+			'show_arrows',
+			array(
+				'label'        => __( 'Arrows', 'alternatepro-elements' ),
+				'type'         => \Elementor\Controls_Manager::SWITCHER,
+				'label_on'     => __( 'Show', 'alternatepro-elements' ),
+				'label_off'    => __( 'Hide', 'alternatepro-elements' ),
+				'return_value' => 'yes',
+				'default'      => 'yes',
+			)
+		);
+
+		$this->add_control(
+			'pagination',
+			array(
+				'label'   => __( 'Pagination', 'alternatepro-elements' ),
+				'type'    => \Elementor\Controls_Manager::SELECT,
+				'default' => 'dots',
+				'options' => array(
+					'none' => __( 'None', 'alternatepro-elements' ),
+					'dots' => __( 'Dots', 'alternatepro-elements' ),
+				),
+			)
+		);
+
+		$this->add_control(
+			'transition_duration',
+			array(
+				'label'     => __( 'Transition Duration', 'alternatepro-elements' ),
+				'type'      => \Elementor\Controls_Manager::NUMBER,
+				'min'       => 0,
+				'max'       => 5000,
+				'step'      => 50,
+				'default'   => 500,
+				'selectors' => array(
+					'{{WRAPPER}} .ap-media-carousel' => '--ap-media-carousel-transition-duration: {{VALUE}}ms;',
+				),
+			)
+		);
+
+		$this->add_control(
+			'autoplay',
+			array(
+				'label'        => __( 'Autoplay', 'alternatepro-elements' ),
+				'type'         => \Elementor\Controls_Manager::SWITCHER,
+				'label_on'     => __( 'Yes', 'alternatepro-elements' ),
+				'label_off'    => __( 'No', 'alternatepro-elements' ),
+				'return_value' => 'yes',
+				'default'      => '',
+				'separator'    => 'before',
+			)
+		);
+
+		$this->add_control(
+			'infinite_loop',
+			array(
+				'label'        => __( 'Infinite Loop', 'alternatepro-elements' ),
+				'type'         => \Elementor\Controls_Manager::SWITCHER,
+				'label_on'     => __( 'Yes', 'alternatepro-elements' ),
+				'label_off'    => __( 'No', 'alternatepro-elements' ),
+				'return_value' => 'yes',
+				'default'      => '',
+			)
+		);
+
+		$this->add_control(
+			'overlay',
+			array(
+				'label'     => __( 'Overlay', 'alternatepro-elements' ),
+				'type'      => \Elementor\Controls_Manager::SELECT,
+				'default'   => 'icon',
+				'separator' => 'before',
+				'options'   => array(
+					'none' => __( 'None', 'alternatepro-elements' ),
+					'icon' => __( 'Icon', 'alternatepro-elements' ),
+				),
+			)
+		);
+
+		$this->add_control(
+			'overlay_icon',
+			array(
+				'label'     => __( 'Icon', 'alternatepro-elements' ),
+				'type'      => \Elementor\Controls_Manager::CHOOSE,
+				'default'   => 'search',
+				'toggle'    => false,
+				'options'   => array(
+					'search' => array(
+						'title' => __( 'Search', 'alternatepro-elements' ),
+						'icon'  => 'eicon-search',
+					),
+					'plus'   => array(
+						'title' => __( 'Plus', 'alternatepro-elements' ),
+						'icon'  => 'eicon-plus-circle',
+					),
+					'eye'    => array(
+						'title' => __( 'View', 'alternatepro-elements' ),
+						'icon'  => 'eicon-eye',
+					),
+					'link'   => array(
+						'title' => __( 'Link', 'alternatepro-elements' ),
+						'icon'  => 'eicon-link',
+					),
+				),
+				'condition' => array(
+					'overlay' => 'icon',
+				),
+			)
+		);
+
+		$this->add_control(
+			'overlay_animation',
+			array(
+				'label'     => __( 'Animation', 'alternatepro-elements' ),
+				'type'      => \Elementor\Controls_Manager::SELECT,
+				'default'   => 'fade',
+				'options'   => array(
+					'none' => __( 'None', 'alternatepro-elements' ),
+					'fade' => __( 'Fade', 'alternatepro-elements' ),
+				),
+				'condition' => array(
+					'overlay' => 'icon',
+				),
+			)
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Image_Size::get_type(),
+			array(
+				'name'      => 'image',
+				'label'     => __( 'Image Resolution', 'alternatepro-elements' ),
+				'default'   => 'full',
+				'exclude'   => array( 'custom' ),
+				'separator' => 'before',
+			)
+		);
+
+		$this->add_control(
+			'image_fit',
+			array(
+				'label'                => __( 'Image Fit', 'alternatepro-elements' ),
+				'type'                 => \Elementor\Controls_Manager::SELECT,
+				'default'              => 'cover',
+				'options'              => array(
+					'cover'   => __( 'Cover', 'alternatepro-elements' ),
+					'contain' => __( 'Contain', 'alternatepro-elements' ),
+					'auto'    => __( 'Auto', 'alternatepro-elements' ),
+				),
+				'selectors_dictionary' => array(
+					'cover'   => '--ap-media-carousel-image-fit: cover;',
+					'contain' => '--ap-media-carousel-image-fit: contain;',
+					'auto'    => '--ap-media-carousel-image-fit: fill;',
+				),
+				'selectors'            => array(
+					'{{WRAPPER}} .ap-media-carousel' => '{{VALUE}}',
+				),
+			)
+		);
+
+		$this->add_control(
+			'lazy_load',
+			array(
+				'label'        => __( 'Lazy Load', 'alternatepro-elements' ),
+				'type'         => \Elementor\Controls_Manager::SWITCHER,
+				'label_on'     => __( 'Yes', 'alternatepro-elements' ),
+				'label_off'    => __( 'No', 'alternatepro-elements' ),
+				'return_value' => 'yes',
+				'default'      => '',
+				'separator'    => 'before',
+			)
+		);
+
+		$this->end_controls_section();
 	}
 
 	/**
@@ -566,6 +756,133 @@ final class MediaCarouselWidget extends \Elementor\Widget_Base {
 	}
 
 	/**
+	 * Register overlay style controls.
+	 *
+	 * @return void
+	 */
+	private function register_overlay_style_controls() {
+		$this->start_controls_section(
+			'section_overlay_style',
+			array(
+				'label' => __( 'Overlay', 'alternatepro-elements' ),
+				'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
+			)
+		);
+
+		$this->add_control(
+			'overlay_background_color',
+			array(
+				'label'     => __( 'Background Color', 'alternatepro-elements' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'default'   => '#6ec1e4',
+				'selectors' => array(
+					'{{WRAPPER}} .ap-media-carousel' => '--ap-media-carousel-overlay-background-color: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->add_control(
+			'overlay_text_color',
+			array(
+				'label'     => __( 'Text Color', 'alternatepro-elements' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .ap-media-carousel' => '--ap-media-carousel-overlay-text-color: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'overlay_icon_size',
+			array(
+				'label'      => __( 'Icon Size', 'alternatepro-elements' ),
+				'type'       => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => array( 'px' ),
+				'range'      => array(
+					'px' => array(
+						'min' => 8,
+						'max' => 120,
+					),
+				),
+				'selectors'  => array(
+					'{{WRAPPER}} .ap-media-carousel' => '--ap-media-carousel-overlay-icon-size: {{SIZE}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->end_controls_section();
+	}
+
+	/**
+	 * Register lightbox style controls.
+	 *
+	 * @return void
+	 */
+	private function register_lightbox_style_controls() {
+		$this->start_controls_section(
+			'section_lightbox_style',
+			array(
+				'label' => __( 'Lightbox', 'alternatepro-elements' ),
+				'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
+			)
+		);
+
+		$this->add_control(
+			'lightbox_color',
+			array(
+				'label'     => __( 'Color', 'alternatepro-elements' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'default'   => '#6ec1e4',
+				'selectors' => array(
+					'{{WRAPPER}} .ap-media-carousel' => '--ap-media-carousel-lightbox-color: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->add_control(
+			'lightbox_ui_color',
+			array(
+				'label'     => __( 'UI Color', 'alternatepro-elements' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .ap-media-carousel' => '--ap-media-carousel-lightbox-ui-color: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->add_control(
+			'lightbox_ui_hover_color',
+			array(
+				'label'     => __( 'UI Hover Color', 'alternatepro-elements' ),
+				'type'      => \Elementor\Controls_Manager::COLOR,
+				'selectors' => array(
+					'{{WRAPPER}} .ap-media-carousel' => '--ap-media-carousel-lightbox-ui-hover-color: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			'lightbox_video_width',
+			array(
+				'label'      => __( 'Video Width', 'alternatepro-elements' ),
+				'type'       => \Elementor\Controls_Manager::SLIDER,
+				'size_units' => array( '%' ),
+				'range'      => array(
+					'%' => array(
+						'min' => 10,
+						'max' => 100,
+					),
+				),
+				'selectors'  => array(
+					'{{WRAPPER}} .ap-media-carousel' => '--ap-media-carousel-lightbox-video-width: {{SIZE}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->end_controls_section();
+	}
+
+	/**
 	 * Register style controls.
 	 *
 	 * @return void
@@ -670,6 +987,8 @@ final class MediaCarouselWidget extends \Elementor\Widget_Base {
 
 		$this->end_controls_section();
 		$this->register_navigation_style_controls();
+		$this->register_overlay_style_controls();
+		$this->register_lightbox_style_controls();
 	}
 
 	/**
@@ -741,22 +1060,24 @@ final class MediaCarouselWidget extends \Elementor\Widget_Base {
 	/**
 	 * Get safe image HTML for a repeater slide.
 	 *
-	 * @param array<string,mixed> $image Image data.
+	 * @param array<string,mixed> $image    Image data.
+	 * @param array<string,mixed> $settings Widget settings.
 	 * @return string
 	 */
-	private function get_slide_image_html( array $image ) {
-		$id    = isset( $image['id'] ) ? absint( $image['id'] ) : 0;
-		$url   = isset( $image['url'] ) ? esc_url_raw( (string) $image['url'] ) : '';
-		$alt   = $this->get_slide_image_alt( $image );
-		$attrs = array(
+	private function get_slide_image_html( array $image, array $settings ) {
+		$id      = isset( $image['id'] ) ? absint( $image['id'] ) : 0;
+		$url     = isset( $image['url'] ) ? esc_url_raw( (string) $image['url'] ) : '';
+		$alt     = $this->get_slide_image_alt( $image );
+		$loading = $this->get_image_loading_attribute( $settings );
+		$attrs   = array(
 			'alt'      => $alt,
 			'class'    => 'ap-media-carousel__image',
 			'decoding' => 'async',
-			'loading'  => 'lazy',
+			'loading'  => $loading,
 		);
 
 		if ( $id ) {
-			$html = wp_get_attachment_image( $id, 'full', false, $attrs );
+			$html = wp_get_attachment_image( $id, $this->get_image_size( $settings ), false, $attrs );
 
 			if ( '' !== $html ) {
 				return $html;
@@ -768,9 +1089,10 @@ final class MediaCarouselWidget extends \Elementor\Widget_Base {
 		}
 
 		return sprintf(
-			'<img class="ap-media-carousel__image" src="%1$s" alt="%2$s" loading="lazy" decoding="async" />',
+			'<img class="ap-media-carousel__image" src="%1$s" alt="%2$s" loading="%3$s" decoding="async" />',
 			esc_url( $url ),
-			esc_attr( $alt )
+			esc_attr( $alt ),
+			esc_attr( $loading )
 		);
 	}
 
@@ -800,7 +1122,7 @@ final class MediaCarouselWidget extends \Elementor\Widget_Base {
 	 * Get frontend carousel options for the widget script.
 	 *
 	 * @param array<string,mixed> $settings Widget settings.
-	 * @return array<string,int>
+	 * @return array<string,mixed>
 	 */
 	private function get_frontend_carousel_options( array $settings ) {
 		$slides_to_scroll = isset( $settings['slides_to_scroll'] ) ? absint( $settings['slides_to_scroll'] ) : 1;
@@ -810,8 +1132,171 @@ final class MediaCarouselWidget extends \Elementor\Widget_Base {
 		}
 
 		return array(
-			'slidesToScroll' => $slides_to_scroll,
+			'arrows'             => $this->is_switcher_enabled( $settings, 'show_arrows', true ),
+			'autoplay'           => $this->is_switcher_enabled( $settings, 'autoplay', false ),
+			'loop'               => $this->is_switcher_enabled( $settings, 'infinite_loop', false ),
+			'pagination'         => $this->get_pagination_type( $settings ),
+			'slidesToScroll'     => $slides_to_scroll,
+			'transitionDuration' => $this->get_transition_duration( $settings ),
 		);
+	}
+
+	/**
+	 * Check whether an Elementor switcher setting is enabled.
+	 *
+	 * @param array<string,mixed> $settings      Widget settings.
+	 * @param string              $key           Setting key.
+	 * @param bool                $default_value Default state.
+	 * @return bool
+	 */
+	private function is_switcher_enabled( array $settings, $key, $default_value = false ) {
+		if ( ! array_key_exists( $key, $settings ) ) {
+			return (bool) $default_value;
+		}
+
+		return 'yes' === $settings[ $key ];
+	}
+
+	/**
+	 * Get pagination type.
+	 *
+	 * @param array<string,mixed> $settings Widget settings.
+	 * @return string
+	 */
+	private function get_pagination_type( array $settings ) {
+		$pagination = isset( $settings['pagination'] ) ? sanitize_key( (string) $settings['pagination'] ) : 'dots';
+
+		return in_array( $pagination, array( 'none', 'dots' ), true ) ? $pagination : 'dots';
+	}
+
+	/**
+	 * Get transition duration in milliseconds.
+	 *
+	 * @param array<string,mixed> $settings Widget settings.
+	 * @return int
+	 */
+	private function get_transition_duration( array $settings ) {
+		$duration = isset( $settings['transition_duration'] ) ? absint( $settings['transition_duration'] ) : 500;
+
+		return min( max( $duration, 0 ), 5000 );
+	}
+
+	/**
+	 * Get overlay mode.
+	 *
+	 * @param array<string,mixed> $settings Widget settings.
+	 * @return string
+	 */
+	private function get_overlay_mode( array $settings ) {
+		$overlay = isset( $settings['overlay'] ) ? sanitize_key( (string) $settings['overlay'] ) : 'icon';
+
+		return in_array( $overlay, array( 'none', 'icon' ), true ) ? $overlay : 'icon';
+	}
+
+	/**
+	 * Get overlay icon key.
+	 *
+	 * @param array<string,mixed> $settings Widget settings.
+	 * @return string
+	 */
+	private function get_overlay_icon_key( array $settings ) {
+		$icon = isset( $settings['overlay_icon'] ) ? sanitize_key( (string) $settings['overlay_icon'] ) : 'search';
+
+		return in_array( $icon, array( 'search', 'plus', 'eye', 'link' ), true ) ? $icon : 'search';
+	}
+
+	/**
+	 * Get overlay animation key.
+	 *
+	 * @param array<string,mixed> $settings Widget settings.
+	 * @return string
+	 */
+	private function get_overlay_animation( array $settings ) {
+		$animation = isset( $settings['overlay_animation'] ) ? sanitize_key( (string) $settings['overlay_animation'] ) : 'fade';
+
+		return in_array( $animation, array( 'none', 'fade' ), true ) ? $animation : 'fade';
+	}
+
+	/**
+	 * Get selected image size.
+	 *
+	 * @param array<string,mixed> $settings Widget settings.
+	 * @return string
+	 */
+	private function get_image_size( array $settings ) {
+		$size = isset( $settings['image_size'] ) ? sanitize_key( (string) $settings['image_size'] ) : 'full';
+
+		return '' !== $size ? $size : 'full';
+	}
+
+	/**
+	 * Get image loading attribute.
+	 *
+	 * @param array<string,mixed> $settings Widget settings.
+	 * @return string
+	 */
+	private function get_image_loading_attribute( array $settings ) {
+		return $this->is_switcher_enabled( $settings, 'lazy_load', false ) ? 'lazy' : 'eager';
+	}
+
+	/**
+	 * Get widget wrapper classes.
+	 *
+	 * @param array<string,mixed> $settings Widget settings.
+	 * @return string
+	 */
+	private function get_carousel_class_names( array $settings ) {
+		$classes = array(
+			'ap-media-carousel',
+			'ap-media-carousel-widget-placeholder',
+			'ap-media-carousel--overlay-' . $this->get_overlay_mode( $settings ),
+			'ap-media-carousel--overlay-animation-' . $this->get_overlay_animation( $settings ),
+		);
+
+		return implode( ' ', array_map( 'sanitize_html_class', $classes ) );
+	}
+
+	/**
+	 * Get overlay HTML.
+	 *
+	 * @param array<string,mixed> $settings Widget settings.
+	 * @param bool                $has_lightbox Whether the overlay should open a lightbox.
+	 * @return string
+	 */
+	private function get_overlay_html( array $settings, $has_lightbox ) {
+		if ( 'icon' !== $this->get_overlay_mode( $settings ) ) {
+			return '';
+		}
+
+		$icon         = $this->get_overlay_icon_key( $settings );
+		$icon_classes = array(
+			'search' => 'eicon-search',
+			'plus'   => 'eicon-plus-circle',
+			'eye'    => 'eicon-eye',
+			'link'   => 'eicon-link',
+		);
+
+		$icon_html = '<span class="ap-media-carousel__overlay-icon ap-media-carousel__overlay-icon--' . esc_attr( $icon ) . ' ' . esc_attr( $icon_classes[ $icon ] ) . '" aria-hidden="true"></span>';
+
+		if ( $has_lightbox ) {
+			return '<span class="ap-media-carousel__overlay"><button class="ap-media-carousel__overlay-trigger" type="button" aria-label="' . esc_attr__( 'Open media in lightbox', 'alternatepro-elements' ) . '" data-ap-media-carousel-lightbox-trigger="true">' . $icon_html . '</button></span>';
+		}
+
+		return '<span class="ap-media-carousel__overlay" aria-hidden="true">' . $icon_html . '</span>';
+	}
+
+	/**
+	 * Get video play icon HTML.
+	 *
+	 * @param bool $has_lightbox Whether the play icon should open a lightbox.
+	 * @return string
+	 */
+	private function get_video_play_icon_html( $has_lightbox ) {
+		if ( $has_lightbox ) {
+			return '<button class="ap-media-carousel__play-icon" type="button" aria-label="' . esc_attr__( 'Open video in lightbox', 'alternatepro-elements' ) . '" data-ap-media-carousel-lightbox-trigger="true"></button>';
+		}
+
+		return '<span class="ap-media-carousel__play-icon" aria-hidden="true"></span>';
 	}
 
 	/**
@@ -824,6 +1309,71 @@ final class MediaCarouselWidget extends \Elementor\Widget_Base {
 		$slide_type = isset( $slide['slide_type'] ) ? sanitize_key( (string) $slide['slide_type'] ) : 'image';
 
 		return 'video' === $slide_type;
+	}
+
+	/**
+	 * Get a video URL from a repeater slide.
+	 *
+	 * @param array<string,mixed> $slide Slide settings.
+	 * @return string
+	 */
+	private function get_slide_video_url( array $slide ) {
+		return isset( $slide['slide_video_link'] ) ? esc_url_raw( (string) $slide['slide_video_link'] ) : '';
+	}
+
+	/**
+	 * Get the full image source used by the lightbox.
+	 *
+	 * @param array<string,mixed> $image Image data.
+	 * @return string
+	 */
+	private function get_lightbox_image_src( array $image ) {
+		$id = isset( $image['id'] ) ? absint( $image['id'] ) : 0;
+
+		if ( $id ) {
+			$attachment_url = wp_get_attachment_url( $id );
+
+			if ( $attachment_url ) {
+				return esc_url_raw( $attachment_url );
+			}
+		}
+
+		return isset( $image['url'] ) ? esc_url_raw( (string) $image['url'] ) : '';
+	}
+
+	/**
+	 * Get lightbox data for a slide.
+	 *
+	 * @param array<string,mixed> $slide Slide settings.
+	 * @param array<string,mixed> $image Image data.
+	 * @return array{type:string,src:string}
+	 */
+	private function get_lightbox_item( array $slide, array $image ) {
+		if ( $this->is_video_slide( $slide ) ) {
+			return array(
+				'type' => 'video',
+				'src'  => $this->get_slide_video_url( $slide ),
+			);
+		}
+
+		return array(
+			'type' => 'image',
+			'src'  => $this->get_lightbox_image_src( $image ),
+		);
+	}
+
+	/**
+	 * Get lightbox data attributes for a slide.
+	 *
+	 * @param array{type:string,src:string} $lightbox_item Lightbox item data.
+	 * @return string
+	 */
+	private function get_lightbox_attributes( array $lightbox_item ) {
+		if ( empty( $lightbox_item['src'] ) ) {
+			return '';
+		}
+
+		return ' data-ap-media-carousel-lightbox-type="' . esc_attr( $lightbox_item['type'] ) . '" data-ap-media-carousel-lightbox-src="' . esc_url( $lightbox_item['src'] ) . '"';
 	}
 
 	/**
@@ -888,25 +1438,27 @@ final class MediaCarouselWidget extends \Elementor\Widget_Base {
 		$slides          = $this->get_render_slides( $settings );
 		$slide_count     = count( $slides );
 		$placeholder_src = $this->get_placeholder_image_src();
+		$class_names     = $this->get_carousel_class_names( $settings );
 		$options         = wp_json_encode( $this->get_frontend_carousel_options( $settings ) );
 
-		echo '<div class="ap-media-carousel ap-media-carousel-widget-placeholder" role="region" aria-label="' . esc_attr( $label ) . '" data-ap-media-carousel="true" data-ap-media-carousel-options="' . esc_attr( $options ? $options : '{}' ) . '">';
+		echo '<div class="' . esc_attr( $class_names ) . '" role="region" aria-label="' . esc_attr( $label ) . '" data-ap-media-carousel="true" data-ap-media-carousel-options="' . esc_attr( $options ? $options : '{}' ) . '">';
 		echo '<div class="ap-media-carousel__viewport">';
 		echo '<div class="ap-media-carousel__slides">';
 
 		foreach ( $slides as $index => $slide ) {
-			$slide_label = sprintf(
+			$image         = $this->get_slide_image( $slide, $placeholder_src );
+			$image_html    = $this->get_slide_image_html( $image, $settings );
+			$link          = $this->get_slide_link( $slide, $image );
+			$is_video      = $this->is_video_slide( $slide );
+			$lightbox_item = $this->get_lightbox_item( $slide, $image );
+			$slide_label   = sprintf(
 				/* translators: 1: slide number, 2: total slides. */
 				__( 'Slide %1$d of %2$d', 'alternatepro-elements' ),
 				$index + 1,
 				$slide_count
 			);
 
-			echo '<div class="ap-media-carousel__slide" role="group" aria-roledescription="' . esc_attr__( 'slide', 'alternatepro-elements' ) . '" aria-label="' . esc_attr( $slide_label ) . '">';
-
-			$image      = $this->get_slide_image( $slide, $placeholder_src );
-			$image_html = $this->get_slide_image_html( $image );
-			$link       = $this->get_slide_link( $slide, $image );
+			echo '<div class="ap-media-carousel__slide" role="group" aria-roledescription="' . esc_attr__( 'slide', 'alternatepro-elements' ) . '" aria-label="' . esc_attr( $slide_label ) . '"' . $this->get_lightbox_attributes( $lightbox_item ) . '>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Generated and escaped by get_lightbox_attributes().
 
 			if ( '' !== $link['url'] ) {
 				echo '<a class="ap-media-carousel__link" href="' . esc_url( $link['url'] ) . '"';
@@ -924,12 +1476,14 @@ final class MediaCarouselWidget extends \Elementor\Widget_Base {
 
 			echo $image_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Generated and escaped by get_slide_image_html().
 
-			if ( $this->is_video_slide( $slide ) ) {
-				echo '<span class="ap-media-carousel__play-icon" aria-hidden="true"></span>';
-			}
-
 			if ( '' !== $link['url'] ) {
 				echo '</a>';
+			}
+
+			if ( $is_video ) {
+				echo $this->get_video_play_icon_html( '' !== $lightbox_item['src'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Generated and escaped by get_video_play_icon_html().
+			} else {
+				echo $this->get_overlay_html( $settings, '' !== $lightbox_item['src'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Generated and escaped by get_overlay_html().
 			}
 
 			echo '</div>';
@@ -939,22 +1493,14 @@ final class MediaCarouselWidget extends \Elementor\Widget_Base {
 		echo '</div>';
 
 		if ( 1 < $slide_count ) {
-			echo '<button class="ap-media-carousel__arrow ap-media-carousel__arrow--prev" type="button" aria-label="' . esc_attr__( 'Previous slide', 'alternatepro-elements' ) . '" data-ap-media-carousel-action="previous" disabled="disabled">&#8249;</button>';
-			echo '<button class="ap-media-carousel__arrow ap-media-carousel__arrow--next" type="button" aria-label="' . esc_attr__( 'Next slide', 'alternatepro-elements' ) . '" data-ap-media-carousel-action="next">&#8250;</button>';
-			echo '<div class="ap-media-carousel__pagination" role="tablist" aria-label="' . esc_attr__( 'Choose slide', 'alternatepro-elements' ) . '">';
-
-			for ( $index = 0; $index < $slide_count; $index++ ) {
-				$is_active = 0 === $index;
-				$dot_class = $is_active ? 'ap-media-carousel__dot ap-media-carousel__dot--active' : 'ap-media-carousel__dot';
-				$dot_label = sprintf(
-					/* translators: %d: slide number. */
-					__( 'Go to slide %d', 'alternatepro-elements' ),
-					$index + 1
-				);
-				echo '<button class="' . esc_attr( $dot_class ) . '" type="button" role="tab" aria-label="' . esc_attr( $dot_label ) . '" aria-current="' . esc_attr( $is_active ? 'true' : 'false' ) . '" aria-selected="' . esc_attr( $is_active ? 'true' : 'false' ) . '" data-ap-media-carousel-index="' . esc_attr( (string) $index ) . '"></button>';
+			if ( $this->is_switcher_enabled( $settings, 'show_arrows', true ) ) {
+				echo '<button class="ap-media-carousel__arrow ap-media-carousel__arrow--prev" type="button" aria-label="' . esc_attr__( 'Previous slide', 'alternatepro-elements' ) . '" data-ap-media-carousel-action="previous" disabled="disabled">&#8249;</button>';
+				echo '<button class="ap-media-carousel__arrow ap-media-carousel__arrow--next" type="button" aria-label="' . esc_attr__( 'Next slide', 'alternatepro-elements' ) . '" data-ap-media-carousel-action="next">&#8250;</button>';
 			}
 
-			echo '</div>';
+			if ( 'dots' === $this->get_pagination_type( $settings ) ) {
+				echo '<div class="ap-media-carousel__pagination" role="tablist" aria-label="' . esc_attr__( 'Choose slide', 'alternatepro-elements' ) . '" data-ap-media-carousel-dot-label="' . esc_attr__( 'Go to slide', 'alternatepro-elements' ) . '"></div>';
+			}
 		}
 
 		echo '</div>';
