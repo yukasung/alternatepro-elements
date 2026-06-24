@@ -62,6 +62,7 @@ The widget foundation:
 - Provides an Elementor panel title, icon, category, and search keywords.
 - Registers the requested Content tab `Slides` section.
 - Adds the `Slides Name` text control with a `Slides` default.
+- Renders `Slides Name` as the `.ap-media-carousel__viewport` carousel `aria-label` with a `Slides` fallback.
 - Adds a `Slides` repeater with five default image items.
 - Adds repeater item `Type` icon choices for `Image` and `Video`, with `Image` as the default.
 - Adds repeater item `Image` media control with the Elementor placeholder image default for image and video items.
@@ -87,13 +88,21 @@ The widget foundation:
 - Adds the requested Style tab `Overlay` section below `Navigation`.
 - Adds overlay style controls for `Background Color`, `Text Color`, and responsive `Icon Size`.
 - Applies overlay background color to the full slide overlay layer and applies text color/icon size to the centered Elementor Free `eicons` overlay icon.
+- Refines hover states so image overlays fade in with centered icons and video play buttons use an Elementor-style transparent play ring.
+- Adds a video-specific hover overlay so hovering a video play icon reveals the full-slide overlay while the inactive video thumbnail keeps its play button visible.
+- Expands the video-specific hover overlay so hovering any visible area of a video slide reveals the full-slide overlay, not only the play icon.
 - Adds the requested Style tab `Lightbox` section below `Overlay`.
 - Adds lightbox style controls for `Color`, `UI Color`, `UI Hover Color`, and responsive `Video Width`.
-- Stores lightbox style values as AP Media Carousel CSS variables and applies them to the runtime lightbox.
+- Stores lightbox style values as AP Media Carousel CSS variables and applies them to the runtime lightbox, with `Video Width` mapped to viewport-relative sizing and an 86vw default.
 - Adds a widget-owned lightbox runtime for image slides and video slides.
 - Opens image slides from the AP overlay trigger and opens video slides from the play icon trigger.
 - Converts supported YouTube and Vimeo URLs to iframe embed URLs in the lightbox and falls back to an external link for unsupported video URLs.
 - Adds lightbox close, previous/next, Escape key, and keyboard arrow navigation behavior.
+- Adds an AP-owned Elementor-style lightbox header with a counter plus share, zoom, fullscreen, and a close control.
+- Keeps the close button visible in the top-right header action group with a clear clickable area and AP-owned SVG icon.
+- Traps keyboard focus inside the AP lightbox while it is open.
+- Provides translated lightbox runtime labels through widget data attributes.
+- Hides the video play icon when a video slide has no video URL.
 - Pauses AP Media Carousel autoplay while the lightbox is open and resumes it after close.
 - Keeps `content_template()` empty.
 - Renders five default Elementor placeholder images when no custom media is selected.
@@ -133,6 +142,7 @@ Passed:
 - `vendor/bin/phpcs --standard=phpcs.xml includes/Widgets/MediaCarouselWidget.php assets/css/media-carousel.css assets/js/media-carousel.js`
 - `git diff --check`
 - Static validation confirmed `ap-media-carousel`, `AP Media Carousel`, `Slides Name`, `Slides`, the five default repeater items, item `Type`, item `Image`, conditional item `Video Link`, item `Link`, conditional item `Custom URL`, `Effect`, `Slides Per View`, `Slides to Scroll`, `Height`, `Width`, video thumbnail play icon output, the requested Slides and Navigation style controls, empty `content_template()`, `MediaCarouselWidget::class` registration through the `media_carousel` key, settings default support, sanitizer allowlist support, frontend style dependency support, and frontend script dependency support.
+- Static validation confirmed `Slides Name` is sanitized and rendered as the AP Media Carousel viewport `aria-label`.
 - Runtime validation through local WordPress and Elementor confirmed the Elementor registration path returns `ap-media-carousel`.
 - Temporary Elementor frontend page validation confirmed `.elementor-widget-ap-media-carousel`, `.ap-media-carousel-widget-placeholder`, five default image placeholders, arrows, the pagination container, and `assets/css/media-carousel.css` render on the page.
 - Temporary Elementor frontend validation confirmed the previous visible text placeholder `AP Media Carousel Widget` no longer renders.
@@ -147,11 +157,21 @@ Passed:
 - Static validation confirmed Additional Options are sanitized before frontend output and serialized for widget-scoped JavaScript behavior.
 - Static validation confirmed Additional Options control frontend output for arrows, dot pagination, transition duration, opt-in autoplay, loop wrapping, overlay icon rendering, image size, image fit, and image loading mode.
 - Static validation confirmed AP Media Carousel declares the Elementor Free `elementor-icons` style dependency and renders overlay icons with `eicon-search`, `eicon-plus-circle`, `eicon-eye`, and `eicon-link` classes.
+- Static CSS validation confirmed AP Media Carousel image hover overlays fade centered icons in and video play icons use an Elementor-style transparent ring state with reduced-motion support.
+- Playwright real-page validation confirmed AP Media Carousel video play icons no longer render a red background in the default state.
+- Playwright real-page validation confirmed hovering a video play icon hides the play button and reveals the full-slide overlay using the configured overlay color and icon.
+- Playwright real-page validation confirmed hovering outside the video play icon still reveals the full-slide overlay with the zoom icon.
 - Playwright smoke validation against a temporary AP Media Carousel fixture confirmed Additional Options runtime behavior for generated page dots, hidden arrows/dots, transition duration, loop-enabled arrows, and opt-in autoplay timer creation.
 - Playwright smoke validation against a temporary AP Media Carousel overlay fixture confirmed the overlay layer spans the full slide, uses the configured background/text/icon-size values, and fades in on hover.
 - Playwright smoke validation against a temporary AP Media Carousel lightbox fixture confirmed image overlay trigger clicks open the AP lightbox, widget lightbox CSS variables are copied into the runtime lightbox, body scrolling is locked while open, Escape closes the lightbox, and lightbox content is cleared after close.
+- Static CSS validation confirmed the AP lightbox close button is placed in the top-right header action group with an explicit clickable target and AP-owned SVG icon that does not depend on icon fonts.
+- Playwright follow-up validation confirmed the AP lightbox header renders the counter, share, zoom, fullscreen, and close controls with translated labels.
+- Playwright first-open validation confirmed the lightbox close button is a visible top-right header action, receives focus, and closes the lightbox immediately.
+- Playwright real-page validation on `AP Demo About` confirmed the AP lightbox close control renders as the fourth header action with an AP-owned SVG icon, keeps the visible UI color while focused, and closes the video lightbox.
+- Playwright real-page validation confirmed the AP video lightbox uses the 86vw viewport-relative `Video Width` default for Elementor-style popup proportions.
 - Playwright smoke validation confirmed the full overlay layer uses `pointer-events: none` while the centered overlay trigger uses `pointer-events: auto`, so the visual overlay does not block existing image links.
 - Playwright smoke validation against the same fixture confirmed video play icon clicks open the AP lightbox with a YouTube iframe embed URL and the configured `Video Width` variable.
+- Playwright follow-up validation confirmed AP lightbox labels are read from translated widget data attributes, `Tab` and `Shift+Tab` stay trapped inside the lightbox controls, and unsupported video URLs render a translated fallback link instead of an iframe.
 - Playwright smoke validation loaded the real `assets/css/media-carousel.css` and `assets/js/media-carousel.js` against AP Media Carousel markup and confirmed five items with three visible slides generates three page dots: `Go to slide 1`, `Go to slide 2`, and `Go to slide 3`.
 - Playwright smoke validation clicked pagination dot 3 and confirmed the track transform changed to `translate3d(-849px, 0px, 0px)`, dot index 2 was selected, and the next arrow became disabled at the last page.
 - Playwright smoke validation clicked the next arrow from the first page and confirmed the active pagination index advanced to 1 with transform `translate3d(-425px, 0px, 0px)`.

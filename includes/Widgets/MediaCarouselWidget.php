@@ -867,6 +867,10 @@ final class MediaCarouselWidget extends \Elementor\Widget_Base {
 				'label'      => __( 'Video Width', 'alternatepro-elements' ),
 				'type'       => \Elementor\Controls_Manager::SLIDER,
 				'size_units' => array( '%' ),
+				'default'    => array(
+					'size' => 86,
+					'unit' => '%',
+				),
 				'range'      => array(
 					'%' => array(
 						'min' => 10,
@@ -874,7 +878,7 @@ final class MediaCarouselWidget extends \Elementor\Widget_Base {
 					),
 				),
 				'selectors'  => array(
-					'{{WRAPPER}} .ap-media-carousel' => '--ap-media-carousel-lightbox-video-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .ap-media-carousel' => '--ap-media-carousel-lightbox-video-width: {{SIZE}}vw;',
 				),
 			)
 		);
@@ -1257,6 +1261,42 @@ final class MediaCarouselWidget extends \Elementor\Widget_Base {
 	}
 
 	/**
+	 * Get the accessible label for the media carousel viewport.
+	 *
+	 * @param array<string,mixed> $settings Widget settings.
+	 * @return string
+	 */
+	private function get_slides_aria_label( array $settings ) {
+		$label = isset( $settings['slides_name'] ) ? sanitize_text_field( $settings['slides_name'] ) : '';
+
+		return '' !== $label ? $label : __( 'Slides', 'alternatepro-elements' );
+	}
+
+	/**
+	 * Get overlay icon HTML.
+	 *
+	 * @param array<string,mixed> $settings Widget settings.
+	 * @param string              $preferred_icon Preferred icon key.
+	 * @return string
+	 */
+	private function get_overlay_icon_html( array $settings, $preferred_icon = '' ) {
+		$icon         = '' === $preferred_icon ? $this->get_overlay_icon_key( $settings ) : sanitize_key( $preferred_icon );
+		$icon_classes = array(
+			'search' => 'eicon-search',
+			'plus'   => 'eicon-plus-circle',
+			'eye'    => 'eicon-eye',
+			'link'   => 'eicon-link',
+			'zoom'   => 'eicon-zoom-in-bold',
+		);
+
+		if ( ! isset( $icon_classes[ $icon ] ) ) {
+			$icon = $this->get_overlay_icon_key( $settings );
+		}
+
+		return '<span class="ap-media-carousel__overlay-icon ap-media-carousel__overlay-icon--' . esc_attr( $icon ) . ' ' . esc_attr( $icon_classes[ $icon ] ) . '" aria-hidden="true"></span>';
+	}
+
+	/**
 	 * Get overlay HTML.
 	 *
 	 * @param array<string,mixed> $settings Widget settings.
@@ -1268,15 +1308,7 @@ final class MediaCarouselWidget extends \Elementor\Widget_Base {
 			return '';
 		}
 
-		$icon         = $this->get_overlay_icon_key( $settings );
-		$icon_classes = array(
-			'search' => 'eicon-search',
-			'plus'   => 'eicon-plus-circle',
-			'eye'    => 'eicon-eye',
-			'link'   => 'eicon-link',
-		);
-
-		$icon_html = '<span class="ap-media-carousel__overlay-icon ap-media-carousel__overlay-icon--' . esc_attr( $icon ) . ' ' . esc_attr( $icon_classes[ $icon ] ) . '" aria-hidden="true"></span>';
+		$icon_html = $this->get_overlay_icon_html( $settings );
 
 		if ( $has_lightbox ) {
 			return '<span class="ap-media-carousel__overlay"><button class="ap-media-carousel__overlay-trigger" type="button" aria-label="' . esc_attr__( 'Open media in lightbox', 'alternatepro-elements' ) . '" data-ap-media-carousel-lightbox-trigger="true">' . $icon_html . '</button></span>';
@@ -1286,17 +1318,38 @@ final class MediaCarouselWidget extends \Elementor\Widget_Base {
 	}
 
 	/**
+	 * Get video hover overlay HTML.
+	 *
+	 * @param array<string,mixed> $settings Widget settings.
+	 * @return string
+	 */
+	private function get_video_hover_overlay_html( array $settings ) {
+		if ( 'icon' !== $this->get_overlay_mode( $settings ) ) {
+			return '';
+		}
+
+		return '<span class="ap-media-carousel__overlay ap-media-carousel__video-hover-overlay" aria-hidden="true">' . $this->get_overlay_icon_html( $settings, 'zoom' ) . '</span>';
+	}
+
+	/**
 	 * Get video play icon HTML.
 	 *
 	 * @param bool $has_lightbox Whether the play icon should open a lightbox.
+	 * @param bool $has_hover_overlay Whether the play icon has a video hover overlay.
 	 * @return string
 	 */
-	private function get_video_play_icon_html( $has_lightbox ) {
-		if ( $has_lightbox ) {
-			return '<button class="ap-media-carousel__play-icon" type="button" aria-label="' . esc_attr__( 'Open video in lightbox', 'alternatepro-elements' ) . '" data-ap-media-carousel-lightbox-trigger="true"></button>';
+	private function get_video_play_icon_html( $has_lightbox, $has_hover_overlay = false ) {
+		if ( ! $has_lightbox ) {
+			return '';
 		}
 
-		return '<span class="ap-media-carousel__play-icon" aria-hidden="true"></span>';
+		$class_names = 'ap-media-carousel__play-icon';
+
+		if ( $has_hover_overlay ) {
+			$class_names .= ' ap-media-carousel__play-icon--has-hover-overlay';
+		}
+
+		return '<button class="' . esc_attr( $class_names ) . '" type="button" aria-label="' . esc_attr__( 'Open video in lightbox', 'alternatepro-elements' ) . '" data-ap-media-carousel-lightbox-trigger="true"></button>';
 	}
 
 	/**
@@ -1377,6 +1430,34 @@ final class MediaCarouselWidget extends \Elementor\Widget_Base {
 	}
 
 	/**
+	 * Get translated lightbox labels for the frontend runtime.
+	 *
+	 * @return string
+	 */
+	private function get_lightbox_label_attributes() {
+		$labels = array(
+			'close'           => __( 'Close lightbox', 'alternatepro-elements' ),
+			'dialog'          => __( 'Media lightbox', 'alternatepro-elements' ),
+			'exit-fullscreen' => __( 'Exit fullscreen', 'alternatepro-elements' ),
+			'fallback'        => __( 'Open video', 'alternatepro-elements' ),
+			'fullscreen'      => __( 'Fullscreen', 'alternatepro-elements' ),
+			'next'            => __( 'Next media', 'alternatepro-elements' ),
+			'previous'        => __( 'Previous media', 'alternatepro-elements' ),
+			'share'           => __( 'Share media', 'alternatepro-elements' ),
+			'video'           => __( 'Video', 'alternatepro-elements' ),
+			'zoom'            => __( 'Zoom media', 'alternatepro-elements' ),
+			'zoom-out'        => __( 'Zoom out', 'alternatepro-elements' ),
+		);
+		$html   = '';
+
+		foreach ( $labels as $key => $label ) {
+			$html .= ' data-ap-media-carousel-lightbox-' . esc_attr( $key ) . '-label="' . esc_attr( $label ) . '"';
+		}
+
+		return $html;
+	}
+
+	/**
 	 * Get link attributes for a repeater slide.
 	 *
 	 * @param array<string,mixed> $slide Slide settings.
@@ -1434,15 +1515,15 @@ final class MediaCarouselWidget extends \Elementor\Widget_Base {
 	 */
 	protected function render() {
 		$settings        = $this->get_settings_for_display();
-		$label           = empty( $settings['slides_name'] ) ? __( 'Slides', 'alternatepro-elements' ) : $settings['slides_name'];
+		$label           = $this->get_slides_aria_label( $settings );
 		$slides          = $this->get_render_slides( $settings );
 		$slide_count     = count( $slides );
 		$placeholder_src = $this->get_placeholder_image_src();
 		$class_names     = $this->get_carousel_class_names( $settings );
 		$options         = wp_json_encode( $this->get_frontend_carousel_options( $settings ) );
 
-		echo '<div class="' . esc_attr( $class_names ) . '" role="region" aria-label="' . esc_attr( $label ) . '" data-ap-media-carousel="true" data-ap-media-carousel-options="' . esc_attr( $options ? $options : '{}' ) . '">';
-		echo '<div class="ap-media-carousel__viewport">';
+		echo '<div class="' . esc_attr( $class_names ) . '" data-ap-media-carousel="true" data-ap-media-carousel-options="' . esc_attr( $options ? $options : '{}' ) . '"' . $this->get_lightbox_label_attributes() . '>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Generated and escaped by get_lightbox_label_attributes().
+		echo '<div class="ap-media-carousel__viewport" role="region" aria-roledescription="' . esc_attr__( 'carousel', 'alternatepro-elements' ) . '" aria-label="' . esc_attr( $label ) . '">';
 		echo '<div class="ap-media-carousel__slides">';
 
 		foreach ( $slides as $index => $slide ) {
@@ -1481,7 +1562,11 @@ final class MediaCarouselWidget extends \Elementor\Widget_Base {
 			}
 
 			if ( $is_video ) {
-				echo $this->get_video_play_icon_html( '' !== $lightbox_item['src'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Generated and escaped by get_video_play_icon_html().
+				$has_video_lightbox = '' !== $lightbox_item['src'];
+				$has_hover_overlay  = $has_video_lightbox && 'icon' === $this->get_overlay_mode( $settings );
+
+				echo $this->get_video_play_icon_html( $has_video_lightbox, $has_hover_overlay ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Generated and escaped by get_video_play_icon_html().
+				echo $has_hover_overlay ? $this->get_video_hover_overlay_html( $settings ) : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Generated and escaped by get_video_hover_overlay_html().
 			} else {
 				echo $this->get_overlay_html( $settings, '' !== $lightbox_item['src'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Generated and escaped by get_overlay_html().
 			}

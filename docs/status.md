@@ -200,6 +200,7 @@ Establish the plugin foundation so modules can load safely, requirements can fai
 - Added the required AP Media Carousel Phase 1 Elementor widget skeleton using Elementor Free public widget registration, a new `media_carousel` settings toggle key, and escaped placeholder output only.
 - AP Media Carousel Phase 1 validation passed targeted PHP syntax, targeted PHPCS, `git diff --check`, static registration checks, local Elementor runtime registration, and temporary Elementor frontend placeholder rendering. Live editor panel/drag validation remains pending because it requires an authenticated administrator browser session, and creating a temporary administrator account requires explicit user authorization.
 - Added AP Media Carousel initial Content tab options for `Slides Name` and a `Slides` repeater shell with five default empty items. The Skin input and Owl Carousel integration remain deferred.
+- AP Media Carousel now renders the sanitized `Slides Name` setting as the carousel viewport `aria-label` with a `Slides` fallback.
 - AP Media Carousel Content tab controls validation passed targeted PHP syntax, targeted PHPCS, `git diff --check`, static control checks, and local Elementor runtime control-stack smoke validation.
 - Added AP Media Carousel Style tab `Slides` controls for space between, background color, border width, border radius, border color, and padding using Elementor-generated selectors without adding widget CSS or JavaScript assets.
 - AP Media Carousel Slides style controls validation passed targeted PHP syntax, targeted PHPCS, `git diff --check`, static control checks, and temporary Elementor frontend smoke validation for the style selector target classes.
@@ -211,6 +212,15 @@ Establish the plugin foundation so modules can load safely, requirements can fai
 - AP Media Carousel pagination fix validation passed targeted PHP syntax, targeted PHPCS for changed PHP/CSS/JS files, `node --check assets/js/media-carousel.js`, `git diff --check`, and Playwright smoke validation for dot and arrow clicks.
 - Fixed AP Media Carousel pagination dot count and movement so dots are generated from real snap/page positions. Playwright confirmed five items with three visible slides renders three dots and the third dot moves to the last page.
 - Added AP Media Carousel lightbox runtime for image overlays and video play icons, including image display, YouTube/Vimeo iframe embeds, lightbox UI controls, keyboard close/navigation, and autoplay pause while open. Validation passed targeted PHP syntax, targeted PHPCS for changed PHP/CSS/JS files, `node --check assets/js/media-carousel.js`, `git diff --check`, and Playwright smoke validation for image and video lightbox flows.
+- Fixed AP Media Carousel lightbox review findings by adding focus trapping, moving lightbox runtime labels to translated widget data attributes, and hiding the video play icon when a video URL is empty. Validation passed targeted PHP syntax, targeted PHPCS, JS syntax checks, `git diff --check`, and Playwright smoke checks for translated labels, focus trapping, and unsupported video fallback behavior.
+- Refined the AP Media Carousel lightbox close button so the control remains visible in the top-right header action group with a larger clickable area.
+- Fixed AP Media Carousel lightbox close button focus color so the close icon stays visible over the default lightbox background.
+- Adjusted AP Media Carousel lightbox video sizing so the Video Width control maps to viewport width with an 86vw Elementor-style default.
+- Refined AP Media Carousel hover states so image overlays fade in with centered icons and video play buttons use an Elementor-style transparent play ring.
+- Refined AP Media Carousel video play hover so hovering the play icon reveals the full-slide Elementor-style overlay while keeping inactive video play buttons visible.
+- Refined AP Media Carousel video slide hover so hovering outside the play icon still reveals the full-slide Elementor-style overlay.
+- Refined AP Media Carousel video play icon default state so it no longer uses a red background.
+- Added AP Media Carousel lightbox header controls inspired by Elementor's slideshow header, including a counter plus share, zoom, fullscreen, and a close action using AP-owned markup and translated labels.
 - Added the explicitly requested AP Slides Phase 1 Elementor widget skeleton using Elementor Free public widget registration, a settings toggle key, and escaped placeholder output only.
 - AP Slides validation passed targeted PHP syntax checks, targeted PHPCS for changed PHP files, all-plugin PHP syntax fallback, `git diff --check`, runtime settings merge validation, and Elementor editor browser validation for panel visibility, drag/drop, and placeholder rendering.
 - AP Slides review, testing, security, widget documentation, and task-board updates were created.
@@ -402,6 +412,14 @@ Phase 2 - Elementor Integration
 - 2026-06-24: Updated AP Media Carousel image overlay icons to use Elementor Free `eicons` classes with the `elementor-icons` frontend style dependency.
 - 2026-06-24: Added AP Media Carousel Style tab Lightbox controls for color, UI color, UI hover color, and responsive video width.
 - 2026-06-24: Added AP Media Carousel lightbox runtime for image overlays and video play icons with image display, YouTube/Vimeo iframe embeds, close/previous/next controls, keyboard close/navigation, and autoplay pause while open.
+- 2026-06-24: Fixed AP Media Carousel lightbox review findings for modal focus trapping, translated runtime labels, and empty video play icon behavior.
+- 2026-06-24: Refined AP Media Carousel lightbox close button header positioning and clickable area.
+- 2026-06-24: Fixed AP Media Carousel lightbox close button focus color visibility over the default lightbox background.
+- 2026-06-24: Adjusted AP Media Carousel lightbox video sizing to use an 86vw viewport-relative Video Width default.
+- 2026-06-24: Refined AP Media Carousel image and video hover states to match Elementor-style overlay behavior.
+- 2026-06-24: Refined AP Media Carousel video play hover so the play icon reveals a full-slide overlay state.
+- 2026-06-24: Refined AP Media Carousel video slide hover so the full-slide overlay appears outside the play icon.
+- 2026-06-24: Added AP Media Carousel lightbox header controls for counter, share, zoom, fullscreen, and a close action.
 - 2026-06-15: Created Code Review Agent workflow for post-implementation reviews.
 - 2026-06-15: Created Testing Agent workflow for post-review validation.
 - 2026-06-15: Enhanced Testing Agent workflow with functional, unit, integration, and regression testing strategy.

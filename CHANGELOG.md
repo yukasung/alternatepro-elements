@@ -57,6 +57,7 @@ The format is based on Keep a Changelog.
 * Added AP Site Logo Image style controls for alignment, width, max width, height, normal/hover opacity, normal/hover CSS filters, border type, border radius, and box shadow using Elementor Free controls.
 * Applied the shared AP Custom CSS control to AP Site Logo with widget-scoped `selector` support.
 * Added AP Media Carousel initial Content tab options for `Slides Name` and a `Slides` repeater shell with five default empty items, while keeping the Skin input deferred.
+* Rendered AP Media Carousel `Slides Name` as the carousel viewport `aria-label` with a `Slides` fallback.
 * Added AP Media Carousel repeater item controls for Type, Image, conditional Video Link, image Link, and conditional Custom URL using Elementor Free controls.
 * Added AP Media Carousel inline Content tab carousel options for Effect, Slides Per View, Slides to Scroll, Height, and Width inside the Slides section.
 * Added AP Media Carousel Content tab Additional Options for arrows, pagination, transition duration, opt-in autoplay, loop, overlay icon/animation, image resolution, image fit, and lazy load using Elementor Free controls.
@@ -115,6 +116,14 @@ The format is based on Keep a Changelog.
 
 ### Fixed
 
+* Added AP Media Carousel lightbox header controls inspired by Elementor's slideshow header, including counter, share, zoom, fullscreen, and a close action using AP-owned markup and translated labels.
+* Refined AP Media Carousel lightbox close button so the control stays visible in the top-right header action group with a clear clickable area.
+* Fixed AP Media Carousel lightbox close button focus color so the close icon stays visible over the default lightbox background.
+* Adjusted AP Media Carousel lightbox video sizing so the Video Width control maps to viewport width with an 86vw Elementor-style default.
+* Refined AP Media Carousel hover states so image overlays fade in with centered icons and video play buttons use an Elementor-style transparent play ring.
+* Refined AP Media Carousel video play hover so hovering the play icon reveals the full-slide Elementor-style overlay while keeping the inactive play button visible.
+* Refined AP Media Carousel video hover so the full-slide overlay appears when hovering anywhere over a video slide, not only over the play icon.
+* Fixed AP Media Carousel lightbox review findings by trapping focus while the lightbox is open, moving runtime lightbox labels to translated widget data attributes, and hiding non-actionable video play icons when a video URL is empty.
 * Fixed AP Image Carosel accessibility baseline by making autoplay opt-in instead of enabled by default.
 * Fixed AP Slides autoplay accessibility baseline by making autoplay opt-in instead of enabled by default.
 * Fixed AP Slides navigation arrow hover background so arrows remain transparent in hover, focus, and active states.

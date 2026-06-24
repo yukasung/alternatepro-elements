@@ -133,6 +133,7 @@
 - [x] Verify AP Media Carousel placeholder renders on a temporary Elementor frontend page.
 - [x] Add AP Media Carousel Content tab `Slides` section.
 - [x] Add AP Media Carousel `Slides Name` text control.
+- [x] Render AP Media Carousel `Slides Name` as the carousel viewport `aria-label`.
 - [x] Add AP Media Carousel `Slides` repeater shell with five default empty items.
 - [x] Keep AP Media Carousel `Skin` input deferred.
 - [x] Verify AP Media Carousel Content tab controls with static checks and Elementor runtime control-stack smoke validation.
@@ -191,6 +192,18 @@
 - [x] Verify AP Media Carousel Lightbox style controls with PHP lint and PHPCS.
 - [x] Add AP Media Carousel lightbox runtime for image overlays and video play icons.
 - [x] Verify AP Media Carousel lightbox runtime with PHP lint, PHPCS, JS syntax checks, `git diff --check`, and Playwright smoke testing.
+- [x] Fix AP Media Carousel lightbox review issues for focus trapping, translated runtime labels, and empty video play icon behavior.
+- [x] Verify AP Media Carousel lightbox review fixes with PHP lint, PHPCS, JS syntax checks, `git diff --check`, and Playwright smoke testing.
+- [x] Refine AP Media Carousel lightbox close button header positioning and clickable area.
+- [x] Add AP Media Carousel lightbox header controls for counter, share, zoom, fullscreen, and close action.
+- [x] Verify AP Media Carousel lightbox first-open close button visibility and close behavior with Playwright.
+- [x] Fix AP Media Carousel lightbox close focus color so it remains visible over the default lightbox background.
+- [x] Verify AP Media Carousel video lightbox close button on the real AP Demo About page with Playwright.
+- [x] Adjust AP Media Carousel lightbox video sizing to an 86vw Elementor-style default.
+- [x] Refine AP Media Carousel image overlay and video play hover states to match Elementor-style behavior.
+- [x] Refine AP Media Carousel video play icon hover to reveal the full-slide overlay state.
+- [x] Refine AP Media Carousel video slide hover so overlay appears outside the play icon.
+- [x] Remove AP Media Carousel video play icon red background for Elementor-style transparent ring state.
 
 ## Issues
 

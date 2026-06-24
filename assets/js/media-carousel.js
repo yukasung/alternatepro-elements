@@ -12,6 +12,7 @@
 	var INITIALIZED_ATTRIBUTE = "data-ap-media-carousel-initialized";
 	var LIGHTBOX_TRIGGER      = "[data-ap-media-carousel-lightbox-trigger]";
 	var LIGHTBOX_OPEN_CLASS   = "ap-media-carousel-lightbox--open";
+	var LIGHTBOX_ZOOM_CLASS   = "ap-media-carousel-lightbox--zoom";
 	var BODY_LIGHTBOX_CLASS   = "ap-media-carousel-lightbox-open";
 	var lightbox              = null;
 
@@ -122,22 +123,76 @@
 		return matchedIndex;
 	}
 
-	function createLightboxButton( className, label, text ) {
+	function getLightboxLabels( carousel ) {
+		function getLabel( key ) {
+			return carousel.getAttribute( "data-ap-media-carousel-lightbox-" + key + "-label" ) || "";
+		}
+
+		return {
+			close: getLabel( "close" ),
+			dialog: getLabel( "dialog" ),
+			exitFullscreen: getLabel( "exit-fullscreen" ),
+			fallback: getLabel( "fallback" ),
+			fullscreen: getLabel( "fullscreen" ),
+			next: getLabel( "next" ),
+			previous: getLabel( "previous" ),
+			share: getLabel( "share" ),
+			zoom: getLabel( "zoom" ),
+			zoomOut: getLabel( "zoom-out" ),
+			video: getLabel( "video" )
+		};
+	}
+
+	function createLightboxButton( className, text, iconClass ) {
 		var button = document.createElement( "button" );
+		var icon;
 
-		button.className   = className;
-		button.type        = "button";
-		button.textContent = text;
+		button.className = className;
+		button.type      = "button";
 
-		button.setAttribute( "aria-label", label );
+		if ( iconClass ) {
+			icon           = document.createElement( "span" );
+			icon.className = iconClass;
+			icon.setAttribute( "aria-hidden", "true" );
+			button.appendChild( icon );
+		} else {
+			button.textContent = text;
+		}
+
+		return button;
+	}
+
+	function createLightboxCloseButton() {
+		var button = createLightboxButton( "ap-media-carousel-lightbox__header-button ap-media-carousel-lightbox__close", "" );
+		var icon   = document.createElementNS( "http://www.w3.org/2000/svg", "svg" );
+		var first  = document.createElementNS( "http://www.w3.org/2000/svg", "path" );
+		var second = document.createElementNS( "http://www.w3.org/2000/svg", "path" );
+
+		icon.classList.add( "ap-media-carousel-lightbox__icon" );
+		icon.setAttribute( "aria-hidden", "true" );
+		icon.setAttribute( "focusable", "false" );
+		icon.setAttribute( "viewBox", "0 0 24 24" );
+
+		first.setAttribute( "d", "M6 6l12 12" );
+		second.setAttribute( "d", "M18 6L6 18" );
+
+		icon.appendChild( first );
+		icon.appendChild( second );
+		button.appendChild( icon );
 
 		return button;
 	}
 
 	function createLightbox() {
 		var root;
+		var header;
+		var actions;
+		var counter;
 		var content;
 		var closeButton;
+		var shareButton;
+		var zoomButton;
+		var fullscreenButton;
 		var previousButton;
 		var nextButton;
 
@@ -145,22 +200,41 @@
 			return lightbox;
 		}
 
-		root           = document.createElement( "div" );
-		content        = document.createElement( "div" );
-		closeButton    = createLightboxButton( "ap-media-carousel-lightbox__close", "Close lightbox", "\u00d7" );
-		previousButton = createLightboxButton( "ap-media-carousel-lightbox__arrow ap-media-carousel-lightbox__arrow--prev", "Previous media", "\u2039" );
-		nextButton     = createLightboxButton( "ap-media-carousel-lightbox__arrow ap-media-carousel-lightbox__arrow--next", "Next media", "\u203a" );
+		root             = document.createElement( "div" );
+		header           = document.createElement( "header" );
+		counter          = document.createElement( "span" );
+		actions          = document.createElement( "div" );
+		content          = document.createElement( "div" );
+		closeButton      = createLightboxCloseButton();
+		shareButton      = createLightboxButton( "ap-media-carousel-lightbox__header-button ap-media-carousel-lightbox__share", "", "eicon-share-arrow" );
+		zoomButton       = createLightboxButton( "ap-media-carousel-lightbox__header-button ap-media-carousel-lightbox__zoom", "", "eicon-zoom-in-bold" );
+		fullscreenButton = createLightboxButton( "ap-media-carousel-lightbox__header-button ap-media-carousel-lightbox__fullscreen", "", "eicon-frame-expand" );
+		previousButton   = createLightboxButton( "ap-media-carousel-lightbox__arrow ap-media-carousel-lightbox__arrow--prev", "\u2039" );
+		nextButton       = createLightboxButton( "ap-media-carousel-lightbox__arrow ap-media-carousel-lightbox__arrow--next", "\u203a" );
 
 		root.className    = "ap-media-carousel-lightbox";
+		header.className  = "ap-media-carousel-lightbox__header ap-media-carousel-lightbox-prevent-close";
+		counter.className = "ap-media-carousel-lightbox__counter";
+		actions.className = "ap-media-carousel-lightbox__header-actions";
 		content.className = "ap-media-carousel-lightbox__content";
 		root.hidden       = true;
+		root.tabIndex     = -1;
 
 		root.setAttribute( "role", "dialog" );
 		root.setAttribute( "aria-modal", "true" );
-		root.setAttribute( "aria-label", "Media lightbox" );
+		zoomButton.setAttribute( "aria-checked", "false" );
+		zoomButton.setAttribute( "role", "switch" );
+		fullscreenButton.setAttribute( "aria-checked", "false" );
+		fullscreenButton.setAttribute( "role", "switch" );
 
+		actions.appendChild( shareButton );
+		actions.appendChild( zoomButton );
+		actions.appendChild( fullscreenButton );
+		actions.appendChild( closeButton );
+		header.appendChild( counter );
+		header.appendChild( actions );
+		root.appendChild( header );
 		root.appendChild( content );
-		root.appendChild( closeButton );
 		root.appendChild( previousButton );
 		root.appendChild( nextButton );
 		document.body.appendChild( root );
@@ -169,11 +243,18 @@
 			activeIndex: 0,
 			activeState: null,
 			activeTrigger: null,
+			actions: actions,
 			closeButton: closeButton,
 			content: content,
+			counter: counter,
+			fullscreenButton: fullscreenButton,
+			header: header,
+			labels: {},
 			nextButton: nextButton,
 			previousButton: previousButton,
-			root: root
+			shareButton: shareButton,
+			root: root,
+			zoomButton: zoomButton
 		};
 
 		root.addEventListener(
@@ -186,6 +267,10 @@
 		);
 
 		closeButton.addEventListener( "click", closeLightbox );
+		shareButton.addEventListener( "click", shareLightboxItem );
+		zoomButton.addEventListener( "click", toggleLightboxZoom );
+		fullscreenButton.addEventListener( "click", toggleLightboxFullscreen );
+		document.addEventListener( "fullscreenchange", syncLightboxFullscreenButton );
 
 		previousButton.addEventListener(
 			"click",
@@ -204,6 +289,18 @@
 		document.addEventListener( "keydown", handleLightboxKeydown );
 
 		return lightbox;
+	}
+
+	function applyLightboxLabels( box, labels ) {
+		box.labels = labels;
+
+		box.root.setAttribute( "aria-label", labels.dialog );
+		box.closeButton.setAttribute( "aria-label", labels.close );
+		box.shareButton.setAttribute( "aria-label", labels.share );
+		box.zoomButton.setAttribute( "aria-label", labels.zoom );
+		box.fullscreenButton.setAttribute( "aria-label", labels.fullscreen );
+		box.previousButton.setAttribute( "aria-label", labels.previous );
+		box.nextButton.setAttribute( "aria-label", labels.next );
 	}
 
 	function setLightboxVariable( root, sourceStyle, property ) {
@@ -315,7 +412,7 @@
 				fallbackLink.href        = item.source;
 				fallbackLink.target      = "_blank";
 				fallbackLink.rel         = "noopener";
-				fallbackLink.textContent = "Open video";
+				fallbackLink.textContent = box.labels.fallback;
 				box.content.appendChild( fallbackLink );
 
 				return;
@@ -327,7 +424,7 @@
 			frame.src       = embedSource;
 
 			frame.setAttribute( "allow", "autoplay; fullscreen; picture-in-picture" );
-			frame.setAttribute( "title", "Video" );
+			frame.setAttribute( "title", box.labels.video );
 
 			video.appendChild( frame );
 			box.content.appendChild( video );
@@ -348,6 +445,162 @@
 
 		box.previousButton.hidden = ! hasMultipleItems;
 		box.nextButton.hidden     = ! hasMultipleItems;
+
+		updateLightboxHeader( box );
+	}
+
+	function getActiveLightboxItem( box ) {
+		if ( ! box || ! box.activeState ) {
+			return null;
+		}
+
+		return box.activeState.lightboxItems[ box.activeIndex ] || null;
+	}
+
+	function setLightboxButtonIcon( button, iconClass ) {
+		if ( button.firstElementChild ) {
+			button.firstElementChild.className = iconClass;
+		}
+	}
+
+	function syncLightboxZoomButton( box, isZoomed ) {
+		box.zoomButton.setAttribute( "aria-checked", isZoomed ? "true" : "false" );
+		box.zoomButton.setAttribute( "aria-label", isZoomed ? box.labels.zoomOut : box.labels.zoom );
+		setLightboxButtonIcon( box.zoomButton, isZoomed ? "eicon-zoom-out-bold" : "eicon-zoom-in-bold" );
+	}
+
+	function resetLightboxZoom( box ) {
+		box.root.classList.remove( LIGHTBOX_ZOOM_CLASS );
+		syncLightboxZoomButton( box, false );
+	}
+
+	function updateLightboxHeader( box ) {
+		var item       = getActiveLightboxItem( box );
+		var itemCount  = box.activeState ? box.activeState.lightboxItems.length : 0;
+		var itemNumber = itemCount ? box.activeIndex + 1 : 0;
+		var isImage    = item && "image" === item.type;
+
+		box.counter.textContent  = itemCount ? itemNumber + " / " + itemCount : "";
+		box.shareButton.disabled = ! item;
+		box.zoomButton.disabled  = ! isImage;
+
+		if ( ! isImage ) {
+			resetLightboxZoom( box );
+		}
+
+		syncLightboxFullscreenButton();
+	}
+
+	function shareLightboxItem() {
+		var box  = lightbox;
+		var item = getActiveLightboxItem( box );
+		var opened;
+
+		if ( ! item || ! item.source ) {
+			return;
+		}
+
+		if ( window.navigator && window.navigator.share ) {
+			window.navigator.share( { url: item.source } ).catch(
+				function () {}
+			);
+
+			return;
+		}
+
+		opened = window.open( item.source, "_blank", "noopener" );
+
+		if ( opened ) {
+			opened.opener = null;
+		}
+	}
+
+	function toggleLightboxZoom() {
+		var box  = lightbox;
+		var item = getActiveLightboxItem( box );
+		var zoomed;
+
+		if ( ! box || ! item || "image" !== item.type ) {
+			return;
+		}
+
+		zoomed = ! box.root.classList.contains( LIGHTBOX_ZOOM_CLASS );
+		box.root.classList.toggle( LIGHTBOX_ZOOM_CLASS, zoomed );
+		syncLightboxZoomButton( box, zoomed );
+	}
+
+	function toggleLightboxFullscreen() {
+		var box = lightbox;
+
+		if ( ! box || ! document.fullscreenEnabled ) {
+			return;
+		}
+
+		if ( document.fullscreenElement === box.root ) {
+			document.exitFullscreen().catch(
+				function () {}
+			);
+
+			return;
+		}
+
+		box.root.requestFullscreen().catch(
+			function () {}
+		);
+	}
+
+	function syncLightboxFullscreenButton() {
+		var box          = lightbox;
+		var isFullscreen = box && document.fullscreenElement === box.root;
+
+		if ( ! box ) {
+			return;
+		}
+
+		box.fullscreenButton.disabled = ! document.fullscreenEnabled;
+		box.fullscreenButton.setAttribute( "aria-checked", isFullscreen ? "true" : "false" );
+		box.fullscreenButton.setAttribute( "aria-label", isFullscreen ? box.labels.exitFullscreen : box.labels.fullscreen );
+		setLightboxButtonIcon( box.fullscreenButton, isFullscreen ? "eicon-frame-minimize" : "eicon-frame-expand" );
+	}
+
+	function getLightboxFocusableElements( box ) {
+		return toArray( box.root.querySelectorAll( "a[href], button:not([disabled]), [tabindex]:not([tabindex='-1'])" ) ).filter(
+			function ( element ) {
+				return ! element.hidden && 0 < element.getClientRects().length;
+			}
+		);
+	}
+
+	function trapLightboxFocus( box, event ) {
+		var focusableElements = getLightboxFocusableElements( box );
+		var firstElement      = focusableElements[ 0 ];
+		var lastElement       = focusableElements[ focusableElements.length - 1 ];
+
+		if ( ! focusableElements.length ) {
+			event.preventDefault();
+			box.root.focus();
+
+			return;
+		}
+
+		if ( -1 === focusableElements.indexOf( document.activeElement ) ) {
+			event.preventDefault();
+			firstElement.focus();
+
+			return;
+		}
+
+		if ( event.shiftKey && document.activeElement === firstElement ) {
+			event.preventDefault();
+			lastElement.focus();
+
+			return;
+		}
+
+		if ( ! event.shiftKey && document.activeElement === lastElement ) {
+			event.preventDefault();
+			firstElement.focus();
+		}
 	}
 
 	function openLightbox( state, index, trigger ) {
@@ -362,7 +615,9 @@
 		box.activeState   = state;
 		box.activeTrigger = trigger;
 
+		applyLightboxLabels( box, state.lightboxLabels );
 		applyLightboxStyles( box, state.carousel );
+		resetLightboxZoom( box );
 		renderLightboxItem( box, item );
 		updateLightboxControls( box );
 		stopAutoplay( state );
@@ -391,9 +646,16 @@
 		state   = box.activeState;
 
 		box.root.classList.remove( LIGHTBOX_OPEN_CLASS );
+		resetLightboxZoom( box );
 		document.body.classList.remove( BODY_LIGHTBOX_CLASS );
 		box.activeState   = null;
 		box.activeTrigger = null;
+
+		if ( document.fullscreenElement === box.root && document.exitFullscreen ) {
+			document.exitFullscreen().catch(
+				function () {}
+			);
+		}
 
 		window.setTimeout(
 			function () {
@@ -438,7 +700,9 @@
 			box.activeIndex = 0;
 		}
 
+		resetLightboxZoom( box );
 		renderLightboxItem( box, items[ box.activeIndex ] );
+		updateLightboxControls( box );
 	}
 
 	function handleLightboxKeydown( event ) {
@@ -449,6 +713,10 @@
 		if ( "Escape" === event.key ) {
 			event.preventDefault();
 			closeLightbox();
+		}
+
+		if ( "Tab" === event.key ) {
+			trapLightboxFocus( lightbox, event );
 		}
 
 		if ( "ArrowLeft" === event.key ) {
@@ -779,6 +1047,7 @@
 			dotLabel: "",
 			dots: [],
 			lightboxItems: [],
+			lightboxLabels: getLightboxLabels( carousel ),
 			loop: getBooleanOption( options, "loop", false ),
 			nextButton: carousel.querySelector( ".ap-media-carousel__arrow--next" ),
 			pages: [],
