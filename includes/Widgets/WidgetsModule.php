@@ -56,6 +56,16 @@ final class WidgetsModule {
 	public const IMAGE_CAROUSEL_SCRIPT = 'apro-image-carousel-frontend';
 
 	/**
+	 * AP Media Carousel frontend style handle.
+	 */
+	public const MEDIA_CAROUSEL_STYLE = 'apro-media-carousel';
+
+	/**
+	 * AP Media Carousel frontend script handle.
+	 */
+	public const MEDIA_CAROUSEL_SCRIPT = 'apro-media-carousel-frontend';
+
+	/**
 	 * AP Slides frontend style handle.
 	 */
 	public const SLIDES_STYLE = 'apro-slides';
@@ -108,6 +118,7 @@ final class WidgetsModule {
 	public function register_assets() {
 		$this->register_nav_menu_assets();
 		$this->register_image_carousel_assets();
+		$this->register_media_carousel_assets();
 		$this->register_slides_assets();
 	}
 
@@ -210,6 +221,28 @@ final class WidgetsModule {
 			APRO_ELEMENTS_URL . 'assets/js/image-carousel.js',
 			array( 'jquery', self::OWL_CAROUSEL_SCRIPT ),
 			$this->asset_version( 'assets/js/image-carousel.js' ),
+			true
+		);
+	}
+
+	/**
+	 * Register AP Media Carousel widget assets.
+	 *
+	 * @return void
+	 */
+	private function register_media_carousel_assets() {
+		wp_register_style(
+			self::MEDIA_CAROUSEL_STYLE,
+			APRO_ELEMENTS_URL . 'assets/css/media-carousel.css',
+			array(),
+			$this->asset_version( 'assets/css/media-carousel.css' )
+		);
+
+		wp_register_script(
+			self::MEDIA_CAROUSEL_SCRIPT,
+			APRO_ELEMENTS_URL . 'assets/js/media-carousel.js',
+			array(),
+			$this->asset_version( 'assets/js/media-carousel.js' ),
 			true
 		);
 	}

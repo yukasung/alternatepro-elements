@@ -149,6 +149,31 @@
 - [ ] Verify AP Site Logo image style controls in the live Elementor editor.
 - [ ] Verify AP Site Logo live Elementor editor panel search and manual drag/drop.
 
+## 2026-06-24
+
+- [x] Render AP Media Carousel default Elementor placeholder images.
+- [x] Add AP Media Carousel repeater item Type, Image, Link, and conditional Custom URL controls.
+- [x] Add AP Media Carousel conditional Video Link control for video items.
+- [x] Keep AP Media Carousel video thumbnail Image control visible for video items.
+- [x] Limit AP Media Carousel image Link controls to image items.
+- [x] Add AP Media Carousel inline Content tab carousel options for Effect, Slides Per View, Slides to Scroll, Height, and Width.
+- [x] Keep AP Media Carousel carousel options inside the Slides section instead of a separate collapse.
+- [x] Map AP Media Carousel preview layout to a flex track suitable for future Owl Carousel integration.
+- [x] Render AP Media Carousel play icon overlay on video slide thumbnails.
+- [x] Render AP Media Carousel selected/default item images with optional item links.
+- [x] Verify AP Media Carousel item controls with PHP lint, PHPCS, and static control checks.
+- [x] Render AP Media Carousel arrows and pagination markers for the default preview.
+- [x] Increase AP Media Carousel default navigation arrow size to 32px.
+- [x] Increase AP Media Carousel default pagination dot spacing to 10px.
+- [x] Add AP Media Carousel widget-scoped frontend CSS for default placeholder layout.
+- [x] Keep AP Media Carousel Owl Carousel integration and autoplay deferred.
+- [x] Verify AP Media Carousel default image output on a temporary Elementor frontend page.
+- [x] Register AP Media Carousel widget-scoped frontend JavaScript.
+- [x] Render AP Media Carousel arrows and pagination dots as accessible buttons.
+- [x] Make AP Media Carousel pagination dots move the carousel track and update active state.
+- [x] Make AP Media Carousel arrows move the carousel track using `Slides to Scroll`.
+- [x] Verify AP Media Carousel pagination fix with PHP lint, PHPCS, JS syntax check, `git diff --check`, and Playwright smoke testing.
+
 ## Issues
 
 - The requested files `docs/product-overview.md`, `docs/architecture.md`, and `docs/coding-standards.md` do not exist in this checkout. Used `PRODUCT.md`, `docs/planning/project-overview.md`, `docs/planning/architecture.md`, and `docs/development-rules.md` instead.

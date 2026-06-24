@@ -57,8 +57,15 @@ The format is based on Keep a Changelog.
 * Added AP Site Logo Image style controls for alignment, width, max width, height, normal/hover opacity, normal/hover CSS filters, border type, border radius, and box shadow using Elementor Free controls.
 * Applied the shared AP Custom CSS control to AP Site Logo with widget-scoped `selector` support.
 * Added AP Media Carousel initial Content tab options for `Slides Name` and a `Slides` repeater shell with five default empty items, while keeping the Skin input deferred.
+* Added AP Media Carousel repeater item controls for Type, Image, conditional Video Link, image Link, and conditional Custom URL using Elementor Free controls.
+* Added AP Media Carousel inline Content tab carousel options for Effect, Slides Per View, Slides to Scroll, Height, and Width inside the Slides section.
+* Added AP Media Carousel play icon overlay rendering for video slide thumbnails.
 * Added AP Media Carousel Slides style options for space between, background color, border width, border radius, border color, and padding using Elementor-generated selectors.
 * Added AP Media Carousel Navigation style options for arrows, pagination, and play icon controls without adding navigation rendering or JavaScript behavior.
+* Updated AP Media Carousel default navigation arrow size to better match Elementor-style media carousel arrows.
+* Updated AP Media Carousel default pagination dot spacing to better match Elementor-style media carousel dots.
+* Added AP Media Carousel default Elementor placeholder image output with arrows, pagination markers, and widget-scoped frontend CSS.
+* Fixed AP Media Carousel pagination by registering a widget-scoped frontend script and rendering arrow/dot controls as accessible buttons that move the carousel track.
 * Moved AP Slides `AP Custom CSS` to the bottom of the Elementor Advanced tab with an editor-only panel ordering script.
 * Extracted AP Custom CSS into a shared Elementor widget trait and shared editor asset for AP Slides, AP Menu, AP Image Carosel, and AP Site Logo reuse.
 * Extracted shared widget setting parsing helpers for carousel-style widgets.
